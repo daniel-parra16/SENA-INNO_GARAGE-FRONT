@@ -3,9 +3,9 @@ import { createRoot } from 'react-dom/client'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import './index.css'
 import App from './App.jsx'
-import Login from'./Pages/login.jsx'
-import Forgot from'./Pages/forgot.jsx'
-import Register from'./Pages/register.jsx'
+import Login from'./Pages/Login.jsx'
+import Forgot from'./Pages/Forgot.jsx'
+import Register from'./Pages/Register.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>

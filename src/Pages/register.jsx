@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import "./register.css";
+import "./Register.css";
 
 function Register() {
   const [showPwd, setShowPwd] = useState(false);
