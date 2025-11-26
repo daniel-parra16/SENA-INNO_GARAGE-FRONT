@@ -1,52 +1,52 @@
-import React, { useState } from 'react';
-import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
-import './login.css'
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import "./forgot.css";
 
-function Forgot() {
-  const [showPwd, setShowPwd] = useState(false);
+const ForgotPassword = () => {
+    const [email, setEmail] = useState("");
+    const navigate = useNavigate();
 
-  return (
-    <div className="login-page">
-      <div className="login-card">
-        <h2 className="title">Bienvenido</h2>
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        alert("Si el correo está registrado, recibirás un enlace para restablecer tu contraseña.");
+        navigate("/login");
+    };
 
-        <Form className="login-form" onSubmit={(e)=>e.preventDefault()}>
-          <div className="field">
-            <Form.Control className="input" type="email" id="email" placeholder=" " required />
-            <label htmlFor="email">Correo electrónico</label>
-          </div>
+    return (
+        <div className="forgot-page">
+            <div className="forgot-card">
 
-          <div className="field">
-            <Form.Control
-              className="input"
-              type={showPwd ? 'text' : 'password'}
-              id="password"
-              placeholder=" "
-              required
-            />
-            <label htmlFor="password">Contraseña</label>
-            <button
-              type="button"
-              className="toggle-pwd"
-              onClick={() => setShowPwd(s => !s)}
-              aria-label="Mostrar contraseña"
-            >
-              {showPwd ? 'Ocultar' : 'Mostrar'}
-            </button>
-          </div>
+                <h2 className="forgot-title">Recuperar Contraseña</h2>
 
-          <div className="actions">
-            <a href="#" className="forgot-pwd">¿Olvidaste tu contraseña?</a>
-            <div id="redirects">
-              <Button variant="primary" type="submit" className="redirect-btn login">Entrar</Button>
-              <Button variant="primary" type="submit" className="redirect-btn register">Registrarse</Button>
+                <p className="forgot-subtitle">
+                    Ingresa tu correo y te enviaremos un enlace para restablecer tu contraseña.
+                </p>
+
+                <form onSubmit={handleSubmit}>
+
+                    <div className="field">
+                        <label>Correo electrónico</label>
+                        <input
+                            type="email"
+                            placeholder="Ingresa tu correo"
+                            required
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                        />
+                    </div>
+
+                    <button className="btn-send" type="submit">
+                        Enviar Enlace
+                    </button>
+                </form>
+
+                <p className="back-login" onClick={() => navigate("/")}>
+                    ← Volver al inicio de sesión
+                </p>
+
             </div>
-          </div>
-        </Form>
-      </div>
-    </div>
-  );
-}
+        </div>
+    );
+};
 
-export default Forgot;
+export default ForgotPassword;

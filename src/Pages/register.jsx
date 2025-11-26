@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import "./register.css";
@@ -6,6 +7,8 @@ import "./register.css";
 function Register() {
   const [showPwd, setShowPwd] = useState(false);
   const [showPwd2, setShowPwd2] = useState(false);
+
+  const navigate = useNavigate(); // <-- navegación agregada
 
   return (
     <div className="register-page">
@@ -15,7 +18,7 @@ function Register() {
         <h2 className="form-title">Register</h2>
 
         <Form className="register-form" onSubmit={(e) => e.preventDefault()}>
-          
+
           {/* PERSONAL INFORMATION */}
           <h3 className="section-title">Personal Information</h3>
 
@@ -110,11 +113,21 @@ function Register() {
 
           {/* ACTION BUTTONS */}
           <div className="button-row">
-            <Button variant="warning" type="button" className="btn-back">
+            <Button 
+              variant="warning" 
+              type="button" 
+              className="btn-back"
+              onClick={() => navigate("/")}   // <-- volver al login
+            >
               Come Back
             </Button>
 
-            <Button variant="primary" type="submit" className="btn-register">
+            <Button 
+              variant="primary" 
+              type="submit" 
+              className="btn-register"
+              onClick={() => navigate("/")}  // <-- redirigir después de registrar
+            >
               Register
             </Button>
           </div>

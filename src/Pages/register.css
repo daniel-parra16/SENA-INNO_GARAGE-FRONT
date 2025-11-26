@@ -1,145 +1,182 @@
-/* === PAGE LAYOUT === */
+/* -----------------------------------
+   Register Page Layout
+----------------------------------- */
 .register-page {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  background: #3a1f0f; /* marrón oscuro */
-  padding: 40px 10px;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 20px;
+    background: linear-gradient(135deg, #E67E22 0%, #000 100%);
+    color: #fff;
 }
 
+/* -----------------------------------
+   Register Card
+----------------------------------- */
 .register-card {
-  background: #4b2a14;
-  padding: 40px;
-  width: 100%;
-  max-width: 900px;
-  border-radius: 12px;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
-  color: white;
+    background: rgba(0, 0, 0, 0.35);
+    backdrop-filter: blur(6px);
+    border-radius: 16px;
+    padding: 40px 50px;
+    width: 80%;
+    max-width: 900px;
+    box-shadow: 0 0 25px rgba(0,0,0,.4);
+    color: #fff;
 }
 
-/* === TITLES === */
+/* -----------------------------------
+   Titles
+----------------------------------- */
 .form-title {
-  text-align: center;
-  font-size: 2.3rem;
-  font-weight: bold;
-  margin-bottom: 35px;
-  text-transform: uppercase;
+    text-align: center;
+    font-size: 3rem;
+    font-weight: 900;
+    margin-bottom: 25px;
+    text-transform: uppercase;
 }
 
 .section-title {
-  font-size: 1.5rem;
-  margin: 25px 0 15px;
-  font-weight: bold;
-  text-align: center;
-  text-transform: uppercase;
+    font-size: 1.7rem;
+    margin: 25px 0 10px;
+    text-align: center;
+    font-weight: 700;
+    text-transform: uppercase;
 }
 
-/* === INPUT GROUPS === */
+/* -----------------------------------
+   Responsive Grid for Inputs
+----------------------------------- */
 .row-group {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-  gap: 20px;
-  margin-bottom: 25px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 25px;
+    margin-bottom: 25px;
 }
 
-/* === INPUT FIELDS === */
+/* -----------------------------------
+   Floating Label Inputs
+----------------------------------- */
 .field {
-  position: relative;
-  display: flex;
-  flex-direction: column;
+    position: relative;
+    width: 100%;
 }
 
 .field input {
-  width: 100%;
-  padding: 12px 14px;
-  border-radius: 8px;
-  border: none;
-  background: #fff;
-  font-size: 1rem;
-  outline: none;
+    width: 100%;
+    background: transparent;
+    border: 0;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.12);
+    padding: 12px 0 10px 0;
+    font-size: 1rem;
+    color: #fff;
+    outline: none;
+    transition: border-color .18s ease, box-shadow .18s ease;
+}
+
+.field input::placeholder {
+    color: transparent;
+}
+
+.field input:focus {
+    border-bottom-color: #995115;
+    box-shadow: 0 2px 0 0 #995115;
 }
 
 .field label {
-  font-size: 0.9rem;
-  margin-top: 5px;
-  color: #ddd;
-  pointer-events: none;
+    position: absolute;
+    left: 4px;
+    top: 8px;
+    color: rgba(255, 255, 255, 0.72);
+    pointer-events: none;
+    transition: transform .18s ease, font-size .18s ease, top .18s ease;
 }
 
-/* === PASSWORD FIELD === */
-.password-field {
-  position: relative;
+.field input:focus + label,
+.field input:not(:placeholder-shown) + label {
+    transform: translateY(-20px);
+    font-size: 0.8rem;
+    color: #e6e6ff;
 }
 
-.toggle-pwd {
-  position: absolute;
-  right: 10px;
-  top: 12px;
-  background: NONE;
-  border: NONE;
-  color: #333;
-  cursor: pointer;
-  font-size: 0.9rem;
+/* -----------------------------------
+   Password Toggle
+----------------------------------- */
+.password-field .toggle-pwd {
+    position: absolute;
+    right: 5px;
+    top: 8px;
+    background: transparent;
+    border: 0;
+    padding: 5px;
+    color: #cbd5e1;
+    cursor: pointer;
+    font-size: 0.8rem;
 }
 
-/* === CHECKBOX === */
+/* -----------------------------------
+   Terms Checkbox
+----------------------------------- */
 .terms {
-  margin: 20px 0;
-  padding-left: 5px;
+    margin: 15px 0 30px;
 }
 
 .terms label {
-  color: #fff !important;
+    color: #fff !important;
 }
 
-/* === ACTION BUTTONS === */
+/* -----------------------------------
+   Buttons
+----------------------------------- */
 .button-row {
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-  margin-top: 25px;
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+    margin-top: 20px;
 }
 
 .btn-back,
 .btn-register {
-  width: 180px;
-  padding: 10px 0;
-  border-radius: 8px;
-  font-size: 1.1rem;
-  font-weight: bold;
-  border: none;
+    padding: 10px 30px;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    border: none;
+    background: #512a09;
+    border: 1px solid #472203;
+    transition: transform .12s ease, background .12s ease;
 }
 
-.btn-back {
-  background: #d87a38;
-  color: white;
-}
-
-.btn-back:hover {
-  background: #bf6a2f;
-}
-
-.btn-register {
-  background: #ff7f40;
-  color: white;
-}
-
+.btn-back:hover,
 .btn-register:hover {
-  background: #e66f35;
+    transform: translateY(-2px);
+    background: #4c2808;
+    border: 1px solid #4d2503;
 }
 
-/* === RESPONSIVE === */
+/* -----------------------------------
+   Responsive
+----------------------------------- */
 @media (max-width: 600px) {
-  .register-card {
-    padding: 25px;
-  }
+    .register-card {
+        padding: 25px 20px;
+    }
 
-  .form-title {
-    font-size: 1.8rem;
-  }
+    .form-title {
+        font-size: 2rem;
+    }
 
-  .section-title {
-    font-size: 1.3rem;
-  }
+    .section-title {
+        font-size: 1.3rem;
+    }
+
+    .button-row {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .btn-back,
+    .btn-register {
+        width: 100%;
+    }
 }

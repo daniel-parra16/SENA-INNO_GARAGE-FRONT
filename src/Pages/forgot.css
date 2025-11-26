@@ -1,195 +1,107 @@
-/* -----------------------------------
-   Root Variables
------------------------------------ */
-:root {
-    --accent-1: #7c3aed; /* purple */
-    --accent-2: #06b6d4; /* teal */
-}
-
-/* -----------------------------------
-   Global Styles
------------------------------------ */
-#root {
-    width: 100%;
-}
-
-body {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
-    background: linear-gradient(135deg, #E67E22 0%, #000 100%);
-    color: #fff;
-}
-
-/* -----------------------------------
-   Login Page Container
------------------------------------ */
-.login-page {
-    min-height: 100vh;
+/* === PAGE LAYOUT === */
+.forgot-page {
     display: flex;
-    align-items: center;
     justify-content: center;
-    position: relative;
-    padding: 48px 20px;
-    overflow: hidden;
+    align-items: center;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #E67E22 0%, #000 100%);
+    padding: 40px 10px;
 }
 
-/* Floating Animation */
-@keyframes float {
-    0%   { transform: translateY(0) rotate(0deg); }
-    50%  { transform: translateY(-18px) rotate(6deg); }
-    100% { transform: translateY(0) rotate(0deg); }
+/* === CARD === */
+.forgot-card {
+background: #6c370c;
+padding: 40px 35px;
+width: 100%;
+max-width: 500px;
+border-radius: 12px;
+box-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
+color: white;
+text-align: center;
 }
 
-/* -----------------------------------
-   Login Card
------------------------------------ */
-.login-card {
-    position: relative;
-    width: 40%;
-    background-color: rgba(209, 112, 27, 0.06);
-    border-radius: 16px;
-    padding: 28px;
-    box-shadow: 0 10px 30px rgba(2, 6, 23, 0.6);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    backdrop-filter: blur(6px);
-    transform: translateZ(0);
-    transition: transform .25s ease, box-shadow .25s ease;
-    z-index: 2;
+/* === TITLES === */
+.forgot-title {
+text-align: center;
+font-size: 2rem;
+font-weight: bold;
+margin-bottom: 15px;
+text-transform: uppercase;
 }
 
-.login-card:hover {
-    transform: translateY(-1px) scale(1.001);
-    box-shadow: 0 18px 40px rgba(2, 6, 23, 0.7);
+.forgot-subtitle {
+font-size: 1rem;
+color: #ddd;
+margin-bottom: 30px;
 }
 
-.title {
-    margin: 0 0 16px;
-    font-size: 2rem;
-    font-weight: 900;
-    color: #fff;
-    text-align: center;
-}
-
-/* -----------------------------------
-   Input Fields
------------------------------------ */
+/* === INPUT FIELD === */
 .field {
-    position: relative;
-    margin-bottom: 20px;
-}
-
-.input {
-    width: 100%;
-    background: transparent;
-    border: 0;
-    border-bottom: 2px solid rgba(255, 255, 255, 0.12);
-    padding: 12px 0 10px 0;
-    color: #fff;
-    outline: none;
-    transition: border-color .18s ease, box-shadow .18s ease;
-}
-
-.input::placeholder {
-    color: transparent;
-}
-
-.input:focus {
-    border-bottom-color: var(--accent-1);
-    box-shadow: 0 6px 18px rgba(124, 58, 237, 0.08);
+display: flex;
+flex-direction: column;
+text-align: left;
+margin-bottom: 25px;
 }
 
 .field label {
-    position: absolute;
-    left: 8px;
-    top: 12px;
-    color: rgba(255, 255, 255, 0.72);
-    pointer-events: none;
-    transition: transform .18s ease, font-size .18s ease, top .18s ease;
+font-size: 0.95rem;
+margin-bottom: 5px;
+color: #fff;
 }
 
-.input:focus + label,
-.input:not(:placeholder-shown) + label {
-    transform: translateY(-14px);
-    font-size: 0.75rem;
-    color: #e6e6ff;
-    top: 6px;
+.field input {
+width: 100%;
+padding: 12px 14px;
+border-radius: 8px;
+border: none;
+background: #fff;
+font-size: 1rem;
+outline: none;
 }
 
-/* Toggle Password Button */
-.toggle-pwd {
-    position: absolute;
-    right: 6px;
-    top: 8px;
-    background: transparent;
-    border: 0;
-    color: #cbd5e1;
-    padding: 6px 8px;
-    cursor: pointer;
-    font-size: 0.85rem;
-    border-radius: 8px;
-    transition: background .12s ease, color .12s ease;
+/* === SUBMIT BUTTON === */
+.btn-send {
+width: 100%;
+padding: 12px 0;
+border-radius: 8px;
+border: none;
+background: #ff7f40;
+font-size: 1.1rem;
+font-weight: bold;
+color: white;
+cursor: pointer;
+transition: 0.2s ease;
 }
 
-.toggle-pwd:hover {
-    background: rgba(255, 255, 255, 0.04);
-    color: #fff;
+.btn-send:hover {
+background: #e66f35;
 }
 
-/* -----------------------------------
-   Actions & Buttons
------------------------------------ */
-.actions {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 12px;
-    margin-top: 8px;
+/* === BACK LINK === */
+.back-login {
+margin-top: 25px;
+font-size: 0.95rem;
+color: #ffb37a;
+cursor: pointer;
+transition: 0.2s ease;
 }
 
-.redirect-btn {
-    padding: 8px 25px;
-    border-radius: 10px;
-    background: #512a09;
-    border: 1px solid #472203;
+.back-login:hover {
+color: #ffd9b6;
+text-decoration: underline;
 }
 
-.redirect-btn:hover {
-    transform: translateY(-2px);
-    background: #4c2808;
-    border: 1px solid #4d2503;
+/* === RESPONSIVE === */
+@media (max-width: 600px) {
+.forgot-card {
+    padding: 25px 20px;
 }
 
-/* Forgot Password */
-.forgot-pwd {
-    text-align: center;
-    font-size: 0.875rem;
-    color: rgba(255, 255, 255, 0.72);
-    text-decoration: none;
-    transition: color .12s ease;
+.forgot-title {
+    font-size: 1.7rem;
 }
 
-.forgot-pwd:hover {
-    color: #fff;
+.forgot-subtitle {
+    font-size: 0.9rem;
 }
-
-#redirects {
-    display: flex;
-    justify-content: space-around;
-    gap: 12px;
-}
-
-/* -----------------------------------
-    Responsive
------------------------------------ */
-@media (max-width: 480px) {
-    .login-card {
-        width: 92%;
-        padding: 20px;
-    }
-
-    .title {
-        font-size: 1.25rem;
-    }
 }
