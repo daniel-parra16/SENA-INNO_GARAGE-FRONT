@@ -1,10 +1,49 @@
+* {
+    font-family: 'Montserrat';
+    font-weight: 1000;
+}
+
 .landing-header {
     display: flex;
     justify-content: space-between;
     height: 10vh;
-    
+    background-color: #aa5a14;
 }
 
 .header-left {
-    
+    display: flex;
+}
+
+.header-logo {
+    height: 9vh;
+    margin-top: 0.25rem;
+}
+
+.title-group {
+    display: flex;
+    flex-direction: column;
+    line-height: 2.3rem;
+    justify-content: center;
+    height: 10vh;
+}
+
+.title-group > span {
+    font-size: 2.3rem;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    height: 10vh;
+    padding: 0 1rem;
+    gap: 0.5rem;
+}
+
+.header-right > span {
+    font-weight: 800;
+}
+
+.profile-icon {
+    width: 100%;
+    height: 50%;
 }
