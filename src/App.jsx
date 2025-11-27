@@ -1,38 +1,22 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
-import { FaUserCircle } from "react-icons/fa";
-import "./App.css";
+import { StrictMode } from 'react'
+import { createRoot } from 'react-dom/client'
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import Login from './Pages/Login/Login.jsx'
+import Forgot from './Pages/Forgot/Forgot.jsx'
+import Register from './Pages/Register/Register.jsx'
+import Landing from './Pages/Landing/Landing.jsx'
 
-const LandingHeader = () => {
-  const navigate = useNavigate();
-
+function App() {
   return (
-    <header className="landing-header">
-
-      {/* Logo + Marca */}
-      <div className="header-left">
-        <img 
-          src="/public/logo.png" 
-          alt="Logo"
-          className="header-logo"
-        />
-
-        <div className="title-group">
-          <span className="title-line1">INNO</span>
-          <span className="title-line2">GARAGE</span>
-        </div>
-      </div>
-
-      {/* Icono Perfil */}
-      <div className="header-right">
-        <FaUserCircle 
-          className="profile-icon"
-          onClick={() => navigate("/profile")}
-        />
-      </div>
-
-    </header>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Login />} />
+        <Route path="/forgot" element={<Forgot />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/landing" element={<Landing />} />
+      </Routes>
+    </BrowserRouter>
   );
-};
+}
 
-export default LandingHeader;
+export default App;
