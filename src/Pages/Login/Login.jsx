@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import './Login.css'
-import '../../public/logo.png'
 
 function Login() {
 const [showPwd, setShowPwd] = useState(false);
