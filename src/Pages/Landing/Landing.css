@@ -1,3 +1,13 @@
-div {
-    height: 90vh;
+.landing-container {
+  padding: 1.5rem;
+}
+
+.landing-container h1 {
+  font-size: 2rem;
+  color: #4a260c;
+}
+
+.landing-container p {
+  color: #6b4a2b;
+  font-size: 1rem;
 }
