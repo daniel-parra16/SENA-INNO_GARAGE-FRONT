@@ -66,7 +66,7 @@ export default function Layout({ children }) {
           </button>
 
           <div className="profile">
-            <FaUserCircle size={32} />
+            <FaUserCircle size={24} />
             <span>Daniel</span>
           </div>
         </header>
