@@ -11,14 +11,14 @@ const navigate = useNavigate();
 return (
     <div className="login-page">
         <div className="login-card">
-            <h2 className="title">Bienvenido</h2>
+            <h2 className="title">Welcome </h2>
 
             <img src="/public/logo.png" alt="logo" width="30%" />
 
             <Form className="login-form" onSubmit={(e)=>e.preventDefault()}>
                 <div className="field">
                     <Form.Control className="input" type="email" id="email" placeholder=" " required />
-                    <label htmlFor="email">Correo electrónico</label>
+                    <label htmlFor="email">E-mail</label>
                 </div>
 
                 <div className="field">
@@ -29,7 +29,7 @@ return (
                         placeholder=" "
                         required
                     />
-                    <label htmlFor="password">Contraseña</label>
+                    <label htmlFor="password">Password</label>
                     <button
                         type="button"
                         className="toggle-pwd"
@@ -41,14 +41,14 @@ return (
                 </div>
 
                 <div className="actions">
-                    <a href="/forgot" className="forgot-pwd">¿Olvidaste tu contraseña?</a>
+                    <a href="/forgot" className="forgot-pwd">¿Forgot you password?</a>
                     <div id="redirects">
                         <Button 
                             variant="primary" 
                             className="redirect-btn login" 
                             onClick={() => navigate("/landing")}
                         >
-                            Entrar
+                            Entry
                         </Button>
 
                         <Button 
@@ -56,7 +56,7 @@ return (
                             className="redirect-btn register" 
                             onClick={() => navigate("/register")}
                         >
-                            Registrarse
+                            Register
                         </Button>
                     </div>
                 </div>

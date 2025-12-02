@@ -4,7 +4,7 @@
     justify-content: center;
     align-items: center;
     padding: 40px 20px;
-    background: linear-gradient(135deg, #E67E22 0%, #000 100%);
+    background: linear-gradient(135deg, #E67E22 0%, #2d1b02 100%);
     color: #fff;
 }
 
@@ -113,6 +113,7 @@
 
 .btn-back,
 .btn-register {
+    color: #fff;
     padding: 10px 30px;
     border-radius: 10px;
     font-size: 1.1rem;

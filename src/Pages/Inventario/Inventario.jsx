@@ -1,6 +1,6 @@
 import React from 'react';
-import List from '../../components/Header/Inventario/Lista';
-import NewProductPanel from '../../components/Header/Inventario/NewProductPanel';
+import List from '../../components/Inventario/Lista/Lista';
+import NewProductPanel from '../../components/Inventario/NewProductPanel/NewProductPanel';
 import './Inventario.css';
 
 class Inventario extends React.Component {
@@ -15,12 +15,80 @@ class Inventario extends React.Component {
       ],
       searchTerm: '',
       newProductPanel: false,
+      editingProduct: null,
     };
   }
 
-  addProduct = () => {
-    this.setState({ newProductPanel: true });
-    console.log("Abrir panel para crear nuevo producto");
+  openModal = () => {
+    this.setState({
+      newProductPanel: true,
+      editingProduct: null
+    });
+  }
+
+
+  openModalToEdit = (product) => {
+    this.setState({
+      editingProduct: product,
+      newProductPanel: true
+    });
+  }
+
+  onCancel = () => {
+    this.setState({ newProductPanel: false });
+  }
+
+  onAdd = (e) => {
+    e.preventDefault();
+    const form = e.target; 
+    //valida q ningun dato este vacio
+    if (!form.productName.value || !form.productQuantity.value) {
+      alert("Por favor, complete todos los campos.");
+      return;
+    }
+    const newProduct = {
+      id: this.state.products.length + 1,
+      name: form.productName.value,
+      stock: parseInt(form.productQuantity.value, 10),
+    };
+
+    this.setState((prevState) => ({
+      products: [...prevState.products, newProduct],
+      newProductPanel: false,
+    }));
+    console.log("Producto agregado:", newProduct);
+  }
+
+  onUpdate = (e) => {
+    e.preventDefault();
+    const form = e.target;
+
+    const updatedProduct = {
+      ...this.state.editingProduct,
+      name: form.productName.value,
+      stock: parseInt(form.productQuantity.value)
+    };
+
+    this.setState(prevState => ({
+      products: prevState.products.map(p =>
+        p.id === updatedProduct.id ? updatedProduct : p
+      ),
+      newProductPanel: false,
+      editingProduct: null
+    }));
+
+    console.log("Producto actualizado:", updatedProduct);
+  };
+
+
+  removeProduct = (e) => {
+    const button = e.target;
+    const row = button.closest('tr');
+    const productId = parseInt(row.cells[0].textContent, 10);
+    this.setState((prevState) => ({
+      products: prevState.products.filter(product => product.id !== productId),
+    }));
+    console.log("Producto eliminado con ID:", productId);
   }
 
   render() {
@@ -30,19 +98,28 @@ class Inventario extends React.Component {
 
     return (
       <div className="table">
-        <div className="actions">
-          <button onClick={this.addProduct} className="btn-create">Crear Producto</button>
+        <div className="actions-inventory">
+          <button onClick={this.openModal} className="btn-create">Crear Producto</button>
 
           <input
             type="text"
-            placeholder="Buscar producto..."
+            placeholder="Buscar producto"
             value={this.state.searchTerm}
             onChange={(e) => this.setState({ searchTerm: e.target.value })}
-            className='search-box'
+            className='inventory-search'
           />
         </div>
-        <List items={filteredProducts}/>
-        <NewProductPanel />
+        <List openmodalupdate={this.openModalToEdit} remove={this.removeProduct} items={filteredProducts}/>
+        {
+          (this.state.newProductPanel) 
+            ? <NewProductPanel
+                onadd={this.onAdd}
+                onupdate={this.onUpdate}
+                oncancel={this.onCancel}
+                product={this.state.editingProduct}
+              /> 
+            : null 
+        }
       </div>
     );
   }

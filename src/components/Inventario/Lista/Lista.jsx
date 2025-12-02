@@ -1,4 +1,5 @@
 import React from 'react';
+import { FaTrash, FaEdit } from "react-icons/fa";
 
 class List extends React.Component {
     constructor(props) {
@@ -24,8 +25,19 @@ class List extends React.Component {
                             <td>{item.name}</td>
                             <td>{item.stock}</td>
                             <td className="actions-cell">
-                                <button className="btn-edit">Editar</button>
-                                <button className="btn-delete">Eliminar</button>
+                                <button
+                                    onClick={() => this.props.openmodalupdate(item)}
+                                    className="btn-icon edit"
+                                >
+                                    <FaEdit />
+                                </button>
+
+                                <button
+                                    onClick={this.props.remove}
+                                    className="btn-icon delete"
+                                >
+                                    <FaTrash />
+                                </button>
                             </td>
                         </tr>
                     ))}
