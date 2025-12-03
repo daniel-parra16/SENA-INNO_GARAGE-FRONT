@@ -9,6 +9,7 @@ import Users from "./Pages/Users/Users";
 import Cotizaciones from "./Pages/Cotizaciones/Cotizaciones";
 import Ordenes from "./Pages/Ordenes/Ordenes";
 import Inventario from "./Pages/Inventario/Inventario";
+import LandingPage from "./Pages/LandingPage/LandingPage"
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route path="/" element={<Login />} />
         <Route path="/forgot" element={<Forgot />} />
         <Route path="/register" element={<Register />} />
+        <Route path="landingpage" element={<LandingPage />} />
 
         {/* === RUTAS CON LAYOUT === */}
         <Route element={<Layout />}>
