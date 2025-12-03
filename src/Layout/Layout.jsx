@@ -2,9 +2,11 @@ import { useState } from "react";
 import { Link, useLocation, Outlet } from "react-router-dom";
 import "./Layout.css";
 import { FaHome, FaUsers, FaClipboardList, FaTools, FaBoxes, FaUserCircle } from "react-icons/fa";
+import LogoutModal from "../components/Layout/Logout";
 
-export default function Layout({ children }) {
+function Layout() {
   const [collapsed, setCollapsed] = useState(false);
+  const [logoutModal, setLogoutModal] = useState(false);
   const location = useLocation();
 
   // Detecta la ruta para marcar activo
@@ -20,10 +22,8 @@ export default function Layout({ children }) {
 
   return (
     <div className="layout">
-      {/* SIDEBAR */}
       <aside className={`sidebar ${collapsed ? "collapsed" : ""}`}>
-        
-        {/* LOGO */}
+
         <div className="logo-container">
           <img
             src="/public/logo.png"
@@ -39,7 +39,6 @@ export default function Layout({ children }) {
           )}
         </div>
 
-        {/* MENU */}
         <nav>
           {menuItems.map((item) => (
             <Link to={item.path} key={item.path} style={{ textDecoration: "none" }}>
@@ -56,18 +55,16 @@ export default function Layout({ children }) {
         </nav>
       </aside>
 
-      {/* BODY */}
       <div className="layout-main">
-        
-        {/* TOPBAR */}
+
         <header className="topbar">
           <button className="menu-btn" onClick={() => setCollapsed(!collapsed)}>
             ☰
           </button>
 
-          <div className="profile">
+          <div onClick={ () => setLogoutModal(true) } className="profile">
             <FaUserCircle size={24} />
-            <span>Daniel</span>
+            <span >Daniel</span>
           </div>
         </header>
 
@@ -76,7 +73,11 @@ export default function Layout({ children }) {
           <Outlet />
         </main>
 
+        {logoutModal && <LogoutModal onclose={() => setLogoutModal(false)} />}
+
       </div>
     </div>
   );
 }
+
+export default Layout;

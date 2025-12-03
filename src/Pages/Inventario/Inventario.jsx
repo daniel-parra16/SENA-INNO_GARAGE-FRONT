@@ -26,7 +26,6 @@ class Inventario extends React.Component {
     });
   }
 
-
   openModalToEdit = (product) => {
     this.setState({
       editingProduct: product,
@@ -79,7 +78,6 @@ class Inventario extends React.Component {
 
     console.log("Producto actualizado:", updatedProduct);
   };
-
 
   removeProduct = (e) => {
     const button = e.target;

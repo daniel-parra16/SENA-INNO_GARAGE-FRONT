@@ -41,7 +41,7 @@ return (
                 </div>
 
                 <div className="actions">
-                    <a href="/forgot" className="forgot-pwd">¿Forgot you password?</a>
+                    <a href="/forgot" className="forgot-pwd"><h4>¿Forgot you password?</h4></a>
                     <div id="redirects">
                         <Button 
                             variant="primary" 

@@ -17,10 +17,10 @@ function App() {
       <Routes>
 
         {/* === RUTAS PÚBLICAS === */}
+        <Route path="landingpage" element={<LandingPage />} />
         <Route path="/" element={<Login />} />
         <Route path="/forgot" element={<Forgot />} />
         <Route path="/register" element={<Register />} />
-        <Route path="landingpage" element={<LandingPage />} />
 
         {/* === RUTAS CON LAYOUT === */}
         <Route element={<Layout />}>

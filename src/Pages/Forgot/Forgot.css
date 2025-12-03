@@ -3,16 +3,16 @@
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background: linear-gradient(135deg, #E67E22 0%, #000 100%);
+    background: linear-gradient(135deg, #E67E22 0%, #2d1b02 100%);
     padding: 40px 10px;
 }
 
 .forgot-card {
-background: #6c370c;
 padding: 40px 35px;
 width: 100%;
 max-width: 500px;
 border-radius: 12px;
+background-color: rgba(0, 0, 0, 0.45);
 box-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
 color: white;
 text-align: center;
@@ -60,7 +60,7 @@ width: 100%;
 padding: 12px 0;
 border-radius: 8px;
 border: none;
-background: #ff7f40;
+background: #d75b1d;
 font-size: 1.1rem;
 font-weight: bold;
 color: white;
@@ -69,13 +69,14 @@ transition: 0.2s ease;
 }
 
 .btn-send:hover {
-background: #e66f35;
+background: #ba4a13;
+color: #ddd;
 }
 
 .back-login {
 margin-top: 25px;
 font-size: 0.95rem;
-color: #ffb37a;
+color: #d4a784;
 cursor: pointer;
 transition: 0.2s ease;
 }
