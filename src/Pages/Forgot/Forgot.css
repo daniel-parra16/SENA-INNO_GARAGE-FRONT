@@ -1,4 +1,3 @@
-/* === PAGE LAYOUT === */
 .forgot-page {
     display: flex;
     justify-content: center;
@@ -8,7 +7,6 @@
     padding: 40px 10px;
 }
 
-/* === CARD === */
 .forgot-card {
 background: #6c370c;
 padding: 40px 35px;
@@ -20,7 +18,6 @@ color: white;
 text-align: center;
 }
 
-/* === TITLES === */
 .forgot-title {
 text-align: center;
 font-size: 2rem;
@@ -35,7 +32,6 @@ color: #ddd;
 margin-bottom: 30px;
 }
 
-/* === INPUT FIELD === */
 .field {
 display: flex;
 flex-direction: column;
@@ -59,7 +55,6 @@ font-size: 1rem;
 outline: none;
 }
 
-/* === SUBMIT BUTTON === */
 .btn-send {
 width: 100%;
 padding: 12px 0;
@@ -77,7 +72,6 @@ transition: 0.2s ease;
 background: #e66f35;
 }
 
-/* === BACK LINK === */
 .back-login {
 margin-top: 25px;
 font-size: 0.95rem;
@@ -91,7 +85,6 @@ color: #ffd9b6;
 text-decoration: underline;
 }
 
-/* === RESPONSIVE === */
 @media (max-width: 600px) {
 .forgot-card {
     padding: 25px 20px;

@@ -1,19 +1,13 @@
-/* -----------------------------------
-   Register Page Layout
------------------------------------ */
 .register-page {
     min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
     padding: 40px 20px;
-    background: linear-gradient(135deg, #E67E22 0%, #000 100%);
+    background: linear-gradient(135deg, #E67E22 0%, #2d1b02 100%);
     color: #fff;
 }
 
-/* -----------------------------------
-   Register Card
------------------------------------ */
 .register-card {
     background: rgba(0, 0, 0, 0.35);
     backdrop-filter: blur(6px);
@@ -25,9 +19,6 @@
     color: #fff;
 }
 
-/* -----------------------------------
-   Titles
------------------------------------ */
 .form-title {
     text-align: center;
     font-size: 3rem;
@@ -44,9 +35,6 @@
     text-transform: uppercase;
 }
 
-/* -----------------------------------
-   Responsive Grid for Inputs
------------------------------------ */
 .row-group {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
@@ -54,9 +42,6 @@
     margin-bottom: 25px;
 }
 
-/* -----------------------------------
-   Floating Label Inputs
------------------------------------ */
 .field {
     position: relative;
     width: 100%;
@@ -99,9 +84,6 @@
     color: #e6e6ff;
 }
 
-/* -----------------------------------
-   Password Toggle
------------------------------------ */
 .password-field .toggle-pwd {
     position: absolute;
     right: 5px;
@@ -114,9 +96,6 @@
     font-size: 0.8rem;
 }
 
-/* -----------------------------------
-   Terms Checkbox
------------------------------------ */
 .terms {
     margin: 15px 0 30px;
 }
@@ -125,9 +104,6 @@
     color: #fff !important;
 }
 
-/* -----------------------------------
-   Buttons
------------------------------------ */
 .button-row {
     display: flex;
     justify-content: center;
@@ -137,6 +113,7 @@
 
 .btn-back,
 .btn-register {
+    color: #fff;
     padding: 10px 30px;
     border-radius: 10px;
     font-size: 1.1rem;
@@ -154,9 +131,6 @@
     border: 1px solid #4d2503;
 }
 
-/* -----------------------------------
-   Responsive
------------------------------------ */
 @media (max-width: 600px) {
     .register-card {
         padding: 25px 20px;

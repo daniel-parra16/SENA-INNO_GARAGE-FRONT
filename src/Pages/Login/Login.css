@@ -13,7 +13,7 @@
 
 body {
     font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
-    background: linear-gradient(135deg, #E67E22 0%, #000 100%);
+    background: linear-gradient(135deg, #E67E22 0%, #2d1b02 100%);
     color: #fff;
 }
 
@@ -35,11 +35,14 @@ body {
    Login Card
 ----------------------------------- */
 .login-card {
+    background-color: rgba(0, 0, 0, 0.45);
+    border-radius: 1rem;
+    padding: 1.5rem;
     position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 60%;
+    width: 45%;
     z-index: 2;
 }
 
@@ -51,7 +54,7 @@ body {
 }
 
 .login-form {
-    width: 55%;
+    width: 90%;
     display: grid;
 }
 
@@ -122,9 +125,12 @@ body {
     flex-direction: column;
     justify-content: center;
     gap: 12px;
+        width: 55%;
+    margin: 0 auto;
 }
 
 .redirect-btn {
+    color: #fff;
     padding: 8px 25px;
     border-radius: 10px;
     background: #512a09;

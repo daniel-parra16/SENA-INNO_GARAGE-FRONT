@@ -22,6 +22,7 @@ return (
         </div>
 
         <div className="header-right">
+            <span>PROFILE</span>
             <FaUserCircle 
             className="profile-icon"
             onClick={() => navigate("/profile")}

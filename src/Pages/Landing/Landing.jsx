@@ -1,11 +1,10 @@
-import Header from '../../components/Header/Header.jsx'
+import "./Landing.css";
 
-function Landing() {
-    return (
-        <>
-            <Header></Header>
-        </>
-    )
+export default function Landing() {
+  return (
+    <div className="landing-container">
+      <h1>Bienvenido a INNO GARAGE</h1>
+      <p>Este es el panel principal del taller automotriz.</p>
+    </div>
+  );
 }
-
-export default Landing;
