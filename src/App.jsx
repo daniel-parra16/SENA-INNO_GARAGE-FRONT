@@ -9,6 +9,7 @@ import Users from "./Pages/Users/Users";
 import Cotizaciones from "./Pages/Cotizaciones/Cotizaciones";
 import Ordenes from "./Pages/Ordenes/Ordenes";
 import Inventario from "./Pages/Inventario/Inventario";
+import Profile from "./Pages/Profile/Profile";
 import LandingPage from "./Pages/LandingPage/LandingPage"
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
           <Route path="cotizaciones" element={<Cotizaciones />} />
           <Route path="ordenes" element={<Ordenes />} />
           <Route path="inventario" element={<Inventario />} />
+          <Route path="profile" element={<Profile />} />
         </Route>
 
       </Routes>

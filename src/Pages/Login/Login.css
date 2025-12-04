@@ -133,14 +133,17 @@ body {
     color: #fff;
     padding: 8px 25px;
     border-radius: 10px;
-    background: #512a09;
-    border: 1px solid #472203;
+    background: #5c2e07;
+    border: 1px solid rgb(92 48 0 / 61%);
+    font-size: 1.1rem;
+    font-weight: bold;
 }
 
 .redirect-btn:hover {
     transform: translateY(-2px);
-    background: #4c2808;
+    background: #703a09;
     border: 1px solid #4d2503;
+    transition: all .3s ease;
 }
 
 /* Forgot Password */

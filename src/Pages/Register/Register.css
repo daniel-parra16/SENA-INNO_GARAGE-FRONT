@@ -15,7 +15,7 @@
     padding: 40px 50px;
     width: 80%;
     max-width: 900px;
-    box-shadow: 0 0 25px rgba(0,0,0,.4);
+    box-shadow: 0 0 25px rgba(0,0,0,.45);
     color: #fff;
 }
 
@@ -119,15 +119,15 @@
     font-size: 1.1rem;
     font-weight: bold;
     border: none;
-    background: #512a09;
-    border: 1px solid #472203;
+    background: #5c2e07;
+    border: 1px solid rgb(92 48 0 / 61%);
     transition: transform .12s ease, background .12s ease;
 }
 
 .btn-back:hover,
 .btn-register:hover {
     transform: translateY(-2px);
-    background: #4c2808;
+    background: #703a09;
     border: 1px solid #4d2503;
 }
 

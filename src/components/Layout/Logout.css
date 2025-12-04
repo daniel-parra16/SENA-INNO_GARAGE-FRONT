@@ -1,3 +1,65 @@
+/* Fondo oscuro transparente */
 .logout-container {
-    
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.05);
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-start;
+    padding-top: 3.5rem;
+    z-index: 999;
+}
+
+/* Tarjeta */
+.logout-card {
+    background: #ffffff;
+    width: 220px;
+    border-radius: 0.5rem 0 0 0.5rem;
+    padding: 0rem 0;
+    box-shadow: -2px 4px 12px rgba(0, 0, 0, 0.2);
+    transition: transform 0.25s ease;
+    transform: translateX(110%);
+}
+
+/* Animaciones */
+.slide-in {
+    transform: translateX(0);
+}
+
+.slide-out {
+    transform: translateX(110%);
+}
+
+/* Botones dentro del modal */
+.logout-option {
+    width: 100%;
+    background: transparent;
+    border: none;
+    padding: 0.8rem 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    font-size: 1rem;
+    cursor: pointer;
+    color: #3a2a1b; /* café oscuro del menú */
+    transition: background 0.2s;
+}
+
+.logout-option:hover {
+    background-color: #eee; /* tono suave */
+    border-radius: 0.5rem 0 0 0;
+}
+
+.logout-red {
+    color: #b43131;
+    border-radius: 0 0 0 0.5rem !important;
+}
+
+.logout-red:hover {
+    background-color: #ffe5e5dd;
+}
+
+/* Iconos */
+.icon {
+    font-size: 1.3rem;
 }
