@@ -5,7 +5,7 @@ import { FaHome, FaUsers, FaClipboardList, FaTools, FaBoxes, FaUserCircle } from
 import LogoutModal from "../components/Layout/Logout";
 
 function Layout() {
-  const [collapsed, setCollapsed] = useState(false);
+  const [collapsed, setCollapsed] = useState(true);
   const [logoutModal, setLogoutModal] = useState(false);
   const location = useLocation();
 

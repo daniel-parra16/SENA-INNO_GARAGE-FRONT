@@ -1,6 +1,6 @@
 import React from 'react';
-import List from '../../components/Inventario/Lista/Lista';
-import NewProductPanel from '../../components/Inventario/NewProductPanel/NewProductPanel';
+import List from '../../components/Tabla/Lista/Lista';
+import NewProductPanel from '../../components/Tabla/NewProductPanel/NewProductPanel';
 import './Inventario.css';
 
 class Inventario extends React.Component {
@@ -8,6 +8,7 @@ class Inventario extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      fields: ['Name', 'Stock'],
       products: [
         { id: 1, name: 'Producto A', stock: 10 },
         { id: 2, name: 'Producto B', stock: 5 },
@@ -75,8 +76,6 @@ class Inventario extends React.Component {
       newProductPanel: false,
       editingProduct: null
     }));
-
-    console.log("Producto actualizado:", updatedProduct);
   };
 
   removeProduct = (e) => {
@@ -95,19 +94,19 @@ class Inventario extends React.Component {
     );
 
     return (
-      <div className="table">
+      <div className="container-modules">
         <div className="actions-inventory">
-          <button onClick={this.openModal} className="btn-create">Crear Producto</button>
+          <button onClick={this.openModal} className="btn-create">Create Product</button>
 
           <input
             type="text"
-            placeholder="Buscar producto"
+            placeholder="Search product"
             value={this.state.searchTerm}
             onChange={(e) => this.setState({ searchTerm: e.target.value })}
-            className='inventory-search'
+            className='table-search'
           />
         </div>
-        <List openmodalupdate={this.openModalToEdit} remove={this.removeProduct} items={filteredProducts}/>
+        <List openmodalupdate={this.openModalToEdit} remove={this.removeProduct} items={filteredProducts} headers={this.state.fields} />
         {
           (this.state.newProductPanel) 
             ? <NewProductPanel
@@ -115,6 +114,8 @@ class Inventario extends React.Component {
                 onupdate={this.onUpdate}
                 oncancel={this.onCancel}
                 product={this.state.editingProduct}
+                module="Product"
+                fields={this.state.fields}
               /> 
             : null 
         }

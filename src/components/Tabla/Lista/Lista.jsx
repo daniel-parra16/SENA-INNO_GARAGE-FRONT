@@ -8,22 +8,25 @@ class List extends React.Component {
 
     render() {
         return (
-            <table className="inventario-table">
+            <table className="table">
                 <thead>
                     <tr>
-                        <th>Id</th>
-                        <th>Producto</th>
-                        <th>Cantidad</th>
-                        <th>Acciones</th>
+                        <th>id</th>
+                        {this.props.headers.map((header, index) => (
+                            <th key={index}>{header}</th>
+                        ))}
+                        <th>ACCIONES</th>
                     </tr>
                 </thead>
 
                 <tbody>
                     {this.props.items.map((item) => (
                         <tr key={item.id}>
-                            <td>{String(item.id).padStart(6, '0')}</td>
-                            <td>{item.name}</td>
-                            <td>{item.stock}</td>
+                            <td key={item.id}>{String(item.id).padStart(6,'0')}</td>
+                            {this.props.headers.map((header, index) => {
+                                let value = item[header.toLowerCase()];
+                                return <td key={index}>{value}</td>;
+                            })}
                             <td className="actions-cell">
                                 <button
                                     onClick={() => this.props.openmodalupdate(item)}

@@ -4,8 +4,8 @@ function NewProductPanel(props) {
 
   const isEditing = !!props.product;
 
-  const title = isEditing ? "Editar Producto" : "Nuevo Producto";
-  const buttonText = isEditing ? "Actualizar Producto" : "Agregar Producto";
+  const title = isEditing ? `Edit ${props.module}` : `New ${props.module}`;
+  const buttonText = isEditing ? `Update ${props.module}` : `Add ${props.module}`;
   const action = isEditing ? props.onupdate : props.onadd;
 
   return (
