@@ -63,7 +63,7 @@ function Layout() {
           </button>
 
           <div onClick={ () => setLogoutModal(true) } className="profile">
-            <FaUserCircle size={24} />
+            <FaUserCircle className="img" size={24} />
             <span >Daniel</span>
           </div>
         </header>
