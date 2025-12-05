@@ -141,34 +141,3 @@
     color: #000;
 }
 
-@media (max-width: 800px) {
-.sidebar {
-    position: fixed;
-    height: 100vh;
-    z-index: 90;
-}
-
-.layout-main {
-    margin-left: 4.5rem;
-}
-
-.sidebar:not(.collapsed) {
-    width: 12rem;
-}
-}
-
-@media (max-width: 600px) {
-.layout {
-    flex-direction: column;
-}
-
-.layout-main {
-    margin-left: 0;
-}
-
-.sidebar {
-    height: auto;
-    flex-direction: row;
-    width: 100%;
-}
-}

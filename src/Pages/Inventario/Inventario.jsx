@@ -1,6 +1,6 @@
 import React from 'react';
-import List from '../../components/Inventario/Lista/Lista';
-import NewProductPanel from '../../components/Inventario/NewProductPanel/NewProductPanel';
+import List from '../../components/Tabla/Lista/Lista';
+import NewProductPanel from '../../components/Tabla/NewRegisterPanel/NewRegisterPanel';
 import './Inventario.css';
 
 class Inventario extends React.Component {
@@ -8,6 +8,11 @@ class Inventario extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      headers: ["name", "stock"],
+      fields: [
+        {name: "productName", label: "Product Name", type: "text", edit: "name", placeholder: "Enter the product name"},
+        {name: 'productQuantity', label: "Product Quantity", type: "number", edit: "stock", placeholder: "Enter the product price" }
+      ],
       products: [
         { id: 1, name: 'Producto A', stock: 10 },
         { id: 2, name: 'Producto B', stock: 5 },
@@ -38,11 +43,12 @@ class Inventario extends React.Component {
   }
 
   onAdd = (e) => {
+    console.log(e.target);
     e.preventDefault();
     const form = e.target; 
     //valida q ningun dato este vacio
     if (!form.productName.value || !form.productQuantity.value) {
-      alert("Por favor, complete todos los campos.");
+      alert("Please fill out all the fields.");
       return;
     }
     const newProduct = {
@@ -55,7 +61,6 @@ class Inventario extends React.Component {
       products: [...prevState.products, newProduct],
       newProductPanel: false,
     }));
-    console.log("Producto agregado:", newProduct);
   }
 
   onUpdate = (e) => {
@@ -75,8 +80,6 @@ class Inventario extends React.Component {
       newProductPanel: false,
       editingProduct: null
     }));
-
-    console.log("Producto actualizado:", updatedProduct);
   };
 
   removeProduct = (e) => {
@@ -86,7 +89,6 @@ class Inventario extends React.Component {
     this.setState((prevState) => ({
       products: prevState.products.filter(product => product.id !== productId),
     }));
-    console.log("Producto eliminado con ID:", productId);
   }
 
   render() {
@@ -95,26 +97,32 @@ class Inventario extends React.Component {
     );
 
     return (
-      <div className="table">
+      <div className="container-modules">
         <div className="actions-inventory">
-          <button onClick={this.openModal} className="btn-create">Crear Producto</button>
+          <button onClick={this.openModal} className="btn-create">Create Product</button>
 
           <input
             type="text"
-            placeholder="Buscar producto"
+            placeholder="Search product"
             value={this.state.searchTerm}
             onChange={(e) => this.setState({ searchTerm: e.target.value })}
-            className='inventory-search'
+            className='table-search'
           />
         </div>
-        <List openmodalupdate={this.openModalToEdit} remove={this.removeProduct} items={filteredProducts}/>
+        <List 
+          openmodalupdate={this.openModalToEdit} 
+          remove={this.removeProduct} 
+          items={filteredProducts} 
+          headers={this.state.headers} />
         {
           (this.state.newProductPanel) 
             ? <NewProductPanel
                 onadd={this.onAdd}
                 onupdate={this.onUpdate}
                 oncancel={this.onCancel}
-                product={this.state.editingProduct}
+                record={this.state.editingProduct}
+                module="Product"
+                fields={this.state.fields}
               /> 
             : null 
         }

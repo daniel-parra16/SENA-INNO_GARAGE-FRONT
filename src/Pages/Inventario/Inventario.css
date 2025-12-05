@@ -1,4 +1,4 @@
-.table {
+.container-modules {
   width: 100%;
   background: #fff;
   padding: 1.2rem;
@@ -30,7 +30,7 @@
   transition: 0.3s;
 }
 
-.inventory-search {
+.table-search {
   padding: 0.5rem 0.8rem;
   border-radius: 0.5rem;
   border: 1px solid #ccc;
@@ -38,20 +38,20 @@
   width: 200px;
 }
 
-.inventory-search:focus {
+.table-search:focus {
   outline: none;
   border-color: #9e5102;
   box-shadow: 0 0 6px rgba(158,81,2,0.4);
 }
 
-.inventario-table {
+.table {
   width: 100%;
   border-collapse: collapse;
   border-radius: 1rem;
   overflow: hidden;
 }
 
-.inventario-table th {
+.table th {
   background: #7e4100;
   color: white;
   padding: 0.8rem;
@@ -59,22 +59,21 @@
   letter-spacing: 0.5px;
 }
 
-.inventario-table td {
+.table td {
   padding: 0.8rem;
   background: #fff;
   border-bottom: 1px solid #ccc;
   text-align: center;
 }
 
-.inventario-table tr:hover td {
+.table tr:hover td {
   background: #f9f4f0;
   transition: 0.3s;
 }
 
 .actions-cell {
-  display: flex;
-  justify-content: center;
-  gap: 1rem;
+  -webkit-writing-mode: vertical-lr;
+  width: 20%;
 }
 
 /* Botón base */
@@ -89,6 +88,7 @@
   align-items: center;
   font-size: 1.1rem;
   transition: 0.2s;
+  margin: 0 1rem;
 }
 
 /* Editar → verde */
