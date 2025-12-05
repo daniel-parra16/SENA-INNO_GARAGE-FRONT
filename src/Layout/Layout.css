@@ -146,8 +146,10 @@
     flex: 1;
     padding: 1.5rem;
     overflow-y: auto;
-    overflow-x: hidden; /* evita ensanche horizontal */
-    max-width: 100%;    /* 🔥 clave */
+    overflow-x: hidden;
+    max-width: 100%;
+    color: #000;
+
 }
 
 table {

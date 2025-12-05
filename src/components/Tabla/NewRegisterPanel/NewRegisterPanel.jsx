@@ -11,7 +11,7 @@ function NewRegisterPanel(props) {
   return (
     <div className="panel-container">
       <div 
-      id={props.module === "Cotización" ? "cotizaciones" : ""}
+      id={(props.module === "Cotización") ? "cotizaciones" : (props.module === "Order" ? "orders" : "")}
       className="panel" 
       >
         <h2>{title}</h2>
