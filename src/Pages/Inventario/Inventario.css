@@ -133,6 +133,15 @@
   background: #8f0000;
 }
 
+/* Enviar → azul */
+.btn-icon.send {
+  background: #0066cc;
+  color: white;
+}
+.btn-icon.send:hover {
+  background: #004c99;
+}
+
 .table-wrapper {
   width: 100%;
   overflow-x: auto;   /* Scroll interno SOLO si es necesario */

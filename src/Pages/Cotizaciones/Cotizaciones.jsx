@@ -8,22 +8,20 @@ import NewRegisterPanel from "../../components/Tabla/NewRegisterPanel/NewRegiste
     constructor(props) {
       super(props);
       this.state = {
-        headers: ["identificacion", "cliente", "vehicle", "process", "quote", "deliveryDate", "asignedTo", "status"],
+        headers: ["identificacion", "cliente", "vehicle", "process", "quote", "status"],
         fields: [
           {name: "identificacion", label: "Identificación", type: "number", edit: "identificacion", placeholder: "Ingrese la identificación del cliente"},
           {name: "cliente", label: "Cliente", type: "text", edit: "cliente", placeholder: "Ingrese el nombre del cliente"},
           {name: "vehicle", label: "Vehículo", type: "text", edit: "vehicle", placeholder: "Ingrese el modelo del vehículo"},
           {name: "process", label: "Proceso", type: "text", edit: "process", placeholder: "Ingrese el proceso a realizar"},
           {name: "quote", label: "Cotización", type: "number", edit: "quote", placeholder: "Ingrese el valor de la cotización"},
-          {name: "deliverydate", label: "Fecha de Entrega", type: "datetime-local", edit: "deliverydate", placeholder: "Ingrese la fecha de entrega"},
-          {name: "asignedto", label: "Asignado a", type: "text", edit: "asignedto", placeholder: "Ingrese el nombre del encargado"},
           {name: "status", label: "Estado", type: "text", edit: "status", placeholder: "Ingrese el estado de la cotización"},
         ],
         cotizaciones: [
-          { id: 1, identificacion: 1014990000, cliente: 'Daniel', vehicle: "Gixxer 250", process: ["Wash", "Oil Change"], quote: 20000, deliverydate: "2024-07-20 12:00:00", asignedto: "Juan Perez", status: "In Process" },
-          { id: 2, identificacion: 1023456789, cliente: 'Maria', vehicle: "Yamaha FZ", process: ["Tire Change"], quote: 15000, deliverydate: "2024-07-22 15:30:00", asignedto: "Ana Gomez", status: "Pending" },
-          { id: 3, identificacion: 1034567890, cliente: 'Carlos', vehicle: "Honda CB", process: ["Engine Check", "Brake Replacement"], quote: 30000, deliverydate: "2024-07-25 10:00:00", asignedto: "Luis Martinez", status: "Completed" },
-          { id: 4, identificacion: 1045678901, cliente: 'Laura', vehicle: "Ducati Monster", process: ["Full Service"], quote: 50000, deliverydate: "2024-07-28 09:00:00", asignedto: "Sofia Lopez", status: "In Process" },
+          { id: 1, identificacion: 1014990000, cliente: 'Daniel', vehicle: "Gixxer 250", process: ["Wash", "Oil Change"], quote: 20000, status: "In Process" },
+          { id: 2, identificacion: 1023456789, cliente: 'Maria', vehicle: "Yamaha FZ", process: ["Tire Change"], quote: 15000, status: "Pending" },
+          { id: 3, identificacion: 1034567890, cliente: 'Carlos', vehicle: "Honda CB", process: ["Engine Check", "Brake Replacement"], quote: 30000, status: "Completed" },
+          { id: 4, identificacion: 1045678901, cliente: 'Laura', vehicle: "Ducati Monster", process: ["Full Service"], quote: 50000, status: "In Process" },
         ],
         searchTerm: '',
         newCotizacionPanel: false,
@@ -67,8 +65,6 @@ import NewRegisterPanel from "../../components/Tabla/NewRegisterPanel/NewRegiste
         vehicle: form.vehicle.value,
         process: form.process.value.split(',').map(item => item.trim()),
         quote: parseInt(form.quote.value, 10),
-        deliverydate: form.deliverydate.value,
-        asignedto: form.asignedto.value,
         status: form.status.value,
       };
 
@@ -88,8 +84,6 @@ import NewRegisterPanel from "../../components/Tabla/NewRegisterPanel/NewRegiste
         vehicle: form.vehicle.value,
         process: form.process.value.split(',').map(item => item.trim()),
         quote: parseInt(form.quote.value, 10),
-        deliverydate: form.deliverydate.value,
-        asignedto: form.asignedto.value,
         status: form.status.value,
       };
       this.setState(prevState => ({
@@ -107,6 +101,16 @@ import NewRegisterPanel from "../../components/Tabla/NewRegisterPanel/NewRegiste
       this.setState(prevState => ({
         cotizaciones: prevState.cotizaciones.filter(c => c.id !== cotizationId)
       }));
+    }
+
+    sendOrder = (e) => {
+      const button = e.target;
+      const row = button.closest('tr');
+      const cotizationId = parseInt(row.cells[0].textContent, 10);
+      const cotizacion = this.state.cotizaciones.find(c => c.id === cotizationId);
+      if (cotizacion) {
+        alert(`Order sent for Cotización ID: ${cotizationId}, Cliente: ${cotizacion.cliente}`);
+      }
     }
 
     render() {
@@ -137,6 +141,8 @@ import NewRegisterPanel from "../../components/Tabla/NewRegisterPanel/NewRegiste
           items={finteredCotizaciones}
           openmodalupdate={this.openModalToEdit}
           remove={this.removeCotizacion}
+          send={this.sendOrder}
+          module="Cotización"
         />
         { this.state.newCotizacionPanel && (
           <NewRegisterPanel
