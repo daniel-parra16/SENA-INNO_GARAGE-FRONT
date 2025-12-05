@@ -18,13 +18,17 @@
     padding: 0 1rem;
     display: flex;
     flex-direction: column;
-    transition: width 0.25s ease-in-out;
+    transition: all 0.25s ease-in-out;
 }
 
 .sidebar.collapsed {
     width: 4.5rem;
     padding-left: 0.6rem;
     padding-right: 0.6rem;
+}
+
+.sidebar.collapsed + .layout-main {
+    max-width: calc(100vw - 4.5rem);
 }
 
 .logo-container {
@@ -95,6 +99,8 @@
     flex: 1;
     display: flex;
     flex-direction: column;
+    max-width: calc(100vw - 15rem);
+    overflow: hidden;
 }
 
 .topbar {
@@ -126,18 +132,31 @@
     font-size: 1.2rem;
     font-weight: 700;
     cursor: pointer;
+    padding: 0.3rem 0.6rem;
+    border-radius: 0.4rem;
+    transition: transform .12s ease-in-out;
 }
 
 .profile:hover {
     transform: scale(1.08);
-    transition: all .12 ease-in-out;
-    font-weight: 640;
-    border-radius: 50%;
+    background: rgba(255,255,255,0.18);
 }
 
 .content {
+    flex: 1;
     padding: 1.5rem;
     overflow-y: auto;
-    color: #000;
+    overflow-x: hidden; /* evita ensanche horizontal */
+    max-width: 100%;    /* 🔥 clave */
+}
+
+table {
+  width: 100%;
+}
+
+td, th {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 

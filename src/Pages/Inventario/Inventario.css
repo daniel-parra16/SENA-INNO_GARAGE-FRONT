@@ -1,13 +1,14 @@
 .container-modules {
   width: 100%;
   background: #fff;
+  color: #000;
   padding: 1.2rem;
   border-radius: 1rem;
   border: 1px solid #ddd;
   box-shadow: 0 4px 10px rgba(0,0,0,0.05);
 }
 
-.actions-inventory {
+.actions-modules {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -71,9 +72,32 @@
   transition: 0.3s;
 }
 
+.table-process {
+    list-style: disc;
+    padding-left: 18px;       /* Indent normal */
+    margin: 0;
+}
+
+.table-process li {
+    margin: 0;
+    padding: 0;
+    line-height: 1.2rem;      /* Reduce altura */
+    font-size: 0.95rem;
+}
+
 .actions-cell {
-  -webkit-writing-mode: vertical-lr;
-  width: 20%;
+  /* el TD queda igual que todas las demás celdas */
+  text-align: center;
+  vertical-align: middle; /* Asegura que tome el alto completo */
+}
+
+.actions-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  height: 100%;   /* Toma toda la altura del TD */
+  width: 100%;
 }
 
 /* Botón base */
@@ -107,4 +131,27 @@
 }
 .btn-icon.delete:hover {
   background: #8f0000;
+}
+
+.table-wrapper {
+  width: 100%;
+  overflow-x: auto;   /* Scroll interno SOLO si es necesario */
+  overflow-y: hidden; /* Muy importante */
+  -webkit-overflow-scrolling: touch;
+}
+
+.table-wrapper table {
+  width: 100%;
+  border-collapse: collapse;
+  border-collapse: collapse;
+  min-width: 900px;
+  color: black;
+}
+
+.table-wrapper td {
+  white-space: nowrap;
+}
+
+td.process {
+  white-space: normal;  /* Permite salto de línea si usas UL o mucho texto */
 }

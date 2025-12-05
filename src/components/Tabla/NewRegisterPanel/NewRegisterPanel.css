@@ -25,6 +25,21 @@
     width: 30%;
 }
 
+#cotizaciones {
+    width: 70% !important;
+}
+
+#cotizaciones form {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 1rem;
+}
+
+#cotizaciones .actions-new-product {
+    grid-column: span 4;
+    justify-content: right;
+}
+
 .panel h2 {
     margin-top: 0;
     margin-bottom: 1rem;

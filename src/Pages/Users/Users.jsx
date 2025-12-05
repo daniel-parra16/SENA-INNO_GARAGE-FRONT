@@ -105,7 +105,8 @@ class Users extends React.Component {
 
     return (
       <div className="container-modules">
-        <div className="actions-inventory">
+        <h1>Users</h1>
+        <div className="actions-modules">
           <button onClick={this.openModal} className="btn-create">Create User</button>
 
           <input 
