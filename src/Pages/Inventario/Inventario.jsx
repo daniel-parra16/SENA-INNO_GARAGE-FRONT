@@ -63,6 +63,7 @@ class Inventario extends React.Component {
     }));
   }
 
+  //update
   onUpdate = (e) => {
     e.preventDefault();
     const form = e.target;
@@ -93,12 +94,15 @@ class Inventario extends React.Component {
 
   render() {
     const filteredProducts = this.state.products.filter(product =>
-      product.name.toLowerCase().includes(this.state.searchTerm.toLowerCase())
+      product.name.toLowerCase().includes(this.state.searchTerm.toLowerCase()) ||
+      product.stock.toString().includes(this.state.searchTerm) ||
+      product.id.toString().includes(this.state.searchTerm)
     );
 
     return (
       <div className="container-modules">
-        <div className="actions-inventory">
+        <h1>Inventario</h1>
+        <div className="actions-modules">
           <button onClick={this.openModal} className="btn-create">Create Product</button>
 
           <input

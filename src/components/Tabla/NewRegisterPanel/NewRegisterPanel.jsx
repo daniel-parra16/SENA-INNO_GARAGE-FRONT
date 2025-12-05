@@ -10,7 +10,10 @@ function NewRegisterPanel(props) {
 
   return (
     <div className="panel-container">
-      <div className="panel">
+      <div 
+      id={(props.module === "Cotización") ? "cotizaciones" : (props.module === "Order" ? "orders" : "")}
+      className="panel" 
+      >
         <h2>{title}</h2>
 
         <form onSubmit={action}>
@@ -39,7 +42,18 @@ function NewRegisterPanel(props) {
                                 ))
                               }
                             </select>
-                          : ""
+                          : (item.type === "datetime-local")
+                            ?
+                              <input
+                                type="datetime-local"
+                                name={item.name}
+                                defaultValue={
+                                  isEditing
+                                    ? props.record[item.edit]?.slice(0, 16)
+                                    : ""
+                                }
+                              />
+                            : ""
                       )
                 }
               </label>
