@@ -72,9 +72,8 @@
 }
 
 .actions-cell {
-  display: flex;
-  justify-content: center;
-  gap: 1rem;
+  -webkit-writing-mode: vertical-lr;
+  width: 20%;
 }
 
 /* Botón base */
@@ -89,6 +88,7 @@
   align-items: center;
   font-size: 1.1rem;
   transition: 0.2s;
+  margin: 0 1rem;
 }
 
 /* Editar → verde */

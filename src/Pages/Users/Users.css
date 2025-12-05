@@ -71,12 +71,6 @@
   transition: 0.3s;
 }
 
-.actions-cell {
-  display: flex;
-  justify-content: center;
-  gap: 1rem;
-}
-
 /* Botón base */
 .btn-icon {
   width: 2rem;

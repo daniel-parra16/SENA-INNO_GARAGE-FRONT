@@ -138,7 +138,6 @@
 .content {
     padding: 1.5rem;
     overflow-y: auto;
-    overflow-x: scroll;
     color: #000;
 }
 

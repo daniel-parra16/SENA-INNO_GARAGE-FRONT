@@ -1,4 +1,4 @@
-.new-product-panel-container {
+.panel-container {
     position: fixed;
     top: 0;
     left: 0;
@@ -8,10 +8,10 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 999;
+    z-index: 700;
 }
 
-.new-product-panel {
+.panel {
     position: fixed;
     top: 50%;
     left: 50%;
@@ -25,35 +25,61 @@
     width: 30%;
 }
 
-.new-product-panel h2 {
+.panel h2 {
     margin-top: 0;
     margin-bottom: 1rem;
 }
 
-.new-product-panel form {
+.panel form {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
 }
 
-.new-product-panel label {
+.panel label {
     font-weight: bold;
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
 }
 
-.new-product-panel input {
+.panel input {
     padding: 0.5rem;
     border: 1px solid #000000;
     border-radius: 0.5rem;
     background: #ccc;
 }
 
-.new-product-panel input:focus {
+.panel input:focus {
     outline: none;
     border-color: #a54700c8;
     box-shadow: 0 0 5px rgba(222, 118, 0, 0.5);
+}
+
+.panel select {
+    width: 100%;
+    padding: 10px 12px;
+    border-radius: 8px;
+    border: 2px solid #8c6239;     /* tono marrón medio */
+    background-color: #ccc;      /* igual al input */
+    color: #333;                    /* texto oscuro para contraste */
+    font-size: 14px;
+    outline: none;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    cursor: pointer;
+}
+
+.panel select {
+    background-image: url("data:image/svg+xml;utf8,<svg fill='black' height='20' viewBox='0 0 24 24' width='20' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 14px;
+}
+
+.panel option:hover {
+    background: #ccc;
 }
 
 .actions-new-product {
