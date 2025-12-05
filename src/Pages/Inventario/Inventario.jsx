@@ -63,6 +63,7 @@ class Inventario extends React.Component {
     }));
   }
 
+  //update
   onUpdate = (e) => {
     e.preventDefault();
     const form = e.target;
