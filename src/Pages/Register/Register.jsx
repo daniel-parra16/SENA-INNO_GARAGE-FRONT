@@ -12,11 +12,21 @@ function Register() {
   return (
     <div className={styles['register-page']}>
 
-      {/* Header igual al Login */}
-      <div className={styles['logo']}>
-        <img src="/public/LogoInnoGarageFondoAzul.png" alt="logo" width="5%" />
-        <h2>INNO-GARAGE</h2>
-      </div>
+      {/* Navbar superior */}
+      <nav className={styles.navbar}>
+        <div className={styles['navbar-brand']}>
+          <img src="/public/LogoInnoGarageFondoAzul.png" alt="logo" width="32px" />
+          INNO-GARAGE
+        </div>
+        <button
+          className={styles['navbar-close']}
+          onClick={() => navigate("/")}
+          aria-label="Cerrar"
+        >
+          ✕
+        </button>
+      </nav>
+
       <h1 className={styles.title}>Create Account</h1>
       <p className={styles.subtitle}>Fill in your details to get started</p>
 

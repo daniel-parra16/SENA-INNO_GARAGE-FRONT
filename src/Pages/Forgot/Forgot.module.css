@@ -1,0 +1,294 @@
+/* -----------------------------------
+   Forgot Page Container
+----------------------------------- */
+.forgot-page {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 0.5rem;
+    overflow: hidden;
+}
+
+/* -----------------------------------
+   Header (logo + navbar top)
+----------------------------------- */
+.navbar {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.75rem 2rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: #101A22;
+    z-index: 10;
+}
+
+.navbar-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.1rem;
+    font-weight: 900;
+    color: #fff;
+}
+
+.navbar-close {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.12);
+    color: #94A3B8;
+    width: 34px;
+    height: 34px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background .2s, color .2s;
+}
+
+.navbar-close:hover {
+    background: rgba(255,255,255,0.12);
+    color: #fff;
+}
+
+/* -----------------------------------
+   Card
+----------------------------------- */
+.forgot-card {
+    background-color: #161d28;
+    box-shadow: 0 0 7px 0 #4f8ef3;
+    border: 0.25px solid #050e3859;
+    border-radius: 1rem;
+    width: 100%;
+    max-width: 440px;
+    overflow: hidden;
+    margin-top: 4rem;
+}
+
+/* Banner superior del card */
+.card-banner {
+    width: 100%;
+    height: 140px;
+    background: linear-gradient(135deg, #0a3a5c 0%, #0d5fa8 50%, #1392EC 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    position: relative;
+    overflow: hidden;
+}
+
+.card-banner::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: 
+        radial-gradient(circle at 20% 50%, rgba(255,255,255,0.04) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(255,255,255,0.06) 0%, transparent 40%);
+}
+
+/* Ícono del carro en el banner */
+.banner-icon {
+    position: relative;
+    z-index: 1;
+}
+
+.banner-tag {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: #1392EC;
+    background: rgba(19, 146, 236, 0.12);
+    border: 1px solid rgba(19, 146, 236, 0.3);
+    padding: 4px 10px;
+    border-radius: 20px;
+}
+
+/* Contenido del card */
+.card-body {
+    padding: 1.75rem 2rem 1.5rem;
+}
+
+.forgot-title {
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: #fff;
+    margin-bottom: 4px;
+}
+
+.forgot-subtitle {
+    font-size: 0.85rem;
+    color: #94A3B8;
+    margin-bottom: 1.25rem;
+    line-height: 1.5;
+}
+
+.forgot-desc {
+    font-size: 0.85rem;
+    color: #64748B;
+    margin-bottom: 1.25rem;
+    line-height: 1.6;
+    padding-top: 0.25rem;
+    border-top: 1px solid rgba(255,255,255,0.06);
+}
+
+/* -----------------------------------
+   Input Field
+----------------------------------- */
+.field-label {
+    font-size: 0.78rem;
+    color: rgba(255,255,255,0.55);
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+    display: block;
+}
+
+.input-wrap {
+    position: relative;
+    margin-bottom: 1.25rem;
+}
+
+.input-icon {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: rgba(255,255,255,0.25);
+    font-size: 14px;
+    pointer-events: none;
+}
+
+.input {
+    width: 100%;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 10px;
+    padding: 13px 14px 13px 40px;
+    color: #fff;
+    font-size: 0.95rem;
+    outline: none;
+    box-sizing: border-box;
+    transition: border-color .2s, background .2s, box-shadow .2s;
+}
+
+.input::placeholder {
+    color: rgba(255,255,255,0.2);
+}
+
+.input:focus {
+    border-color: #1392EC;
+    background: rgba(19, 146, 236, 0.06);
+    box-shadow: 0 0 0 3px rgba(19, 146, 236, 0.12);
+}
+
+/* -----------------------------------
+   Buttons
+----------------------------------- */
+.btn-send {
+    width: 100%;
+    padding: 13px;
+    border: none;
+    border-radius: 10px;
+    background: #0c7bc9;
+    color: #fff;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background .2s, transform .2s, box-shadow .2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 1rem;
+}
+
+.btn-send:hover {
+    background: #045a97;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 16px rgba(19, 146, 236, 0.3);
+}
+
+/* Divider */
+.divider {
+    height: 1px;
+    background: rgba(255,255,255,0.07);
+    margin: 0.25rem 0 1rem;
+}
+
+.back-login {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    background: transparent;
+    border: none;
+    color: #94A3B8;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: color .15s;
+    padding: 4px 0;
+}
+
+.back-login:hover {
+    color: #1392EC;
+}
+
+/* -----------------------------------
+   Footer badges
+----------------------------------- */
+.footer-badges {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    margin-top: 1.5rem;
+}
+
+.badge-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.72rem;
+    color: rgba(255,255,255,0.28);
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+.badge-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #27ae60;
+}
+
+/* -----------------------------------
+   Responsive
+----------------------------------- */
+@media (max-width: 480px) {
+    .forgot-card {
+        max-width: 100%;
+        border-radius: 12px;
+    }
+
+    .card-body {
+        padding: 1.25rem;
+    }
+
+    .forgot-title {
+        font-size: 1.3rem;
+    }
+}

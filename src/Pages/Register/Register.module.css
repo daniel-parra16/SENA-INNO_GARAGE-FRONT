@@ -12,21 +12,51 @@
     overflow: hidden;
 }
 
+
 /* -----------------------------------
-   Header (logo + título)
+   Header (logo + navbar top)
 ----------------------------------- */
-.logo {
+.navbar {
     width: 100%;
     display: flex;
-    margin: 0 2rem;
-    font-size: 1.3rem;
     align-items: center;
-    gap: 12px;
-    border-bottom: 1px solid #ccc;
+    justify-content: space-between;
+    padding: 0.75rem 2rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: #101A22;
+    z-index: 10;
 }
 
-.logo h2 {
+.navbar-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.1rem;
     font-weight: 900;
+    color: #fff;
+}
+
+.navbar-close {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.12);
+    color: #94A3B8;
+    width: 34px;
+    height: 34px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background .2s, color .2s;
+}
+
+.navbar-close:hover {
+    background: rgba(255,255,255,0.12);
+    color: #fff;
 }
 
 .title {
@@ -34,6 +64,7 @@
     font-weight: 800;
     color: #fff;
     text-align: center;
+    margin-top: 3rem;
 }
 
 .subtitle {
