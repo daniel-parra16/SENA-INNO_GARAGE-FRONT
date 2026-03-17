@@ -13,7 +13,7 @@
 
 body {
     font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
-    background: linear-gradient(135deg, #E67E22 0%, #2d1b02 100%);
+    background: #101A22;
     color: #fff;
 }
 
@@ -25,17 +25,43 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: top;
     position: relative;
-    padding: 1rem;
+    margin-top: 2rem;
+    padding: 0.5rem;
     overflow: hidden;
 }
 
+.logo {
+    width: 65%;
+    display: flex;
+    margin: 0 auto;
+    font-size: 1.6rem;
+    align-items: center;
+    justify-content: center;
+}
+
+.logo h2 {
+    font-weight: 900;
+}
+
+.title {
+    font-size: 3rem;
+    font-weight: 800;
+    color: #fff;
+    text-align: center;
+}
+
+.login-page p {
+    color: #94A3B8;
+}
 /* -----------------------------------
    Login Card
 ----------------------------------- */
 .login-card {
-    background-color: rgba(0, 0, 0, 0.45);
+    background-color: #161d28;
+    box-shadow: 0 0 7px 0 #4f8ef3 ;
+    border: 0.25px solid #050e3859;
     border-radius: 1rem;
     padding: 1.5rem;
     position: relative;
@@ -44,13 +70,7 @@ body {
     align-items: center;
     width: 45%;
     z-index: 2;
-}
-
-.title {
-    font-size: 3rem;
-    font-weight: 900;
-    color: #fff;
-    text-align: center;
+    margin: 1.5rem 0;
 }
 
 .login-form {
@@ -71,23 +91,23 @@ body {
     background: transparent;
     border: 0;
     border-bottom: 2px solid rgba(255, 255, 255, 0.12);
-    padding: 1rem 0 0.75rem 0;
-    color: #000;
+    padding: 0.75rem 0 0.5rem 0;
+    color: #ffffff;
     outline: none;
     transition: border-color .18s ease, box-shadow .18s ease;
 }
 
 .input::placeholder {
-    color: transparent;
+    color: #fff;
 }
 .input:focus {
-    border-bottom-color: #995115;
-    box-shadow: 0 2px 0 0 #995115;
+    border-bottom-color: #0972bd;
+    box-shadow: 0 2px 0 0 #0972bd;
 }
 
 .field label {
     position: absolute;
-    left: 8px;
+    left: 2px;
     top: 5px;
     color: rgba(255, 255, 255, 0.72);
     pointer-events: none;
@@ -96,7 +116,7 @@ body {
 
 .input:focus + label,
 .input:not(:placeholder-shown) + label {
-    transform: translateY(-35px);
+    transform: translateY(-20px);
     font-size: 0.85rem;
     color: #e6e6ff;
     top: 6px;
@@ -125,24 +145,24 @@ body {
     flex-direction: column;
     justify-content: center;
     gap: 12px;
-    width: 55%;
+    width:100%;
     margin: 0 auto;
 }
 
-.redirect-btn {
+.login-btn {
     color: #fff;
     padding: 8px 25px;
     border-radius: 10px;
-    background: #5c2e07;
+    background: #0c7bc9;
     border: 1px solid rgb(92 48 0 / 61%);
     font-size: 1.1rem;
     font-weight: bold;
 }
 
-.redirect-btn:hover {
+.login-btn:hover {
     transform: translateY(-2px);
-    background: #703a09;
-    border: 1px solid #4d2503;
+    background: #045a97;
+    border: 1px solid #00487b;
     transition: all .3s ease;
 }
 
@@ -150,19 +170,39 @@ body {
 .forgot-pwd {
     text-align: center;
     font-size: 1rem;
-    color: rgba(255, 255, 255, 0.72);
+    color: #ffffffb8;
     text-decoration: none;
     transition: color .12s ease;
 }
 
 .forgot-pwd:hover {
-    color: #fff;
+    color: #8f8f91;
 }
 
-#redirects {
+.redirects {
     display: flex;
     justify-content: space-around;
     gap: 12px;
+}
+
+.register-text {
+    margin-top: 1.25rem;
+    font-size: 0.95rem;
+    color: #94A3B8;
+    text-align: center;
+}
+
+.register-link {
+    color: #1392EC;
+    cursor: pointer;
+    font-weight: 600;
+    text-decoration: none;
+    transition: color .15s ease;
+}
+
+.register-link:hover {
+    color: #4fb3f7;
+    text-decoration: underline;
 }
 
 /* -----------------------------------

@@ -2,68 +2,74 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import './Login.css'
+import styles from './Login.module.css';
 
 function Login() {
-const [showPwd, setShowPwd] = useState(false);
-const navigate = useNavigate();
+    const [showPwd, setShowPwd] = useState(false);
+    const navigate = useNavigate();
 
-return (
-    <div className="login-page">
-        <div className="login-card">
-            <h2 className="title">Welcome </h2>
+    return (
+        <div className={styles['login-page']}>
+            <div className={styles['logo']}>
+                <img src="/public/LogoInnoGarageFondoAzul.png" alt="logo" width="10%" />
+                <h2>INNO-GARAGE</h2>
+            </div>
+            <h1 className={styles.title}>Welcome Back</h1>
+            <p>Log in to manage your workshop</p>
 
-            <img src="/public/logo.png" alt="logo" width="30%" />
+            <div className={styles['login-card']}>
+                <Form className={styles['login-form']} onSubmit={(e) => e.preventDefault()}>
+                    <div className={styles.field}>
+                        <Form.Control className={styles.input} type="text" id="username" placeholder=" " required />
+                        <label htmlFor="username">Username</label>
+                    </div>
 
-            <Form className="login-form" onSubmit={(e)=>e.preventDefault()}>
-                <div className="field">
-                    <Form.Control className="input" type="email" id="email" placeholder=" " required />
-                    <label htmlFor="email">E-mail</label>
-                </div>
+                    <div className={styles.field}>
+                        <Form.Control
+                            className={styles.input}
+                            type={showPwd ? 'text' : 'password'}
+                            id="password"
+                            placeholder=" "
+                            required
+                        />
+                        <label htmlFor="password">Password</label>
+                        <button
+                            type="button"
+                            className={styles['toggle-pwd']}
+                            onClick={() => setShowPwd(s => !s)}
+                            aria-label="Mostrar contraseña"
+                        >
+                            {showPwd ? 'Ocultar' : 'Mostrar'}
+                        </button>
+                    </div>
 
-                <div className="field">
-                    <Form.Control
-                        className="input"
-                        type={showPwd ? 'text' : 'password'}
-                        id="password"
-                        placeholder=" "
-                        required
-                    />
-                    <label htmlFor="password">Password</label>
-                    <button
-                        type="button"
-                        className="toggle-pwd"
-                        onClick={() => setShowPwd(s => !s)}
-                        aria-label="Mostrar contraseña"
-                    >
-                    {showPwd ? 'Ocultar' : 'Mostrar'}
-                    </button>
-                </div>
-
-                <div className="actions">
-                    <a href="/forgot" className="forgot-pwd"><h4>¿Forgot you password?</h4></a>
-                    <div id="redirects">
-                        <Button 
-                            variant="primary" 
-                            className="redirect-btn login" 
+                    <div className={styles.actions}>
+                        <a href="/forgot" className={styles['forgot-pwd']}>
+                            ¿Forgot your password?
+                        </a>
+                        <Button
+                            variant="primary"
+                            className={styles['login-btn']}
                             onClick={() => navigate("/landing")}
                         >
-                            Entry
-                        </Button>
-
-                        <Button 
-                            variant="primary" 
-                            className="redirect-btn register" 
-                            onClick={() => navigate("/register")}
-                        >
-                            Register
+                            Login to Dashboard →
                         </Button>
                     </div>
-                </div>
-            </Form>
+                </Form>
+            </div>
+
+            {/* Texto fuera del card */}
+            <p className={styles['register-text']}>
+                Don't have an account yet?{' '}
+                <span
+                    className={styles['register-link']}
+                    onClick={() => navigate("/register")}
+                >
+                    Create an account
+                </span>
+            </p>
         </div>
-    </div>
-);
+    );
 }
 
 export default Login;
