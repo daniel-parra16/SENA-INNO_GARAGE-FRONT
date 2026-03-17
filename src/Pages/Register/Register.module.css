@@ -1,0 +1,273 @@
+/* -----------------------------------
+   Register Page Container
+----------------------------------- */
+.register-page {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    padding: 0 0 2rem;
+    overflow: hidden;
+}
+
+/* -----------------------------------
+   Header (logo + título)
+----------------------------------- */
+.logo {
+    width: 100%;
+    display: flex;
+    margin: 0 2rem;
+    font-size: 1.3rem;
+    align-items: center;
+    gap: 12px;
+    border-bottom: 1px solid #ccc;
+}
+
+.logo h2 {
+    font-weight: 900;
+}
+
+.title {
+    font-size: 3rem;
+    font-weight: 800;
+    color: #fff;
+    text-align: center;
+}
+
+.subtitle {
+    color: #94A3B8;
+    font-size: 1rem;
+    margin-bottom: 0;
+}
+
+/* -----------------------------------
+   Register Card
+----------------------------------- */
+.register-card {
+    background-color: #161d28;
+    box-shadow: 0 0 7px 0 #4f8ef3;
+    border: 0.25px solid #050e3859;
+    border-radius: 1rem;
+    padding: 1.5rem 2rem;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 55%;
+    z-index: 2;
+    margin: 1.5rem 0;
+}
+
+.register-form {
+    width: 90%;
+    display: grid;
+}
+
+/* -----------------------------------
+   Section titles
+----------------------------------- */
+.section-title {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #1392EC;
+    margin: 1.5rem 0 0.25rem;
+    padding-bottom: 6px;
+    border-bottom: 1px solid rgba(19, 146, 236, 0.2);
+}
+
+/* -----------------------------------
+   Row groups
+----------------------------------- */
+.row-group {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 0 24px;
+    margin-bottom: 0.5rem;
+}
+
+/* -----------------------------------
+   Input Fields (igual al Login)
+----------------------------------- */
+.field {
+    position: relative;
+    margin: 1rem 0 0.75rem;
+}
+
+.field input,
+.field-input {
+    width: 100%;
+    background: transparent;
+    border: 0;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.12);
+    padding: 0.75rem 0 0.5rem 0;
+    color: #ffffff;
+    outline: none;
+    font-size: 1rem;
+    transition: border-color .18s ease, box-shadow .18s ease;
+}
+
+.field input::placeholder {
+    color: transparent;
+}
+
+.field input:focus {
+    border-bottom-color: #0972bd;
+    box-shadow: 0 2px 0 0 #0972bd;
+}
+
+.field label {
+    position: absolute;
+    left: 2px;
+    top: 5px;
+    color: rgba(255, 255, 255, 0.72);
+    pointer-events: none;
+    transition: transform .18s ease, font-size .18s ease, top .18s ease;
+}
+
+.field input:focus + label,
+.field input:not(:placeholder-shown) + label {
+    transform: translateY(-20px);
+    font-size: 0.85rem;
+    color: #e6e6ff;
+    top: 6px;
+}
+
+.field select {
+    width: 100%;
+    background: transparent;
+    border: 0;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.12);
+    padding: 0.75rem 0 0.5rem 0;
+    color: #ffffff;
+    outline: none;
+    font-size: 1rem;
+    appearance: none;
+    cursor: pointer;
+    transition: border-color .18s ease, box-shadow .18s ease;
+}
+
+.field select:focus {
+    border-bottom-color: #0972bd;
+    box-shadow: 0 2px 0 0 #0972bd;
+}
+
+.field select option {
+    background: #161d28;
+    color: #fff;
+}
+
+/* Toggle Password Button */
+.toggle-pwd {
+    position: absolute;
+    right: 2px;
+    top: 5px;
+    background: transparent;
+    border: 0;
+    padding: 7px;
+    color: #cbd5e1;
+    cursor: pointer;
+    font-size: 0.85rem;
+    transition: color .12s ease;
+    outline: none;
+}
+
+/* -----------------------------------
+   Terms checkbox
+----------------------------------- */
+.terms {
+    margin: 1rem 0 0.5rem;
+}
+
+.terms label {
+    color: #94A3B8 !important;
+    font-size: 0.9rem;
+}
+
+/* -----------------------------------
+   Buttons
+----------------------------------- */
+.button-row {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 1.25rem;
+    width: 100%;
+}
+
+.btn-register {
+    width: 100%;
+    color: #fff;
+    padding: 10px;
+    border-radius: 10px;
+    background: #0c7bc9;
+    border: none;
+    font-size: 1.1rem;
+    font-weight: bold;
+    transition: transform .3s ease, background .3s ease;
+}
+
+.btn-register:hover {
+    transform: translateY(-2px);
+    background: #045a97;
+}
+
+.btn-back {
+    width: 100%;
+    color: #94A3B8;
+    padding: 10px;
+    border-radius: 10px;
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    font-size: 1rem;
+    font-weight: 600;
+    transition: border-color .2s ease, color .2s ease;
+}
+
+.btn-back:hover {
+    border-color: #1392EC;
+    color: #fff;
+}
+
+/* -----------------------------------
+   Login link (fuera del card)
+----------------------------------- */
+.login-text {
+    margin-top: 1.25rem;
+    font-size: 0.95rem;
+    color: #94A3B8;
+    text-align: center;
+}
+
+.login-link {
+    color: #1392EC;
+    cursor: pointer;
+    font-weight: 600;
+    transition: color .15s ease;
+}
+
+.login-link:hover {
+    color: #4fb3f7;
+    text-decoration: underline;
+}
+
+/* -----------------------------------
+   Responsive
+----------------------------------- */
+@media (max-width: 600px) {
+    .register-card {
+        width: 92%;
+        padding: 1.5rem 1rem;
+    }
+
+    .title {
+        font-size: 2rem;
+    }
+
+    .row-group {
+        grid-template-columns: 1fr;
+    }
+}

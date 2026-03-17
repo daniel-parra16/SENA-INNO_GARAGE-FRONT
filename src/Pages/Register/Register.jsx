@@ -2,73 +2,73 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import "./Register.css";
+import styles from "./Register.module.css";
 
 function Register() {
   const [showPwd, setShowPwd] = useState(false);
   const [showPwd2, setShowPwd2] = useState(false);
-
-  const navigate = useNavigate(); // <-- navegación agregada
+  const navigate = useNavigate();
 
   return (
-    <div className="register-page">
-      <div className="register-card">
+    <div className={styles['register-page']}>
 
-        {/* TITLE */}
-        <h2 className="form-title">Register</h2>
+      {/* Header igual al Login */}
+      <div className={styles['logo']}>
+        <img src="/public/LogoInnoGarageFondoAzul.png" alt="logo" width="5%" />
+        <h2>INNO-GARAGE</h2>
+      </div>
+      <h1 className={styles.title}>Create Account</h1>
+      <p className={styles.subtitle}>Fill in your details to get started</p>
 
-        <Form className="register-form" onSubmit={(e) => e.preventDefault()}>
+      <div className={styles['register-card']}>
+        <Form className={styles['register-form']} onSubmit={(e) => e.preventDefault()}>
 
           {/* PERSONAL INFORMATION */}
-          <h3 className="section-title">Personal Information</h3>
+          <p className={styles['section-title']}>Personal Information</p>
+          <div className={styles['row-group']}>
 
-          <div className="row-group">
-            <div className="field">
-              <Form.Control type="text" placeholder=" " required />
-              <label>Identification</label>
+            <div className={styles.field}>
+              <Form.Control as="select" required defaultValue="">
+                <option value="" disabled hidden> </option>
+                <option value="CC">Cédula de Ciudadanía</option>
+                <option value="TI">Tarjeta de Identidad</option>
+                <option value="CE">Cédula de Extranjería</option>
+                <option value="PP">Pasaporte</option>
+              </Form.Control>
+              <label>Tipo de Documento</label>
             </div>
 
-            <div className="field">
+            <div className={styles.field}>
               <Form.Control type="text" placeholder=" " required />
-              <label>Full Name</label>
+              <label>Número de Documento</label>
             </div>
 
-            <div className="field">
+            <div className={styles.field}>
+              <Form.Control type="text" placeholder=" " required />
+              <label>Nombres</label>
+            </div>
+
+            <div className={styles.field}>
+              <Form.Control type="text" placeholder=" " required />
+              <label>Apellidos</label>
+            </div>
+
+            <div className={styles.field}>
+              <Form.Control type="tel" placeholder=" " required />
+              <label>Teléfono</label>
+            </div>
+
+            <div className={styles.field}>
               <Form.Control type="email" placeholder=" " required />
-              <label>Email Address</label>
+              <label>Correo Electrónico</label>
             </div>
 
-            <div className="field">
-              <Form.Control type="text" placeholder=" " required />
-              <label>Phone Number</label>
-            </div>
-          </div>
-
-          {/* VEHICLE INFORMATION */}
-          <h3 className="section-title">Vehicle Information</h3>
-
-          <div className="row-group">
-            <div className="field">
-              <Form.Control type="text" placeholder=" " required />
-              <label>Make</label>
-            </div>
-
-            <div className="field">
-              <Form.Control type="text" placeholder=" " required />
-              <label>Model</label>
-            </div>
-
-            <div className="field">
-              <Form.Control type="text" placeholder=" " required />
-              <label>License Plate</label>
-            </div>
           </div>
 
           {/* SECURITY */}
-          <h3 className="section-title">Security</h3>
-
-          <div className="row-group">
-            <div className="field password-field">
+          <p className={styles['section-title']}>Security</p>
+          <div className={styles['row-group']}>
+            <div className={styles.field}>
               <Form.Control
                 type={showPwd ? "text" : "password"}
                 placeholder=" "
@@ -77,14 +77,13 @@ function Register() {
               <label>Password</label>
               <button
                 type="button"
-                className="toggle-pwd"
-                onClick={() => setShowPwd((s) => !s)}
+                className={styles['toggle-pwd']}
+                onClick={() => setShowPwd(s => !s)}
               >
                 {showPwd ? "Ocultar" : "Mostrar"}
               </button>
             </div>
-
-            <div className="field password-field">
+            <div className={styles.field}>
               <Form.Control
                 type={showPwd2 ? "text" : "password"}
                 placeholder=" "
@@ -93,8 +92,8 @@ function Register() {
               <label>Confirm Password</label>
               <button
                 type="button"
-                className="toggle-pwd"
-                onClick={() => setShowPwd2((s) => !s)}
+                className={styles['toggle-pwd']}
+                onClick={() => setShowPwd2(s => !s)}
               >
                 {showPwd2 ? "Ocultar" : "Mostrar"}
               </button>
@@ -102,7 +101,7 @@ function Register() {
           </div>
 
           {/* TERMS */}
-          <div className="terms">
+          <div className={styles.terms}>
             <Form.Check
               type="checkbox"
               id="terms"
@@ -111,29 +110,38 @@ function Register() {
             />
           </div>
 
-          {/* ACTION BUTTONS */}
-          <div className="button-row">
-            <Button 
-              variant="warning" 
-              type="button" 
-              className="btn-back"
-              onClick={() => navigate("/")}   // <-- volver al login
+          {/* BUTTONS */}
+          <div className={styles['button-row']}>
+            <Button
+              className={styles['btn-register']}
+              type="submit"
+              onClick={() => navigate("/")}
+            >
+              Create Account →
+            </Button>
+            <Button
+              className={styles['btn-back']}
+              type="button"
+              onClick={() => navigate("/")}
             >
               Come Back
-            </Button>
-
-            <Button 
-              variant="primary" 
-              type="submit" 
-              className="btn-register"
-              onClick={() => navigate("/")}  // <-- redirigir después de registrar
-            >
-              Register
             </Button>
           </div>
 
         </Form>
       </div>
+
+      {/* Link de vuelta al login, fuera del card */}
+      <p className={styles['login-text']}>
+        Already have an account?{' '}
+        <span
+          className={styles['login-link']}
+          onClick={() => navigate("/")}
+        >
+          Sign in
+        </span>
+      </p>
+
     </div>
   );
 }
