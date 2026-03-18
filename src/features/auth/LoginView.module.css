@@ -1,0 +1,68 @@
+.container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #101A22;
+  position: relative;
+  overflow: hidden;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+}
+
+.logoContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: clamp(16px, 3vh, 24px);
+  z-index: 10;
+  flex-shrink: 0;
+}
+
+.logoBox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: clamp(12px, 2vh, 24px);
+}
+
+.title {
+  color: #FFFFFF;
+  font-size: clamp(20px, 3.5vh, 24px);
+  font-weight: 600;
+  margin: 0;
+}
+
+.subtitle {
+  color: #94A3B8;
+  font-size: clamp(13px, 1.8vh, 14px);
+  margin-top: 8px;
+}
+
+.card {
+  width: 100%;
+  max-width: 440px;
+  background-color: #1C2227;
+  border-radius: 12px;
+  border: 1px solid rgba(19, 146, 236, 0.1);
+  padding: clamp(20px, 4vh, 40px);
+  margin: 0 16px;
+  max-height: 95vh;
+  display: flex;
+  flex-direction: column;
+  z-index: 10;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  box-sizing: border-box;
+}
+
+.backgroundEffects {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  background-image: 
+    radial-gradient(circle at 50% 0%, rgba(19, 146, 236, 0.15) 0%, transparent 50%),
+    radial-gradient(circle at 100% 100%, rgba(19, 146, 236, 0.05) 0%, transparent 50%);
+}
