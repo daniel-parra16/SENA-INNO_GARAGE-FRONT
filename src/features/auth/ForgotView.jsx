@@ -18,7 +18,6 @@ export default function ForgotView() {
           </div>
         </div>
 
-        {/* Inyectamos la lógica del componente formulario de registro */}
         <ForgotForm />
       </div>
     </div>
