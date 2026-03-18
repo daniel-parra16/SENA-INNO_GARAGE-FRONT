@@ -9,7 +9,7 @@ export default function LoginView() {
       <div className={styles.card}>
         <div className={styles.logoContainer}>
           <div className={styles.logoBox}>
-            <img src="/src/assets/images/LogoInnoGarageFondoAzul.png" alt="Fondo Inno Garage" className={styles.imgIG} />
+            <img src="/src/assets/images/logo/LogoInnoGarageFondoAzul.png" alt="Fondo Inno Garage" className={styles.imgIG} />
           </div>
           <h1 className={styles.title}>Iniciar sesion</h1>
         </div>

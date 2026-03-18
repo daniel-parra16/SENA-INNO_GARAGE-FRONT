@@ -1,7 +1,7 @@
-import styles from './RegisterView.module.css';
-import RegisterForm from './components/RegisterForm/RegisterForm';
+import styles from './ForgotView.module.css';
+import ForgotForm from './components/ForgotForm/ForgotForm';
 
-export default function RegisterView() {
+export default function ForgotView() {
   return (
     <div className={styles.container}>
       {/* Elementos visuales y de fondo administrados por la vista */}
@@ -19,7 +19,7 @@ export default function RegisterView() {
         </div>
 
         {/* Inyectamos la lógica del componente formulario de registro */}
-        <RegisterForm />
+        <ForgotForm />
       </div>
     </div>
   );
