@@ -22,7 +22,7 @@
 
 .card {
   width: 100%;
-  max-width: 440px;
+  max-width: 60%;
   background-color: #111518;
   border-radius: 12px;
   border: 1px solid #1E293B;
@@ -50,6 +50,10 @@
 
 .logoBox {
   margin-bottom: clamp(12px, 2vh, 24px);
+}
+
+.imgIG {
+  max-width: 5rem;
 }
 
 .title {

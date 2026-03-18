@@ -5,7 +5,7 @@
 .label {
   display: block;
   color: #CBD5E1;
-  font-size: clamp(12px, 1.5vh, 14px);
+  font-size: clamp(12px, 1vw, 14px);
   font-weight: 500;
   margin-bottom: clamp(4px, 1vh, 8px);
 }
@@ -35,7 +35,7 @@
 .checkboxContainer {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   margin-bottom: clamp(16px, 2.5vh, 24px);
 }
 
