@@ -1,0 +1,43 @@
+.searchBar {
+  display: flex;
+  align-items: center;
+  border-radius: 8px;
+  padding: 8px 16px;
+  width: 100%;
+  transition: border-color 0.2s;
+}
+
+/* Header Variant (Sin bordes, fondo terciario) */
+.header {
+  background-color: var(--bg-tertiary);
+  border: 1px solid transparent;
+}
+
+/* Default Variant (Para las tablas de modulos, bordes marcados) */
+.default {
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+}
+.default:focus-within {
+  border-color: var(--primary-color, #3b82f6);
+}
+
+.searchIcon {
+  color: var(--text-secondary);
+  margin-right: 8px;
+  min-width: 18px;
+}
+
+.searchInput {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: var(--text-primary);
+  font-size: 0.875rem;
+  outline: none;
+  width: 100%;
+}
+
+.searchInput::placeholder {
+  color: var(--text-secondary);
+}

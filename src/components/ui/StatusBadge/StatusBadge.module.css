@@ -1,0 +1,36 @@
+.badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 8px;
+  border-radius: 999px;
+  font-size: var(--text-xs, 0.75rem);
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+/* Variant styles based on status (Old Ordenes Styles) */
+.success { /* Completed / Aprobada */
+  background-color: rgba(34, 197, 94, 0.1);
+  color: #22c55e;
+}
+
+.warning { /* Pending */
+  background-color: rgba(234, 179, 8, 0.1);
+  color: #eab308;
+}
+
+.error { /* Cancelled / Rechazada */
+  background-color: rgba(239, 68, 68, 0.1);
+  color: #ef4444;
+}
+
+.info { /* En Progreso / Neutral */
+  background-color: rgba(59, 130, 246, 0.1);
+  color: #3b82f6;
+}
+
+.neutral {
+  background-color: rgba(107, 114, 128, 0.1);
+  color: #9ca3af;
+}

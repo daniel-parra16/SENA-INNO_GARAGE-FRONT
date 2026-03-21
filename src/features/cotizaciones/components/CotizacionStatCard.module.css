@@ -1,0 +1,68 @@
+.card {
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.title {
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+  font-weight: 500;
+  margin: 0;
+}
+
+.iconWrapper {
+  padding: 8px;
+  border-radius: 8px;
+  background-color: var(--bg-tertiary);
+}
+
+.iconTotal { color: var(--primary-color); }
+.iconPending { color: var(--warning-color); }
+.iconApproved { color: var(--success-color); }
+.iconRejected { color: var(--error-color); }
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.value {
+  color: var(--text-primary);
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.trend {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.positive {
+  color: var(--success-color);
+}
+
+.negative {
+  color: var(--error-color);
+}
+
+.trend span {
+  color: var(--text-secondary);
+  font-weight: 400;
+}

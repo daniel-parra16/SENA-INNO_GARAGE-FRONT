@@ -1,0 +1,79 @@
+.tableWrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.table th,
+.table td {
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid var(--border-color);
+  font-size: 0.875rem;
+}
+
+.table th {
+  background-color: var(--bg-primary);
+  color: var(--text-secondary);
+  font-weight: 600;
+}
+
+.table tbody tr:hover {
+  background-color: rgba(255, 255, 255, 0.02);
+}
+
+.sku {
+  color: var(--text-secondary);
+  font-family: monospace;
+}
+
+.name {
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+.category {
+  color: var(--text-secondary);
+}
+
+.stock {
+  color: var(--text-primary);
+}
+
+.price {
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+.actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.actionBtn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+  opacity: 0.6;
+  transition: all 0.2s;
+  color: var(--text-primary);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.25rem;
+}
+
+.actionBtn:hover {
+  opacity: 1;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.deleteBtn:hover {
+  color: var(--error);
+  background-color: rgba(239, 68, 68, 0.1);
+}

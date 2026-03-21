@@ -1,0 +1,162 @@
+/* ---- Contenedor del form ---- */
+.formContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  overflow-y: auto;
+}
+
+/* ---- Section titles ---- */
+.sectionTitle {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #1392EC;
+  margin: 1.25rem 0 0.75rem;
+  padding-bottom: 6px;
+  border-bottom: 1px solid rgba(19, 146, 236, 0.2);
+  flex-shrink: 0;
+}
+
+/* ---- Row groups — 2 columnas ---- */
+.rowGroup {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px 20px;
+}
+
+/* ---- Cada campo ---- */
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.label {
+  display: block;
+  color: #CBD5E1;
+  font-size: clamp(12px, 1.5vh, 13px);
+  font-weight: 500;
+}
+
+/* ---- Inputs y Select con mismo estilo ---- */
+.input {
+  width: 100%;
+  height: clamp(38px, 6vh, 44px);
+  background-color: #0B0E14;
+  border: 1px solid #334155;
+  border-radius: 8px;
+  padding: 0 16px;
+  color: #ffffff;
+  font-size: clamp(13px, 1.8vh, 14px);
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  box-sizing: border-box;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+.input::placeholder {
+  color: #475569;
+}
+
+.input:focus {
+  border-color: #1392EC;
+  box-shadow: 0 0 0 2px rgba(19, 146, 236, 0.2);
+}
+
+/* Select específico */
+select.input {
+  cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2364748B' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  padding-right: 36px;
+}
+
+select.input option {
+  background-color: #0B0E14;
+  color: #fff;
+}
+
+/* ---- Password wrapper ---- */
+.passwordWrapper {
+  position: relative;
+}
+
+.passwordWrapper .input {
+  padding-right: 72px;
+}
+
+.togglePwd {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: 0;
+  color: #64748B;
+  cursor: pointer;
+  font-size: 0.8rem;
+  padding: 0;
+  transition: color 0.15s ease;
+  outline: none;
+}
+
+.togglePwd:hover {
+  color: #94A3B8;
+}
+
+/* ---- Botón submit ---- */
+.submitBtn {
+  width: 100%;
+  height: clamp(40px, 6.5vh, 48px);
+  background-color: #1392EC;
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  font-size: clamp(14px, 2vh, 15px);
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  margin-top: 1.25rem;
+  flex-shrink: 0;
+}
+
+.submitBtn:hover {
+  background-color: #0d82d6;
+}
+
+.submitBtn:active {
+  background-color: #0b71bd;
+}
+
+/* ---- Footer link ---- */
+.footerLink {
+  text-align: center;
+  margin-top: clamp(10px, 2vh, 18px);
+  font-size: clamp(12px, 1.8vh, 14px);
+  flex-shrink: 0;
+}
+
+.footerText {
+  color: #94A3B8;
+}
+
+.link {
+  color: #1392EC;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.link:hover {
+  text-decoration: underline;
+}
+
+/* ---- Responsive ---- */
+@media (max-width: 600px) {
+  .rowGroup {
+    grid-template-columns: 1fr;
+  }
+}
