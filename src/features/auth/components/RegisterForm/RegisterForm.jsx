@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { registerUser } from '../../services/authService';
 import styles from './RegisterForm.module.css';
 
 export default function RegisterForm() {
@@ -21,14 +22,20 @@ export default function RegisterForm() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (formData.password !== formData.confirmPassword) {
       alert("Las contraseñas no coinciden. Por favor, verifica.");
       return;
     }
-    console.log("Registrando usuario:", formData);
-    navigate('/login');
+    // Quitar confirmPassword del payload
+    const { confirmPassword, ...payload } = formData;
+    try {
+      await registerUser(payload);
+      navigate('/login');
+    } catch (error) {
+      alert(error.message || "No se pudo registrar el usuario");
+    }
   };
 
   return (
