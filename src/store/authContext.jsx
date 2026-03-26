@@ -11,6 +11,7 @@ export function AuthProvider({ children }) {
     useEffect(() => {
         const stored = localStorage.getItem("auth");
 
+        //valida que exista un token de autenticacion en el local storage
         if (stored) {
             const parsed = JSON.parse(stored);
 
@@ -21,6 +22,7 @@ export function AuthProvider({ children }) {
 
                 // Validar expiración
                 if (payload.exp > now) {
+                    // Settea los datos del usuario, token y rol en la variable user
                     setUser(parsed);
                 } else {
                     localStorage.removeItem("auth"); // token expirado
@@ -33,6 +35,7 @@ export function AuthProvider({ children }) {
 
     // Login
     const login = (data) => {
+        // Uso de roles especificos de nuestro proyecto
         const roleMap = {
             ROLE_Admin: "admin",
             ROLE_Mecanico: "mecanico",
@@ -41,6 +44,7 @@ export function AuthProvider({ children }) {
 
         const roleRaw = data.roles?.[0];
 
+        // Crea nuevos datos que se almacenaran en la variable user
         const userData = {
             username: data.usuario,
             token: data.token,
