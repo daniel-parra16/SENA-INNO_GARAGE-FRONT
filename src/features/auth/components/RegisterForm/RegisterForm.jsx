@@ -5,12 +5,12 @@ import styles from './RegisterForm.module.css';
 
 export default function RegisterForm() {
   const [formData, setFormData] = useState({
-    documentType: '',
-    documentNumber: '',
+    tipoDocumento: '',
+    numeroDocumento: '',
     nombres: '',
     apellidos: '',
-    phone: '',
-    email: '',
+    telefono: '',
+    correo: '',
     password: '',
     confirmPassword: ''
   });
@@ -46,12 +46,12 @@ export default function RegisterForm() {
 
       <div className={styles.rowGroup}>
         <div className={styles.formGroup}>
-          <label htmlFor="documentType" className={styles.label}>Tipo de Documento</label>
+          <label htmlFor="tipoDocumento" className={styles.label}>Tipo de Documento</label>
           <select
-            id="documentType"
-            name="documentType"
+            id="tipoDocumento"
+            name="tipoDocumento"
             className={styles.input}
-            value={formData.documentType}
+            value={formData.tipoDocumento}
             onChange={handleChange}
             required
           >
@@ -59,19 +59,19 @@ export default function RegisterForm() {
             <option value="CC">Cédula de Ciudadanía</option>
             <option value="TI">Tarjeta de Identidad</option>
             <option value="CE">Cédula de Extranjería</option>
-            <option value="PP">Pasaporte</option>
+            <option value="PASAPORTE">Pasaporte</option>
           </select>
         </div>
 
         <div className={styles.formGroup}>
-          <label htmlFor="documentNumber" className={styles.label}>Número de Documento</label>
+          <label htmlFor="numeroDocumento" className={styles.label}>Número de Documento</label>
           <input
             type="text"
-            id="documentNumber"
-            name="documentNumber"
+            id="numeroDocumento"
+            name="numeroDocumento"
             className={styles.input}
             placeholder="Ej: 1234567890"
-            value={formData.documentNumber}
+            value={formData.numeroDocumento}
             onChange={handleChange}
             required
           />
@@ -106,28 +106,28 @@ export default function RegisterForm() {
         </div>
 
         <div className={styles.formGroup}>
-          <label htmlFor="phone" className={styles.label}>Teléfono</label>
+          <label htmlFor="telefono" className={styles.label}>Teléfono</label>
           <input
             type="tel"
-            id="phone"
-            name="phone"
+            id="telefono"
+            name="telefono"
             className={styles.input}
             placeholder="Ej: 3001234567"
-            value={formData.phone}
+            value={formData.telefono}
             onChange={handleChange}
             required
           />
         </div>
 
         <div className={styles.formGroup}>
-          <label htmlFor="email" className={styles.label}>Correo Electrónico</label>
+          <label htmlFor="correo" className={styles.label}>Correo Electrónico</label>
           <input
             type="email"
-            id="email"
-            name="email"
+            id="correo"
+            name="correo"
             className={styles.input}
             placeholder="ejemplo@correo.com"
-            value={formData.email}
+            value={formData.correo}
             onChange={handleChange}
             required
           />
@@ -150,7 +150,7 @@ export default function RegisterForm() {
               value={formData.password}
               onChange={handleChange}
               required
-              minLength="6"
+              minLength="8"
             />
             <button
               type="button"
@@ -174,7 +174,7 @@ export default function RegisterForm() {
               value={formData.confirmPassword}
               onChange={handleChange}
               required
-              minLength="6"
+              minLength="8"
             />
             <button
               type="button"
