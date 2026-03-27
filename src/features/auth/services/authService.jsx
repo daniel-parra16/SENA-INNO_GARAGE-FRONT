@@ -7,3 +7,10 @@ export async function registerUser(payload) {
 		body: payload
 	});
 }
+// Servicio para iniciar sesion del usuario
+export async function loginUser(payload) {
+	return apiFetch('/auth/login', {
+		method: 'POST',
+		body: payload
+	});
+}

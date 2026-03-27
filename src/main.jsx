@@ -5,6 +5,7 @@ import './index.css';
 import './styles/global.css';
 import './styles/variables.css';
 import { AuthProvider } from './store/authContext.jsx';
+import { BrowserRouter } from 'react-router-dom';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>

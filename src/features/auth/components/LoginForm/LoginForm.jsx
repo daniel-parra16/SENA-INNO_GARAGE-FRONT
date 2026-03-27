@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import styles from './LoginForm.module.css';
+import { loginUser } from '../../services/authService';
 
 export default function LoginForm() {
   const [username, setUsername] = useState('');
@@ -9,6 +10,14 @@ export default function LoginForm() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    let data = {
+      numeroDocumento: username,
+      password: password
+    }
+
+    loginUser(data);
+
     // In a real app, you would authenticate here.
     console.log('Login attempt', { username, password });
     // Navigate to dashboard on success
