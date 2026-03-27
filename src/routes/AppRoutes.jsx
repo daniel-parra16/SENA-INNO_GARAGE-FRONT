@@ -1,12 +1,12 @@
 import { Route, Routes } from 'react-router-dom';
 import MainLayout from '../components/layout/MainLayout';
-import LoginView from '../features/auth/index';
+import LoginView from '../features/auth/Index';
 import RegisterView from '../features/auth/RegisterView';
-import CotizacionesView from '../features/cotizaciones/index';
-import DashboardView from '../features/dashboard/index';
-import InventarioView from '../features/inventario/index.jsx';
-import OrdenesView from '../features/ordenes/index';
-import UsuariosView from '../features/usuarios/index';
+import CotizacionesView from '../features/cotizaciones/Index';
+import DashboardView from '../features/dashboard/Index';
+import InventarioView from '../features/inventario/Index.jsx';
+import OrdenesView from '../features/ordenes/Index';
+import UsuariosView from '../features/usuarios/Index';
 
 export default function AppRoutes() {
   return (

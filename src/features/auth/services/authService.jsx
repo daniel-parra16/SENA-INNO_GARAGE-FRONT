@@ -1,4 +1,4 @@
-import { apiFetch } from '../../../api/api';
+import { apiFetch } from '../../../api/AuthApi';
 
 // Servicio para registrar usuario
 export async function registerUser(payload) {
