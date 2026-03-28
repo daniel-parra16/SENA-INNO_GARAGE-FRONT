@@ -14,7 +14,6 @@ export default function RegisterView() {
               <img src="/src/assets/images/LogoInnoGarageFondoAzul.png" alt="Fondo Inno Garage" className={styles.imgIG} />
             </div>
             <h1 className={styles.title}>Crear una cuenta</h1>
-            <p className={styles.subtitle}>Introduce tus datos para comenzar.</p>
           </div>
         </div>
 
