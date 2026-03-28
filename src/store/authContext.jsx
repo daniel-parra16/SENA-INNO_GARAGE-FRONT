@@ -13,10 +13,9 @@ export function AuthProvider({ children }) {
 
         //valida que exista un token de autenticacion en el local storage
         if (stored) {
-            const parsed = JSON.parse(stored);
-
             try {
                 // Decodificar token JWT
+                const parsed = JSON.parse(stored);
                 const payload = JSON.parse(atob(parsed.token.split(".")[1]));
                 const now = Date.now() / 1000;
 

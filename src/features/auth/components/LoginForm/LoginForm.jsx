@@ -2,26 +2,31 @@ import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import styles from './LoginForm.module.css';
 import { loginUser } from '../../services/authService';
+import { useAuth } from '../../../../store/authContext';
 
 export default function LoginForm() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+
+  const { login } = useAuth();
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setError('');
+    setLoading(true);
 
-    let data = {
-      numeroDocumento: username,
-      password: password
+    try {
+      const data = await loginUser({ numeroDocumento: username, password });
+      login(data);         // guarda tokens + usuario en contexto y localStorage
+      navigate('/');
+    } catch (err) {
+      setError(err.message || 'Credenciales incorrectas');
+    } finally {
+      setLoading(false);
     }
-
-    loginUser(data);
-
-    // In a real app, you would authenticate here.
-    console.log('Login attempt', { username, password });
-    // Navigate to dashboard on success
-    navigate('/');
   };
 
   return (
