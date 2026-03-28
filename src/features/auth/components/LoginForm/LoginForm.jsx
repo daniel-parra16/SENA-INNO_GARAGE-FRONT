@@ -19,7 +19,7 @@ export default function LoginForm() {
     setLoading(true);
 
     try {
-      const data = await loginUser({ numeroDocumento: username, password });
+      const data = await loginUser({ numeroDocumento: username, password: password });
       login(data);         // guarda tokens + usuario en contexto y localStorage
       navigate('/');
     } catch (err) {
