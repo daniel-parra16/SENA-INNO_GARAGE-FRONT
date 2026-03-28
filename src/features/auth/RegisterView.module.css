@@ -37,7 +37,7 @@
 }
 
 .header {
-  margin-bottom: clamp(16px, 3vh, 32px);
+  margin-bottom: clamp(10px, 2vh, 26px);
   flex-shrink: 0;
 }
 
@@ -48,10 +48,6 @@
   text-align: center;
 }
 
-.logoBox {
-  margin-bottom: clamp(12px, 2vh, 24px);
-}
-
 .imgIG {
   max-width: 5rem;
 }
@@ -60,7 +56,6 @@
   color: #F8FAFC;
   font-size: clamp(20px, 3.5vh, 24px);
   font-weight: 600;
-  margin-bottom: 8px;
   margin-top: 0;
 }
 

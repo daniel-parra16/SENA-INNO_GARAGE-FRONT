@@ -57,7 +57,7 @@ export default function LoginForm() {
       </div>
 
       <div className={styles.checkboxContainer}>
-        <Link to="/forgotPass" className={styles.forgotPassword} >
+        <Link to="/remember" className={styles.forgotPassword}>
           Olvidaste tu contraseña?
         </Link>
       </div>
