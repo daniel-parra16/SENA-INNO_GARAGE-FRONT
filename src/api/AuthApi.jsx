@@ -38,12 +38,17 @@ export async function apiFetch(endpoint, options = {}) {
   // Separamos body y headers para tratarlos de forma controlada.
   const { body, headers, ...restOptions } = options;
 
+  // Leer el token guardado en localStorage
+  const stored = localStorage.getItem("auth");
+  const accessToken = stored ? JSON.parse(stored).accessToken : null;
+
   const response = await fetch(url, {
     ...restOptions,
     headers: {
       // Header por defecto para JSON
       'Content-Type': 'application/json',
-      // Si envías headers extra, sobrescriben o se agregan aquí
+      // Si hay token, agregarlo al header Authorization
+      ...(accessToken && { 'Authorization': `Bearer ${accessToken}` }),
       ...(headers || {})
     },
     // Si hay body, lo convertimos a JSON string

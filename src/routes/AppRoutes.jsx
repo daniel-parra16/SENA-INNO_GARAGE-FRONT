@@ -10,31 +10,74 @@ import OrdenesView from '../features/ordenes/Index';
 import UsuariosView from '../features/usuarios/Index';
 import { useAuth } from '../store/authContext.jsx';
 
+// Permite que solo accedan los usuarios no logueados.
+function GuestRoute({ children }) {
+  const { user } = useAuth();
+
+  return !user ? children : <Navigate to="/" replace />;
+}
+
+// Proteje las rutas en caso que el usuario no se encuentre logueado.
 function ProtectedRoute({ children }) {
   const { user } = useAuth();
   return user ? children : <Navigate to="/login" replace />;
 }
 
+// Proteje las rutas que requieren un rol específico
+function RoleRoute({ children, roles }) {
+  const { user } = useAuth();
+
+  if (!user) return <Navigate to="/login" replace />;
+
+  if (!roles.includes(user.rol)) {
+    return <Navigate to="/" replace />;
+    // Redirige al dashboard si no tiene el rol requerido
+  }
+
+  return children;
+}
+
 export default function AppRoutes() {
   return (
     <Routes>
-      <Route path="/login" element={<LoginView />} />
-      <Route path="/register" element={<RegisterView />} />
-      <Route path="/remember" element={<RememberView />} />
+      <Route path="/login" element={
+        <GuestRoute>
+          <LoginView />
+        </GuestRoute>
+      } />
 
-      <Route
-        path="/"
-        element={
-          <ProtectedRoute>
-            <MainLayout />
-          </ProtectedRoute>
-        }
-      >
+      <Route path="/register" element={
+        <GuestRoute>
+          <RegisterView />
+        </GuestRoute>
+      } />
+
+      <Route path="/remember" element={
+        <GuestRoute>
+          <RememberView />
+        </GuestRoute>
+      } />
+
+      <Route path="/" element={
+        <ProtectedRoute>
+          <MainLayout />
+        </ProtectedRoute>
+      }>
         <Route index element={<DashboardView />} />
         <Route path="ordenes" element={<OrdenesView />} />
         <Route path="cotizaciones" element={<CotizacionesView />} />
-        <Route path="usuarios" element={<UsuariosView />} />
-        <Route path="inventario" element={<InventarioView />} />
+
+        {/* Solo admin puede ver usuarios e inventario */}
+        <Route path="usuarios" element={
+          <RoleRoute roles={["admin"]}>
+            <UsuariosView />
+          </RoleRoute>
+        } />
+        <Route path="inventario" element={
+          <RoleRoute roles={["admin", "mecanico"]}>
+            <InventarioView />
+          </RoleRoute>
+        } />
       </Route>
     </Routes>
   );
