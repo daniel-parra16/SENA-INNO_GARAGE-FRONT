@@ -1,72 +1,130 @@
 import {
-  Bell,
-  Car,
-  CircleDollarSign,
-  ClipboardList,
-  LayoutGrid,
-  Package,
-  Settings,
-  UserCog,
-  // Users,
-  Wrench
+    Bell,
+    Car,
+    CircleDollarSign,
+    ClipboardList,
+    LayoutGrid,
+    Package,
+    Settings,
+    UserCog,
+    Wrench
 } from 'lucide-react';
 import { NavLink } from 'react-router-dom';
 import styles from './Sidebar.module.css';
+import { useAuth } from '../../../store/authContext';
+
+// Menú completo — cada item tiene los roles que pueden verlo
+const navItems = [
+    {
+        to: '/',
+        icon: <LayoutGrid size={20} />,
+        label: 'Inicio',
+        roles: ['admin', 'mecanico', 'cliente']
+    },
+    {
+        to: '/usuarios',
+        icon: <UserCog size={20} />,
+        label: 'Usuarios',
+        roles: ['admin']
+    },
+    {
+        to: '/vehiculos',
+        icon: <Car size={20} />,
+        label: 'Vehículos',
+        roles: ['admin', 'mecanico']
+    },
+    {
+        to: '/ordenes',
+        icon: <ClipboardList size={20} />,
+        label: 'Órdenes',
+        roles: ['admin', 'mecanico', 'cliente']
+    },
+    {
+        to: '/cotizaciones',
+        icon: <CircleDollarSign size={20} />,
+        label: 'Cotizaciones',
+        roles: ['admin', 'mecanico', 'cliente']
+    },
+    {
+        to: '/inventario',
+        icon: <Package size={20} />,
+        label: 'Inventario',
+        roles: ['admin', 'mecanico']
+    },
+    {
+        to: '/notificaciones',
+        icon: <Bell size={20} />,
+        label: 'Notificaciones',
+        roles: ['admin', 'mecanico', 'cliente'],
+        badge: 3
+    },
+];
+
+// Mapea el rol interno al nombre visible
+const rolLabel = {
+    admin: 'Administrador',
+    mecanico: 'Mecánico',
+    cliente: 'Cliente',
+};
 
 export default function Sidebar() {
-  const navItems = [
-    { to: '/', icon: <LayoutGrid size={20} />, label: 'Inicio' },
-    // { to: '/clientes', icon: <Users size={20} />, label: 'Clientes' },
-    { to: '/usuarios', icon: <UserCog size={20} />, label: 'Usuarios' },
-    { to: '/vehiculos', icon: <Car size={20} />, label: 'Vehiculos' },
-    { to: '/ordenes', icon: <ClipboardList size={20} />, label: 'Ordenes' },
-    { to: '/cotizaciones', icon: <CircleDollarSign size={20} />, label: 'Cotizaciones' },
-    { to: '/inventario', icon: <Package size={20} />, label: 'Inventario' },
-    { to: '/notificaciones', icon: <Bell size={20} />, label: 'Notificaciones', badge: 3 },
-  ];
+    const { user } = useAuth();
 
-  return (
-    <div className={styles.sidebarContainer}>
-      <div className={styles.logoSection}>
-        <div className={styles.logoIcon}>
-          <Wrench size={20} color="white" />
-        </div>
-        <div className={styles.logoText}>
-          <span className={styles.brand}>AutoFix Pro</span>
-          <span className={styles.subtitle}>Repair Management</span>
-        </div>
-      </div>
+    // Filtra los items según el rol del usuario
+    const itemsVisibles = navItems.filter(item =>
+        item.roles.includes(user?.rol)
+    );
 
-      <nav className={styles.navMenu}>
-        {navItems.map((item) => (
-          <NavLink
-            key={item.to}
-            to={item.to}
-            className={({ isActive }) => 
-              `${styles.navItem} ${isActive ? styles.active : ''}`
-            }
-          >
-            {item.icon}
-            <span className={styles.linkLabel}>{item.label}</span>
-            {item.badge && <span className={styles.badge}>{item.badge}</span>}
-          </NavLink>
-        ))}
-      </nav>
+    return (
+        <div className={styles.sidebarContainer}>
+            <div className={styles.logoSection}>
+                <div className={styles.logoIcon}>
+                    <Wrench size={20} color="white" />
+                </div>
+                <div className={styles.logoText}>
+                    <span className={styles.brand}>InnoGarage</span>
+                    <span className={styles.subtitle}>Repair Management</span>
+                </div>
+            </div>
 
-      <div className={styles.footerSection}>
-        <div className={styles.userProfile}>
-          <div className={styles.avatar}>
-            <div className={styles.avatarPlaceholder}></div>
-          </div>
-          <div className={styles.userInfo}>
-            <span className={styles.userName}>Alex Thompson</span>
-            <span className={styles.userRole}>Shop Manager</span>
-          </div>
-          <button className={styles.settingsBtn}>
-            <Settings size={20} />
-          </button>
+            <nav className={styles.navMenu}>
+                {itemsVisibles.map((item) => (
+                    <NavLink
+                        key={item.to}
+                        to={item.to}
+                        end={item.to === '/'}
+                        className={({ isActive }) =>
+                            `${styles.navItem} ${isActive ? styles.active : ''}`
+                        }
+                    >
+                        {item.icon}
+                        <span className={styles.linkLabel}>{item.label}</span>
+                        {item.badge && (
+                            <span className={styles.badge}>{item.badge}</span>
+                        )}
+                    </NavLink>
+                ))}
+            </nav>
+
+            <div className={styles.footerSection}>
+                <div className={styles.userProfile}>
+                    <div className={styles.avatar}>
+                        <div className={styles.avatarPlaceholder}>
+                            {/* Inicial del nombre */}
+                            {user?.nombres?.charAt(0).toUpperCase()}
+                        </div>
+                    </div>
+                    <div className={styles.userInfo}>
+                        <span className={styles.userName}>{user?.nombres}</span>
+                        <span className={styles.userRole}>
+                            {rolLabel[user?.rol] || user?.rol}
+                        </span>
+                    </div>
+                    <button className={styles.settingsBtn}>
+                        <Settings size={20} />
+                    </button>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-  );
+    );
 }

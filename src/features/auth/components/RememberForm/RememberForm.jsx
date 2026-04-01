@@ -1,25 +1,64 @@
 import { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import styles from './RememberForm.module.css';
+import { solicitarRecuperacion } from '../../services/authService';
+import LoadingModal from '../../../../components/ui/LoadingModal/LoadingModal';
+import Modal from '../../../../components/ui/Modal/modal';
 
 export default function RememberForm() {
     const [email, setEmail] = useState("");
+    const [isLoading, setIsLoading] = useState(false);
+    const [showModal, setShowModal] = useState(false);
+    const [modalConfig, setModalConfig] = useState({ title: '', message: '', type: 'info' });
     const navigate = useNavigate();
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        alert("Si el correo está registrado, recibirás un enlace para restablecer tu contraseña.");
-        navigate("/login");
+        setIsLoading(true);
+
+        try {
+            await solicitarRecuperacion(email);
+            // Siempre mostramos el mismo mensaje — no revelamos si el correo existe
+            setModalConfig({
+                title: 'Correo enviado',
+                message: 'Si el correo está registrado, recibirás un enlace para restablecer tu contraseña.',
+                type: 'success'
+            });
+            setShowModal(true);
+        } catch {
+            // Incluso si falla mostramos el mismo mensaje por seguridad
+            setModalConfig({
+                title: 'Correo enviado',
+                message: 'Si el correo está registrado, recibirás un enlace para restablecer tu contraseña.',
+                type: 'success'
+            });
+            setShowModal(true);
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+    const handleCloseModal = () => {
+        setShowModal(false);
+        navigate('/login');
     };
 
     return (
         <>
-            <div className={styles['forgot-card']} >
+            {isLoading && <LoadingModal message="Enviando enlace..." />}
+            {showModal && (
+                <Modal
+                    title={modalConfig.title}
+                    message={modalConfig.message}
+                    type={modalConfig.type}
+                    onClose={handleCloseModal}
+                />
+            )}
 
-                {/* Banner superior */}
-                <div className={styles['card-banner']} >
+            <div className={styles['forgot-card']}>
+                {/* Banner superior — sin cambios */}
+                <div className={styles['card-banner']}>
                     <div className={styles['banner-icon']}>
-                        {/* Ícono SVG */}
                         <svg width="52" height="52" viewBox="0 0 52 52" fill="none">
                             <circle cx="26" cy="26" r="25" stroke="rgba(255,255,255,0.15)" strokeWidth="1" />
                             <circle cx="26" cy="26" r="18" fill="rgba(255,255,255,0.07)" stroke="rgba(255,255,255,0.2)" strokeWidth="1" />
@@ -35,10 +74,10 @@ export default function RememberForm() {
                     <div className={styles['banner-tag']}>
                         <span>🔒</span> Protocolo de Seguridad
                     </div>
-                </div >
+                </div>
 
                 {/* Cuerpo */}
-                <div className={styles['card-body']} >
+                <div className={styles['card-body']}>
                     <h2 className={styles['forgot-title']}>Recuperar Contraseña</h2>
                     <p className={styles['forgot-subtitle']}>
                         No te preocupes, te ayudaremos a volver en poco tiempo.
@@ -61,8 +100,7 @@ export default function RememberForm() {
                                 onChange={(e) => setEmail(e.target.value)}
                             />
                         </div>
-
-                        <button className={styles['btn-send']} type="submit">
+                        <button className={styles['btn-send']} type="submit" disabled={isLoading}>
                             Enviar enlace de recuperación &nbsp;→
                         </button>
                     </form>
@@ -75,8 +113,8 @@ export default function RememberForm() {
                     >
                         ← Volver al inicio de sesión
                     </button>
-                </div >
-            </div >
+                </div>
+            </div>
 
             <div className={styles['footer-badges']}>
                 <div className={styles['badge-item']}>
@@ -88,5 +126,5 @@ export default function RememberForm() {
                 </div>
             </div>
         </>
-    )
+    );
 }

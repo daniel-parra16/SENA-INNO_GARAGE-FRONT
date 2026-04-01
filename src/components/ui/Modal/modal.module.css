@@ -1,0 +1,81 @@
+/* Fondo oscuro */
+.modalOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+/* Contenedor del modal */
+.modalContent {
+    background: #ffffff;
+    padding: 25px;
+    border-radius: 10px;
+    width: 320px;
+    text-align: center;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+
+    /* Animación */
+    animation: fadeInScale 0.3s ease;
+}
+
+/* Título */
+.modalTitle {
+    color: #1392EC;
+    margin-bottom: 10px;
+    font-weight: 700;
+}
+
+/* Mensaje */
+.modalMessage {
+    color: #333;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+/* Botón */
+.modalButton {
+    margin-top: 15px;
+    padding: 8px 16px;
+    border: none;
+    background: #1392EC;
+    color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.modalButton:hover {
+    background: #0981d6;
+}
+
+.success {
+    border-top: 5px solid #22c55e;
+}
+
+.error {
+    border-top: 5px solid #ef4444;
+}
+
+.info {
+    border-top: 5px solid #1392EC;
+}
+
+/* Animación */
+@keyframes fadeInScale {
+    from {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}

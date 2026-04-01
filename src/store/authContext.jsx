@@ -1,60 +1,72 @@
 import { createContext, useContext, useEffect, useState } from "react";
 
-// Creamos el contexto
 export const AuthContext = createContext();
 
-// Provider (envuelve toda la app)
+// Función auxiliar para decodificar el payload del JWT
+function decodeJWT(token) {
+    try {
+        const payload = token.split(".")[1];
+        return JSON.parse(atob(payload));
+    } catch {
+        return null;
+    }
+}
+
+// Mapea el rol del backend al nombre corto para el frontend
+const roleMap = {
+    ROLE_ADMIN: "admin",
+    ROLE_MECANICO: "mecanico",
+    ROLE_CLIENTE: "cliente",
+};
+
 export function AuthProvider({ children }) {
     const [user, setUser] = useState(null);
 
-    // Cargar sesión al iniciar la app
+    // Cargar sesión guardada al iniciar la app
     useEffect(() => {
         const stored = localStorage.getItem("auth");
+        if (!stored) return;
 
-        //valida que exista un token de autenticacion en el local storage
-        if (stored) {
-            try {
-                // Decodificar token JWT
-                const parsed = JSON.parse(stored);
-                const payload = JSON.parse(atob(parsed.token.split(".")[1]));
-                const now = Date.now() / 1000;
+        try {
+            const parsed = JSON.parse(stored);
+            const payload = decodeJWT(parsed.accessToken);
 
-                // Validar expiración
-                if (payload.exp > now) {
-                    // Settea los datos del usuario, token y rol en la variable user
-                    setUser(parsed);
-                } else {
-                    localStorage.removeItem("auth"); // token expirado
-                }
-            } catch (error) {
-                localStorage.removeItem("auth"); // token inválido
+            if (!payload) {
+                localStorage.removeItem("auth");
+                return;
             }
+
+            // Verificar que el accessToken no haya expirado
+            const now = Date.now() / 1000;
+            if (payload.exp > now) {
+                setUser(parsed);
+            } else {
+                localStorage.removeItem("auth");
+            }
+        } catch {
+            localStorage.removeItem("auth");
         }
     }, []);
 
-    // Login
+    // Login — recibe LoginResponse { accessToken, refreshToken, tipo }
     const login = (data) => {
-        // Uso de roles especificos de nuestro proyecto
-        const roleMap = {
-            ROLE_Admin: "admin",
-            ROLE_Mecanico: "mecanico",
-            ROLE_Cliente: "cliente",
-        };
+        // Decodificar el accessToken para leer rol y nombre
+        const payload = decodeJWT(data.accessToken);
 
-        const roleRaw = data.roles?.[0];
-
-        // Crea nuevos datos que se almacenaran en la variable user
         const userData = {
-            username: data.usuario,
-            token: data.token,
-            role: roleMap[roleRaw] || "cliente",
+            accessToken: data.accessToken,
+            refreshToken: data.refreshToken,
+            tipo: data.tipo,
+            // Leer directamente del payload del JWT
+            nombres: payload?.nombres || "",
+            rol: roleMap[payload?.roles?.[0]] || "cliente",
+            id: payload?.sub || "",
         };
 
         setUser(userData);
         localStorage.setItem("auth", JSON.stringify(userData));
     };
 
-    // 🚪 Logout
     const logout = () => {
         setUser(null);
         localStorage.removeItem("auth");
@@ -67,5 +79,4 @@ export function AuthProvider({ children }) {
     );
 }
 
-// Hook personalizado (forma PRO de usar el contexto)
 export const useAuth = () => useContext(AuthContext);

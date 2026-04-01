@@ -1,0 +1,70 @@
+.container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #0f172a, #1e293b);
+}
+
+.card {
+    background: #ffffff;
+    padding: 40px;
+    border-radius: 16px;
+    text-align: center;
+    width: 100%;
+    max-width: 420px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.titulo {
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.mensaje {
+    font-size: 14px;
+    color: #64748b;
+}
+
+.boton {
+    margin-top: 20px;
+    padding: 12px 20px;
+    background: #1392EC;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.boton:hover {
+    background: #0f7cd1;
+}
+
+.iconExito {
+    font-size: 50px;
+    color: #22c55e;
+    margin-bottom: 15px;
+}
+
+.iconError {
+    font-size: 50px;
+    color: #ef4444;
+    margin-bottom: 15px;
+}
+
+.spinner {
+    width: 45px;
+    height: 45px;
+    border: 4px solid #e5e7eb;
+    border-top: 4px solid #1392EC;
+    border-radius: 50%;
+    margin: 0 auto 15px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}

@@ -15,3 +15,42 @@ export async function loginUser(data) {
 		body: data
 	});
 }
+
+// Refresh token — renueva el accessToken usando el refreshToken
+export async function refreshToken(refreshToken) {
+    return await apiFetch('/auth/refresh', {
+        method: 'POST',
+        body: { refreshToken }
+    });
+}
+
+// Logout — invalida la sesión en el backend
+export async function logoutUser(refreshToken) {
+    return await apiFetch('/auth/logout', {
+        method: 'POST',
+        body: { refreshToken }
+    });
+}
+
+// Servicio para verificar el correo con el token de la URL
+export async function verificarCorreo(token) {
+    return await apiFetch(`/auth/verificar-correo?token=${token}`, {
+        method: 'GET'
+    });
+}
+
+// Solicitar recuperación de contraseña
+export async function solicitarRecuperacion(correo) {
+    return await apiFetch('/auth/recuperar-password', {
+        method: 'POST',
+        body: { correo }
+    });
+}
+
+// Restablecer contraseña con token
+export async function restablecerPassword(data) {
+    return await apiFetch('/auth/nueva-password', {
+        method: 'POST',
+        body: data
+    });
+}

@@ -1,10 +1,12 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { registerUser } from '../../services/AuthService';
-import LoadingModal from '../UI/LoadingModal/LoadingModal';
+import { registerUser } from '../../services/authService';
+import LoadingModal from '../../../../components/ui/LoadingModal/LoadingModal';
 import styles from './RegisterForm.module.css';
+import Modal from '../../../../components/ui/Modal/modal';
 
 export default function RegisterForm() {
+
   const [formData, setFormData] = useState({
     tipoDocumento: '',
     numeroDocumento: '',
@@ -15,9 +17,16 @@ export default function RegisterForm() {
     password: '',
     confirmPassword: ''
   });
+
   const [showPwd, setShowPwd] = useState(false);
   const [showPwd2, setShowPwd2] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [error, setError] = useState('');
+  const [title, setTitle] = useState('');
+  const [type, setType] = useState('info');
+  const [showModal, setShowModal] = useState(false);
+
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -28,189 +37,217 @@ export default function RegisterForm() {
     e.preventDefault();
 
     if (formData.password !== formData.confirmPassword) {
-      alert("Las contraseñas no coinciden. Por favor, verifica.");
+      setError("Las contraseñas no coinciden");
+      setShowModal(true);
       return;
     }
-    // Quitar confirmPassword del payload
+
     const { confirmPassword, ...payload } = formData;
 
     setIsLoading(true);
 
     try {
       await registerUser(payload);
-      navigate('/login');
-    } catch (error) {
-      alert(error.message || "No se pudo registrar el usuario");
-    } finally {
+
+      setTitle("Success");
+      setType("success");
+      setError("Usuario registrado correctamente. Verifica tu correo.");
+      setIsSuccess(true);
+      setShowModal(true);
       setIsLoading(false);
+      
+    } catch (err) {
+      setError(err.message || "No se pudo registrar el usuario");
+      setTitle("Error");
+      setType("error");
+      setIsSuccess(false);
+      setShowModal(true);
+      setIsLoading(false);
+
+    }
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+
+    if (isSuccess) {
+      navigate('/login');
     }
   };
 
   return (
-      <>
-        {/* Modal de carga — se renderiza encima de todo mientras isLoading sea true */}
-        {isLoading && <LoadingModal message="Creando tu cuenta..." />}
-  
-        <form className={styles.formContainer} onSubmit={handleSubmit}>
-  
-          {/* INFORMACIÓN PERSONAL */}
-          <p className={styles.sectionTitle}>Información Personal</p>
-  
-          <div className={styles.rowGroup}>
-            <div className={styles.formGroup}>
-              <label htmlFor="tipoDocumento" className={styles.label}>Tipo de Documento</label>
-              <select
-                id="tipoDocumento"
-                name="tipoDocumento"
+    <>
+      {isLoading && <LoadingModal message="Creando tu cuenta..." />}
+
+      {showModal && (
+        <Modal
+          title={title}
+          message={error}
+          onClose={handleCloseModal}
+          type={type}
+        />
+      )}
+
+      <form className={styles.formContainer} onSubmit={handleSubmit}>
+
+        <p className={styles.sectionTitle}>Información Personal</p>
+
+        <div className={styles.rowGroup}>
+          <div className={styles.formGroup}>
+            <label htmlFor="tipoDocumento" className={styles.label}>Tipo de Documento</label>
+            <select
+              id="tipoDocumento"
+              name="tipoDocumento"
+              className={styles.input}
+              value={formData.tipoDocumento}
+              onChange={handleChange}
+              required
+            >
+              <option value="" disabled hidden></option>
+              <option value="CC">Cédula de Ciudadanía</option>
+              <option value="TI">Tarjeta de Identidad</option>
+              <option value="CE">Cédula de Extranjería</option>
+              <option value="PASAPORTE">Pasaporte</option>
+            </select>
+          </div>
+
+          <div className={styles.formGroup}>
+            <label htmlFor="numeroDocumento" className={styles.label}>Número de Documento</label>
+            <input
+              type="text"
+              id="numeroDocumento"
+              name="numeroDocumento"
+              className={styles.input}
+              placeholder="Ej: 1234567890"
+              value={formData.numeroDocumento}
+              onChange={handleChange}
+              required
+            />
+          </div>
+
+          <div className={styles.formGroup}>
+            <label htmlFor="nombres" className={styles.label}>Nombres</label>
+            <input
+              type="text"
+              id="nombres"
+              name="nombres"
+              className={styles.input}
+              placeholder="Ej: Juan Andrés"
+              value={formData.nombres}
+              onChange={handleChange}
+              required
+            />
+          </div>
+
+          <div className={styles.formGroup}>
+            <label htmlFor="apellidos" className={styles.label}>Apellidos</label>
+            <input
+              type="text"
+              id="apellidos"
+              name="apellidos"
+              className={styles.input}
+              placeholder="Ej: Pérez García"
+              value={formData.apellidos}
+              onChange={handleChange}
+              required
+            />
+          </div>
+
+          <div className={styles.formGroup}>
+            <label htmlFor="telefono" className={styles.label}>Teléfono</label>
+            <input
+              type="tel"
+              id="telefono"
+              name="telefono"
+              className={styles.input}
+              placeholder="Ej: 3001234567"
+              value={formData.telefono}
+              onChange={handleChange}
+              required
+            />
+          </div>
+
+          <div className={styles.formGroup}>
+            <label htmlFor="correo" className={styles.label}>Correo Electrónico</label>
+            <input
+              type="email"
+              id="correo"
+              name="correo"
+              className={styles.input}
+              placeholder="ejemplo@correo.com"
+              value={formData.correo}
+              onChange={handleChange}
+              required
+            />
+          </div>
+        </div>
+
+        <p className={styles.sectionTitle}>Seguridad</p>
+
+        <div className={styles.rowGroup}>
+          <div className={styles.formGroup}>
+            <label htmlFor="password" className={styles.label}>Contraseña</label>
+            <div className={styles.passwordWrapper}>
+              <input
+                type={showPwd ? 'text' : 'password'}
+                id="password"
+                name="password"
                 className={styles.input}
-                value={formData.tipoDocumento}
+                placeholder="••••••••"
+                value={formData.password}
                 onChange={handleChange}
                 required
+                minLength="8"
+              />
+              <button
+                type="button"
+                className={styles.togglePwd}
+                onClick={() => setShowPwd(s => !s)}
+                tabIndex={-1}
               >
-                <option value="" disabled hidden></option>
-                <option value="CC">Cédula de Ciudadanía</option>
-                <option value="TI">Tarjeta de Identidad</option>
-                <option value="CE">Cédula de Extranjería</option>
-                <option value="PASAPORTE">Pasaporte</option>
-              </select>
-            </div>
-  
-            <div className={styles.formGroup}>
-              <label htmlFor="numeroDocumento" className={styles.label}>Número de Documento</label>
-              <input
-                type="text"
-                id="numeroDocumento"
-                name="numeroDocumento"
-                className={styles.input}
-                placeholder="Ej: 1234567890"
-                value={formData.numeroDocumento}
-                onChange={handleChange}
-                required
-              />
-            </div>
-  
-            <div className={styles.formGroup}>
-              <label htmlFor="nombres" className={styles.label}>Nombres</label>
-              <input
-                type="text"
-                id="nombres"
-                name="nombres"
-                className={styles.input}
-                placeholder="Ej: Juan Andrés"
-                value={formData.nombres}
-                onChange={handleChange}
-                required
-              />
-            </div>
-  
-            <div className={styles.formGroup}>
-              <label htmlFor="apellidos" className={styles.label}>Apellidos</label>
-              <input
-                type="text"
-                id="apellidos"
-                name="apellidos"
-                className={styles.input}
-                placeholder="Ej: Pérez García"
-                value={formData.apellidos}
-                onChange={handleChange}
-                required
-              />
-            </div>
-  
-            <div className={styles.formGroup}>
-              <label htmlFor="telefono" className={styles.label}>Teléfono</label>
-              <input
-                type="tel"
-                id="telefono"
-                name="telefono"
-                className={styles.input}
-                placeholder="Ej: 3001234567"
-                value={formData.telefono}
-                onChange={handleChange}
-                required
-              />
-            </div>
-  
-            <div className={styles.formGroup}>
-              <label htmlFor="correo" className={styles.label}>Correo Electrónico</label>
-              <input
-                type="email"
-                id="correo"
-                name="correo"
-                className={styles.input}
-                placeholder="ejemplo@correo.com"
-                value={formData.correo}
-                onChange={handleChange}
-                required
-              />
+                {showPwd ? 'Ocultar' : 'Mostrar'}
+              </button>
             </div>
           </div>
-  
-          {/* SEGURIDAD */}
-          <p className={styles.sectionTitle}>Seguridad</p>
-  
-          <div className={styles.rowGroup}>
-            <div className={styles.formGroup}>
-              <label htmlFor="password" className={styles.label}>Contraseña</label>
-              <div className={styles.passwordWrapper}>
-                <input
-                  type={showPwd ? 'text' : 'password'}
-                  id="password"
-                  name="password"
-                  className={styles.input}
-                  placeholder="••••••••"
-                  value={formData.password}
-                  onChange={handleChange}
-                  required
-                  minLength="8"
-                />
-                <button
-                  type="button"
-                  className={styles.togglePwd}
-                  onClick={() => setShowPwd(s => !s)}
-                >
-                  {showPwd ? 'Ocultar' : 'Mostrar'}
-                </button>
-              </div>
-            </div>
-  
-            <div className={styles.formGroup}>
-              <label htmlFor="confirmPassword" className={styles.label}>Confirmar Contraseña</label>
-              <div className={styles.passwordWrapper}>
-                <input
-                  type={showPwd2 ? 'text' : 'password'}
-                  id="confirmPassword"
-                  name="confirmPassword"
-                  className={styles.input}
-                  placeholder="••••••••"
-                  value={formData.confirmPassword}
-                  onChange={handleChange}
-                  required
-                  minLength="8"
-                />
-                <button
-                  type="button"
-                  className={styles.togglePwd}
-                  onClick={() => setShowPwd2(s => !s)}
-                >
-                  {showPwd2 ? 'Ocultar' : 'Mostrar'}
-                </button>
-              </div>
+
+          <div className={styles.formGroup}>
+            <label htmlFor="confirmPassword" className={styles.label}>Confirmar Contraseña</label>
+            <div className={styles.passwordWrapper}>
+              <input
+                type={showPwd2 ? 'text' : 'password'}
+                id="confirmPassword"
+                name="confirmPassword"
+                className={styles.input}
+                placeholder="••••••••"
+                value={formData.confirmPassword}
+                onChange={handleChange}
+                required
+                minLength="8"
+              />
+              <button
+                type="button"
+                className={styles.togglePwd}
+                onClick={() => setShowPwd2(s => !s)}
+                tabIndex={-1}
+              >
+                {showPwd2 ? 'Ocultar' : 'Mostrar'}
+              </button>
             </div>
           </div>
-  
-          <button type="submit" className={styles.submitBtn}>
-            Crear Cuenta →
-          </button>
-  
-          <div className={styles.footerLink}>
-            <span className={styles.footerText}>¿Ya tienes una cuenta? </span>
-            <Link to="/login" className={styles.link}>
-              Inicia sesión
-            </Link>
-          </div>
-  
-        </form>
-      </>
-    );
+        </div>
+
+        <button type="submit" className={styles.submitBtn}>
+          Crear Cuenta →
+        </button>
+
+        <div className={styles.footerLink}>
+          <span className={styles.footerText}>¿Ya tienes una cuenta? </span>
+          <Link to="/login" className={styles.link}>
+            Inicia sesión
+          </Link>
+        </div>
+
+      </form>
+    </>
+  );
 }
