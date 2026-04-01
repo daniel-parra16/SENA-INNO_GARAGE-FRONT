@@ -11,6 +11,7 @@ export default function LoginForm() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [title, setTitle] = useState('');
+  const [type, setType] = useState('info');
   const [showModal, setShowModal] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -29,6 +30,7 @@ export default function LoginForm() {
       navigate('/');
     } catch (err) {
       setTitle("Error");
+      setType("error");
       setError(err.message || 'Credenciales incorrectas');
       setShowModal(true);
     } finally {
@@ -42,7 +44,7 @@ export default function LoginForm() {
       {isLoading && <LoadingModal message="Validando Credenciales..." />}
 
       {/* Modal que muestra el error en pantalla */}
-      {showModal && <Modal title={title} message={error} onClose={() => setShowModal(false)}/>}
+      {showModal && <Modal title={title} message={error} onClose={() => setShowModal(false)} type={type}/>}
 
       <form onSubmit={handleSubmit}>
         <div className={styles.formGroup}>

@@ -9,6 +9,8 @@ import InventarioView from '../features/inventario/Index.jsx';
 import OrdenesView from '../features/ordenes/Index';
 import UsuariosView from '../features/usuarios/Index';
 import { useAuth } from '../store/authContext.jsx';
+import VerifyEmailView from '../features/auth/VerifyEmailView.jsx';
+import NewPasswordView from '../features/auth/NewPasswordView.jsx';
 
 // Permite que solo accedan los usuarios no logueados.
 function GuestRoute({ children }) {
@@ -57,6 +59,10 @@ export default function AppRoutes() {
           <RememberView />
         </GuestRoute>
       } />
+
+      <Route path="/verificar-correo" element={<VerifyEmailView />} />
+
+      <Route path="/nueva-password" element={<NewPasswordView />} />
 
       <Route path="/" element={
         <ProtectedRoute>

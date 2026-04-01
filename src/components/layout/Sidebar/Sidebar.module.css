@@ -99,7 +99,8 @@
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background-color: #fca5a5; /* similar to image avatar color */
+  background-color: #fca5a5; 
+  padding-top: 0.25rem;
 }
 
 .userInfo {

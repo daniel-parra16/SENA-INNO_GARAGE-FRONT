@@ -24,6 +24,7 @@ export default function RegisterForm() {
   const [isSuccess, setIsSuccess] = useState(false);
   const [error, setError] = useState('');
   const [title, setTitle] = useState('');
+  const [type, setType] = useState('info');
   const [showModal, setShowModal] = useState(false);
 
   const navigate = useNavigate();
@@ -49,6 +50,7 @@ export default function RegisterForm() {
       await registerUser(payload);
 
       setTitle("Success");
+      setType("success");
       setError("Usuario registrado correctamente. Verifica tu correo.");
       setIsSuccess(true);
       setShowModal(true);
@@ -57,6 +59,7 @@ export default function RegisterForm() {
     } catch (err) {
       setError(err.message || "No se pudo registrar el usuario");
       setTitle("Error");
+      setType("error");
       setIsSuccess(false);
       setShowModal(true);
       setIsLoading(false);
@@ -81,6 +84,7 @@ export default function RegisterForm() {
           title={title}
           message={error}
           onClose={handleCloseModal}
+          type={type}
         />
       )}
 

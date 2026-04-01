@@ -55,6 +55,18 @@
     background: #0981d6;
 }
 
+.success {
+    border-top: 5px solid #22c55e;
+}
+
+.error {
+    border-top: 5px solid #ef4444;
+}
+
+.info {
+    border-top: 5px solid #1392EC;
+}
+
 /* Animación */
 @keyframes fadeInScale {
     from {
