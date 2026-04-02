@@ -89,36 +89,10 @@
   border-top: 1px solid var(--border-color);
 }
 
-.userProfile {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
 
-.avatarPlaceholder {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background-color: #fca5a5; 
-  padding-top: 0.25rem;
-}
 
-.userInfo {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-}
 
-.userName {
-  font-size: 0.9rem;
-  font-weight: 600;
-  color: var(--text-primary);
-}
 
-.userRole {
-  font-size: 0.75rem;
-  color: var(--text-secondary);
-}
 
 .settingsBtn {
   background: transparent;
@@ -126,8 +100,8 @@
   color: var(--text-secondary);
   cursor: pointer;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  align-items: left;
+  justify-content:left;
   padding: 4px;
 }
 

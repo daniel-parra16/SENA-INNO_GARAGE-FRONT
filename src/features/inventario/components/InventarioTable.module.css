@@ -17,9 +17,12 @@
 }
 
 .table th {
-  background-color: var(--bg-primary);
+  background-color: var(--table-head-bg);
   color: var(--text-secondary);
   font-weight: 600;
+}
+.table td {
+  background-color: var(--table-body-bg);
 }
 
 .table tbody tr:hover {

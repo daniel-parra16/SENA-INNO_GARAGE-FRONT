@@ -1,9 +1,8 @@
 .tableContainer {
-    background-color: var(--bg-secondary);
+    background-color: var(--table-head-bg);
     border: 1px solid var(--border-color);
     border-radius: var(--radius-md);
     overflow-x: auto;
-    margin-top: var(--spacing-lg);
 }
 
 .table {
@@ -26,6 +25,7 @@
     padding: var(--spacing-md);
     border-bottom: 1px solid var(--border-color);
     vertical-align: middle;
+    background-color: var(--table-body-bg);
 }
 
 .table tbody tr:last-child td {

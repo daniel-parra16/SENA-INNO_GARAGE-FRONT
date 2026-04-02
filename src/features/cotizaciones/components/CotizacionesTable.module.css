@@ -49,13 +49,14 @@
   text-align: left;
 }
 
+
 .table th {
   padding: 16px 20px;
   color: var(--text-secondary);
   font-size: 0.875rem;
   font-weight: 500;
   border-bottom: 1px solid var(--border-color);
-  background-color: rgba(30, 41, 59, 0.5); /* subtle header bg */
+  background-color: var(--table-head-bg); /* subtle header bg */
 }
 
 .table td {
@@ -63,6 +64,7 @@
   color: var(--text-primary);
   font-size: 0.875rem;
   border-bottom: 1px solid var(--border-color);
+  background-color: var(--table-body-bg); /* subtle body bg */
 }
 
 .table tr:hover td {

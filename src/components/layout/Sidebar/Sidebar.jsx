@@ -71,9 +71,11 @@ export default function Sidebar() {
     const { user } = useAuth();
 
     // Filtra los items según el rol del usuario
-    const itemsVisibles = navItems.filter(item =>
-        item.roles.includes(user?.rol)
-    );
+    // const itemsVisibles = navItems.filter(item =>
+    //     item.roles.includes(user?.rol)
+    // );
+    // Mostrando todos los módulos sin filtrar por rol
+    const itemsVisibles = navItems;
 
     return (
         <div className={styles.sidebarContainer}>
@@ -108,18 +110,8 @@ export default function Sidebar() {
 
             <div className={styles.footerSection}>
                 <div className={styles.userProfile}>
-                    <div className={styles.avatar}>
-                        <div className={styles.avatarPlaceholder}>
-                            {/* Inicial del nombre */}
-                            {user?.nombres?.charAt(0).toUpperCase()}
-                        </div>
-                    </div>
-                    <div className={styles.userInfo}>
-                        <span className={styles.userName}>{user?.nombres}</span>
-                        <span className={styles.userRole}>
-                            {rolLabel[user?.rol] || user?.rol}
-                        </span>
-                    </div>
+                    
+                    
                     <button className={styles.settingsBtn}>
                         <Settings size={20} />
                     </button>

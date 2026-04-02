@@ -49,6 +49,9 @@
   border-collapse: collapse;
   text-align: left;
 }
+.table thead {
+  background-color: var(--table-head-bg);
+}
 
 .table th {
   padding: 12px 24px;
@@ -64,6 +67,9 @@
   padding: 16px 24px;
   border-bottom: 1px solid var(--border-color);
   vertical-align: middle;
+}
+.table tbody {
+  background-color: var(--table-body-bg);
 }
 
 .table tbody tr:last-child td {

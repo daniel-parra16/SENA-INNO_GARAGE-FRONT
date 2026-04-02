@@ -65,12 +65,15 @@
   justify-content: center;
 }
 
-.avatarPlaceholder {
+
+.avatarCircle {
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background-color: #fca5a5;
-  padding-top: 0.25rem;
+  background: #29569f;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .userInfo {

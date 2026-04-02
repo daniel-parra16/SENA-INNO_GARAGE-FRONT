@@ -1,63 +1,70 @@
 .tableContainer {
-    background-color: var(--bg-secondary);
+    background-color:  var(--table-head-bg);
     border: 1px solid var(--border-color);
     border-radius: var(--radius-md);
-    overflow: hidden;
-    margin-top: 1.5rem;
-  }
-  
-  .tableWrapper {
     overflow-x: auto;
-  }
-
-  .table {
     width: 100%;
+    max-width: 100vw;
+}
+
+.tableWrapper {
+    min-width: 900px;
+    width: 100%;
+    overflow-x: auto;
+}
+
+.table {
+    width: 100%;
+    min-width: 900px;
     border-collapse: collapse;
     text-align: left;
     font-weight: 500;
     white-space: nowrap;
-    background-color: var(--bg-secondary);
-  }
+    background-color: var(--table-body-bg);
+}
 
-  .table th {
-    padding: 1rem 1.5rem;
+
+.table th, .table td {
+    padding: 1rem 1.2rem;
+}
+
+.table th {
     color: var(--text-secondary);
     font-size: 0.875rem;
     font-weight: 500;
     border-bottom: 1px solid var(--border-color);
-    background-color: rgba(30, 41, 59, 0.5);
-  }
+    background-color: var(--table-head-bg);
+}
 
-  .table td {
-    padding: 1rem 1.5rem;
+.table td {
     border-bottom: 1px solid var(--border-color);
     vertical-align: middle;
-  }
-  
-  .table tbody tr:last-child td {
+}
+
+.table tbody tr:last-child td {
     border-bottom: none;
-  }
-  
-  .table tbody tr:hover {
+}
+
+.table tbody tr:hover {
     background-color: rgba(255, 255, 255, 0.02);
-  }
-  
-  .idCell {
+}
+
+.idCell {
     font-weight: 500;
     color: var(--text-secondary);
-  }
-  
-  .nameCell {
+}
+
+.nameCell {
     font-weight: 600;
     color: var(--text-primary);
-  }
-  
-  .actionButtons {
+}
+
+.actionButtons {
     display: flex;
     gap: 0.5rem;
-  }
-  
-  .actionBtn {
+}
+
+.actionBtn {
     background: transparent;
     border: none;
     cursor: pointer;
@@ -68,14 +75,14 @@
     align-items: center;
     justify-content: center;
     transition: all 0.2s ease;
-  }
-  
-  .actionBtn:hover {
+}
+
+.actionBtn:hover {
     background-color: rgba(255, 255, 255, 0.1);
     color: var(--text-primary);
-  }
-  
-  .actionBtnDanger:hover {
+}
+
+.actionBtnDanger:hover {
     background-color: rgba(239, 68, 68, 0.1);
     color: var(--danger-color, #ef4444);
-  }
+}

@@ -13,7 +13,7 @@ export default function DashboardView() {
       value: '18', 
       change: '+2%', 
       changeType: 'positive',
-      icon: <Car size={20} className={styles.iconBlue} /> 
+      icon: <Car size={30} className={styles.iconBlue} /> 
     },
     { 
       id: 2,
@@ -21,7 +21,7 @@ export default function DashboardView() {
       value: '5', 
       change: '-5%', 
       changeType: 'negative',
-      icon: <ClipboardList size={20} className={styles.iconOrange} /> 
+      icon: <ClipboardList size={30} className={styles.iconOrange} /> 
     },
     { 
       id: 3,
@@ -29,7 +29,7 @@ export default function DashboardView() {
       value: '12', 
       change: '+10%', 
       changeType: 'positive',
-      icon: <CheckCircle size={20} className={styles.iconGreen} /> 
+      icon: <CheckCircle size={30} className={styles.iconGreen} /> 
     },
     { 
       id: 4,
@@ -37,7 +37,7 @@ export default function DashboardView() {
       value: '$4,250.00', 
       change: '+15%', 
       changeType: 'positive',
-      icon: <Wallet size={20} className={styles.iconPurple} /> 
+      icon: <Wallet size={30} className={styles.iconPurple} /> 
     }
   ];
 
