@@ -1,31 +1,33 @@
 import { Activity, AlertTriangle, PackageSearch, XCircle } from 'lucide-react';
 import styles from './InventarioStatCard.module.css';
 
-const ICONS = {
-  total: <PackageSearch size={24} />,
-  warning: <AlertTriangle size={24} />,
-  critical: <XCircle size={24} />,
-  value: <Activity size={24} />
-};
-
 export default function InventarioStatCard({ title, value, type, trend }) {
-  const isPositive = trend > 0;
-  const isNeutral = trend === 0;
+  const getIcon = () => {
+    switch (type) {
+      case 'warning':
+        return <AlertTriangle className={styles.iconWarning} size={24} />;
+      case 'critical':
+        return <XCircle className={styles.iconCritical} size={24} />;
+      case 'value':
+        return <Activity className={styles.iconValue} size={24} />;
+      default:
+        return <PackageSearch className={styles.iconTotal} size={24} />;
+    }
+  };
 
   return (
-    <div className={`${styles.card} ${styles[type]}`}>
-      <div className={styles.iconContainer}>
-        <span className={styles.icon}>{ICONS[type] || '📊'}</span>
+    <div className={styles.card}>
+      <div className={styles.header}>
+        <h3 className={styles.title}>{title}</h3>
+        {getIcon()}
       </div>
-      <div className={styles.content}>
-        <p className={styles.title}>{title}</p>
-        <h3 className={styles.value}>{value}</h3>
-      </div>
-      <div className={styles.trendContainer}>
-        <span className={`${styles.trend} ${isNeutral ? styles.neutral : isPositive ? styles.positive : styles.negative}`}>
-          {isNeutral ? '−' : isPositive ? '↑' : '↓'} {Math.abs(trend)}%
-        </span>
-        <span className={styles.trendText}>vs mes anterior</span>
+      <div className={styles.body}>
+        <div className={styles.value}>{value}</div>
+        {trend !== undefined && (
+          <div className={`${styles.trend} ${trend > 0 ? styles.positive : styles.negative}`}>
+            {trend > 0 ? '+' : ''}{trend}%
+          </div>
+        )}
       </div>
     </div>
   );

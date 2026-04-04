@@ -3,8 +3,21 @@
   justify-content: space-between;
   align-items: center;
   height: 100%;
-  padding: 0 32px;
+  padding: 0 32px 0 20px;
   background-color: var(--topbar-bg);
+}
+
+.leftSection {
+  display: flex;
+  align-items: center;
+}
+
+.toggleBtn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 2px;
+  color: aliceblue;
 }
 
 .headerSearch {
@@ -53,8 +66,9 @@
   gap: 12px;
   padding: 8px 12px;
   border-radius: 8px;
-  
+
 }
+
 .userProfile:hover {
   background-color: var(--bg-tertiary);
 }
@@ -65,12 +79,15 @@
   justify-content: center;
 }
 
-.avatarPlaceholder {
+
+.avatarCircle {
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background-color: #fca5a5;
-  padding-top: 0.25rem;
+  background: #29569f;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .userInfo {
