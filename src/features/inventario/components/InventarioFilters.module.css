@@ -2,9 +2,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: var(--spacing-lg, 24px);
   gap: var(--spacing-md, 16px);
-  margin-bottom: 1.5rem;
   flex-wrap: wrap;
 }
 
@@ -23,10 +21,13 @@
 .filterGroup {
   display: flex;
   gap: 1rem;
+  flex: 1;
+  flex-wrap: wrap;
+  justify-content: flex-start;
 }
 
 .select {
-  padding: 0.625rem 1rem;
+  padding: 0.625rem 2.5rem 0.625rem 1rem;
   border: 1px solid var(--border-color);
   border-radius: 0.5rem;
   background-color: var(--bg-secondary);

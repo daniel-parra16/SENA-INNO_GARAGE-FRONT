@@ -1,102 +1,106 @@
 .tableContainer {
-    background-color: var(--table-head-bg);
-    border: 1px solid var(--border-color);
-    border-radius: var(--radius-md);
-    overflow-x: auto;
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.tableWrapper {
+  overflow-x: auto;
 }
 
 .table {
-    width: 100%;
-    border-collapse: collapse;
-    text-align: left;
-    color: var(--text-primary);
-    font-size: var(--text-sm);
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
 }
 
 .table th {
-    padding: var(--spacing-md);
-    border-bottom: 1px solid var(--border-color);
-    color: var(--text-secondary);
-    font-weight: 500;
-    white-space: nowrap;
+  padding: 16px 20px;
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+  font-weight: 500;
+  border-bottom: 1px solid var(--border-color);
+  background-color: var(--table-head-bg);
 }
 
 .table td {
-    padding: var(--spacing-md);
-    border-bottom: 1px solid var(--border-color);
-    vertical-align: middle;
-    background-color: var(--table-body-bg);
+  padding: 16px 20px;
+  color: var(--text-primary);
+  font-size: 0.875rem;
+  border-bottom: 1px solid var(--border-color);
+  background-color: var(--table-body-bg);
 }
 
-.table tbody tr:last-child td {
-    border-bottom: none;
+.table tr:hover td {
+  background-color: var(--bg-tertiary);
 }
 
-.table tbody tr:hover {
-    background-color: rgba(255, 255, 255, 0.02);
+.table tr:last-child td {
+  border-bottom: none;
 }
 
 .idCell {
-    font-weight: 500;
-    color: var(--primary-color);
+  font-weight: 500;
+  color: var(--primary-color) !important;
 }
 
 .totalCell {
-    font-weight: 600;
+  font-weight: 600;
 }
 
 .statusBadge {
-    display: inline-flex;
-    padding: 4px 8px;
-    border-radius: 999px;
-    font-size: var(--text-xs);
-    font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
 }
 
 .statusCompleted {
-    background-color: rgba(34, 197, 94, 0.1);
-    color: #22c55e;
+  background-color: var(--success-dark);
+  color: var(--success-light);
 }
 
 .statusProgress {
-    background-color: rgba(59, 130, 246, 0.1);
-    color: #3b82f6;
+  background-color: rgba(59, 130, 246, 0.2);
+  color: #3b82f6;
 }
 
 .statusPending {
-    background-color: rgba(234, 179, 8, 0.1);
-    color: #eab308;
+  background-color: var(--warning-dark);
+  color: var(--warning-light);
 }
 
 .statusCancelled {
-    background-color: rgba(239, 68, 68, 0.1);
-    color: #ef4444;
+  background-color: var(--error-dark);
+  color: var(--error-light);
 }
 
 .actionButtons {
-    display: flex;
-    gap: var(--spacing-xs);
+  display: flex;
+  gap: 8px;
 }
 
 .actionBtn {
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    color: var(--text-secondary);
-    padding: 4px;
-    border-radius: var(--radius-sm);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.2s ease;
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
 }
 
 .actionBtn:hover {
-    background-color: rgba(255, 255, 255, 0.1);
-    color: var(--text-primary);
+  background-color: var(--bg-primary);
+  color: var(--primary-color);
 }
 
 .actionBtnDanger:hover {
-    background-color: rgba(239, 68, 68, 0.1);
-    color: #ef4444;
+  color: var(--error-color);
 }

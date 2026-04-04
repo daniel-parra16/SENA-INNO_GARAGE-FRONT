@@ -1,85 +1,56 @@
 .card {
   background-color: var(--bg-secondary);
   border: 1px solid var(--border-color);
-  border-radius: 0.75rem;
-  padding: 1.5rem;
+  border-radius: var(--radius-md, 8px);
+  padding: var(--spacing-md, 16px);
+  color: var(--text-primary);
   display: flex;
   flex-direction: column;
-  gap: 1rem;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  gap: var(--spacing-sm, 8px);
 }
 
-.card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-}
-
-.iconContainer {
-  display: inline-flex;
+.header {
+  display: flex;
+  justify-content: space-between;
   align-items: center;
-  justify-content: center;
-  width: 2.5rem;
-  height: 2.5rem;
-  border-radius: 0.5rem;
-  background-color: var(--bg-primary);
-  opacity: 0.8;
-}
-
-.icon {
-  font-size: 1.25rem;
-}
-
-.content {
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
 }
 
 .title {
-  font-size: 0.875rem;
+  font-size: var(--text-sm, 0.875rem);
   color: var(--text-secondary);
   font-weight: 500;
+  margin: 0;
+}
+
+.body {
+  display: flex;
+  align-items: baseline;
+  gap: var(--spacing-sm, 8px);
 }
 
 .value {
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: var(--text-primary);
-}
-
-.trendContainer {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  margin-top: auto;
-  font-size: 0.875rem;
+  font-size: var(--text-xl, 1.5rem);
+  font-weight: 600;
 }
 
 .trend {
-  font-weight: 600;
-  display: inline-flex;
-  align-items: center;
+  font-size: var(--text-xs, 0.75rem);
+  font-weight: 500;
+  padding: 2px 6px;
+  border-radius: var(--radius-sm, 4px);
 }
 
 .positive {
-  color: var(--success);
+  background-color: rgba(16, 185, 129, 0.1);
+  color: var(--success-color);
 }
 
 .negative {
-  color: var(--error);
+  background-color: rgba(239, 68, 68, 0.1);
+  color: var(--error-color);
 }
 
-.neutral {
-  color: var(--text-secondary);
-}
-
-.trendText {
-  color: var(--text-secondary);
-}
-
-/* Tipos */
-.total .iconContainer { background-color: rgba(59, 130, 246, 0.1); color: #3b82f6; }
-.warning .iconContainer { background-color: rgba(234, 179, 8, 0.1); color: #eab308; }
-.critical .iconContainer { background-color: rgba(239, 68, 68, 0.1); color: #ef4444; }
-.value .iconContainer { background-color: rgba(34, 197, 94, 0.1); color: #22c55e; }
+.iconTotal { color: var(--primary-color, #3b82f6); }
+.iconWarning { color: var(--warning-color, #eab308); }
+.iconCritical { color: var(--danger-color, #ef4444); }
+.iconValue { color: var(--success-color, #22c55e); }

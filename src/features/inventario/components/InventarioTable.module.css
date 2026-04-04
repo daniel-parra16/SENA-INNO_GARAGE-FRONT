@@ -1,5 +1,45 @@
+.tableContainer {
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.tableHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.tableTitle {
+  color: var(--text-primary);
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.searchBox {
+  display: flex;
+}
+
+.searchInput {
+  background-color: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+  border-radius: 6px;
+  padding: 8px 12px;
+  font-size: 0.875rem;
+  width: 250px;
+}
+
+.searchInput:focus {
+  outline: none;
+  border-color: var(--primary-color);
+}
+
 .tableWrapper {
-  width: 100%;
   overflow-x: auto;
 }
 
@@ -9,74 +49,95 @@
   text-align: left;
 }
 
-.table th,
-.table td {
-  padding: 1rem 1.5rem;
-  border-bottom: 1px solid var(--border-color);
-  font-size: 0.875rem;
-}
 
 .table th {
-  background-color: var(--table-head-bg);
+  padding: 16px 20px;
   color: var(--text-secondary);
+  font-size: 0.875rem;
+  font-weight: 500;
+  border-bottom: 1px solid var(--border-color);
+  background-color: var(--table-head-bg); /* subtle header bg */
+}
+
+.table td {
+  padding: 16px 20px;
+  color: var(--text-primary);
+  font-size: 0.875rem;
+  border-bottom: 1px solid var(--border-color);
+  background-color: var(--table-body-bg); /* subtle body bg */
+}
+
+.table tr:hover td {
+  background-color: var(--bg-tertiary);
+}
+
+.table tr:last-child td {
+  border-bottom: none;
+}
+
+.idCell {
+  font-weight: 500;
+  color: var(--primary-color) !important;
+}
+
+.totalCell {
   font-weight: 600;
 }
-.table td {
-  background-color: var(--table-body-bg);
+
+/* Status Badges */
+.statusBadge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
 }
 
-.table tbody tr:hover {
-  background-color: rgba(255, 255, 255, 0.02);
+.statusApproved {
+  background-color: var(--success-dark);
+  color: var(--success-light);
 }
 
-.sku {
+.statusPending {
+  background-color: var(--warning-dark);
+  color: var(--warning-light);
+}
+
+.statusRejected {
+  background-color: var(--error-dark);
+  color: var(--error-light);
+}
+
+.statusExpired {
+  background-color: var(--border-color);
   color: var(--text-secondary);
-  font-family: monospace;
 }
 
-.name {
-  color: var(--text-primary);
-  font-weight: 500;
-}
-
-.category {
-  color: var(--text-secondary);
-}
-
-.stock {
-  color: var(--text-primary);
-}
-
-.price {
-  color: var(--text-primary);
-  font-weight: 500;
-}
-
+/* Actions */
 .actions {
   display: flex;
-  gap: 0.5rem;
+  gap: 8px;
 }
 
 .actionBtn {
-  background: none;
+  background: transparent;
   border: none;
+  color: var(--text-secondary);
   cursor: pointer;
-  padding: 0.5rem;
-  opacity: 0.6;
-  transition: all 0.2s;
-  color: var(--text-primary);
-  display: inline-flex;
+  padding: 4px;
+  border-radius: 4px;
+  display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 0.25rem;
+  transition: all 0.2s;
 }
 
 .actionBtn:hover {
-  opacity: 1;
-  background-color: rgba(255, 255, 255, 0.1);
+  background-color: var(--bg-primary);
+  color: var(--primary-color);
 }
 
-.deleteBtn:hover {
-  color: var(--error);
-  background-color: rgba(239, 68, 68, 0.1);
+.actionDelete:hover {
+  color: var(--error-color);
 }

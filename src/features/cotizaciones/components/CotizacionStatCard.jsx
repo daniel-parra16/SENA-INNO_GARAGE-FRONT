@@ -1,16 +1,17 @@
-import { ArrowDownRight, ArrowUpRight, CheckCircle, Clock, FileText, XCircle } from 'lucide-react';
+import { CheckCircle, Clock, FileText, XCircle } from 'lucide-react';
 import styles from './CotizacionStatCard.module.css';
 
 export default function CotizacionStatCard({ title, value, type, trend }) {
-  const isPositive = trend >= 0;
-
   const getIcon = () => {
-    switch(type) {
-      case 'total': return <FileText size={24} className={styles.iconTotal} />;
-      case 'pending': return <Clock size={24} className={styles.iconPending} />;
-      case 'approved': return <CheckCircle size={24} className={styles.iconApproved} />;
-      case 'rejected': return <XCircle size={24} className={styles.iconRejected} />;
-      default: return <FileText size={24} />;
+    switch (type) {
+      case 'pending':
+        return <Clock className={styles.iconPending} />;
+      case 'approved':
+        return <CheckCircle className={styles.iconCompleted} />;
+      case 'rejected':
+        return <XCircle className={styles.iconCancelled} />;
+      default:
+        return <FileText className={styles.iconTotal} />;
     }
   };
 
@@ -18,17 +19,15 @@ export default function CotizacionStatCard({ title, value, type, trend }) {
     <div className={styles.card}>
       <div className={styles.header}>
         <h3 className={styles.title}>{title}</h3>
-        <div className={styles.iconWrapper}>
-          {getIcon()}
-        </div>
+        {getIcon()}
       </div>
-      
-      <div className={styles.content}>
+      <div className={styles.body}>
         <div className={styles.value}>{value}</div>
-        <div className={`${styles.trend} ${isPositive ? styles.positive : styles.negative}`}>
-          {isPositive ? <ArrowUpRight size={16} /> : <ArrowDownRight size={16} />}
-          <span>{Math.abs(trend)}% desde el mes pasado</span>
-        </div>
+        {typeof trend !== 'undefined' && (
+          <div className={`${styles.trend} ${trend > 0 ? styles.positive : styles.negative}`}>
+            {trend > 0 ? '+' : ''}{trend}%
+          </div>
+        )}
       </div>
     </div>
   );
