@@ -60,8 +60,11 @@ export async function apiFetch(endpoint, options = {}) {
 
   // Si status es 4xx/5xx, lanzamos error para manejarlo en el formulario
   if (!response.ok) {
-    const errorMessage = data?.message || `Error HTTP ${response.status}`;
-    throw new Error(errorMessage);
+    throw {
+      status: response.status,
+      message: data?.message || `Error HTTP ${response.status}`,
+      errores: data?.errores || null
+    };
   }
 
   // Si todo bien, devolvemos data (objeto JSON o null)

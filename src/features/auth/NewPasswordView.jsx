@@ -105,6 +105,7 @@ export default function NewPasswordView() {
             )}
 
             <div className={styles.container}>
+                <div className={styles.backgroundEffects}></div>
                 <div className={styles.card}>
                     <div className={styles.iconLock}>🔐</div>
                     <h2 className={styles.titulo}>Nueva contraseña</h2>
@@ -152,6 +153,9 @@ export default function NewPasswordView() {
                     >
                         ← Volver al login
                     </button>
+                </div>
+                <div className="backgroundEffects">
+                    
                 </div>
             </div>
         </>
