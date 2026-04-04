@@ -1,5 +1,5 @@
 // components/UI/LoadingModal/LoadingModal.jsx
-import Logo from '../../../../public/Logo-2.svg'; // Ajusta la ruta según tu estructura de carpetas
+import Logo from '../../../assets/logo/Logo-2.svg';
 import styles from './LoadingModal.module.css';
 
 export default function LoadingModal({ message = 'Cargando...' }) {

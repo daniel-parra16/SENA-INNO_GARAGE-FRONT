@@ -1,11 +1,10 @@
-import { Car, CheckCircle, ClipboardList, Wallet } from 'lucide-react';
-import AlertsTable from './components/AlertsTable';
-import InventoryAlert from './components/InventoryAlert';
-import StatCard from './components/StatCard';
-import TechnicianList from './components/TechnicianList';
-import styles from './Dashboard.module.css';
+import { useAuth } from '../../store/authContext';
+import AdminDashboard from './components/AdminDashboard';
+import ClienteDashboard from './components/ClienteDashboard';
+import MecanicoDashboard from './components/MecanicoDashboard';
 
 export default function DashboardView() {
+  const { user } = useAuth();
   const stats = [
     { 
       id: 1,
@@ -41,28 +40,7 @@ export default function DashboardView() {
     }
   ];
 
-  return (
-    <div className={styles.dashboardContainer}>
-      <header className={styles.header}>
-        <h1 className={styles.title}>Resumen del Taller</h1>
-        <p className={styles.subtitle}>Estado en tiempo real de las operaciones del taller para hoy, 24 de octubre.</p>
-      </header>
-
-      <section className={styles.statsGrid}>
-        {stats.map(stat => (
-          <StatCard key={stat.id} {...stat} />
-        ))}
-      </section>
-
-      <section className={styles.mainContent}>
-        <div className={styles.leftColumn}>
-          <AlertsTable />
-        </div>
-        <div className={styles.rightColumn}>
-          <TechnicianList />
-          <InventoryAlert />
-        </div>
-      </section>
-    </div>
-  );
+    if (user?.rol === 'admin') return <AdminDashboard />
+    if (user?.rol === 'mecanico') return <MecanicoDashboard />
+    return <ClienteDashboard />
 }
