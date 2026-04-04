@@ -22,7 +22,7 @@ export default function RegisterForm() {
   const [showPwd2, setShowPwd2] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
-  const [error, setError] = useState('');
+  const [message, setMessage] = useState('');
   const [title, setTitle] = useState('');
   const [type, setType] = useState('info');
   const [showModal, setShowModal] = useState(false);
@@ -37,7 +37,7 @@ export default function RegisterForm() {
     e.preventDefault();
 
     if (formData.password !== formData.confirmPassword) {
-      setError("Las contraseñas no coinciden");
+      setMessage("Las contraseñas no coinciden");
       setShowModal(true);
       return;
     }
@@ -51,13 +51,29 @@ export default function RegisterForm() {
 
       setTitle("Success");
       setType("success");
-      setError("Usuario registrado correctamente. Verifica tu correo.");
+      setMessage("Usuario registrado correctamente. Verifica tu correo.");
       setIsSuccess(true);
       setShowModal(true);
       setIsLoading(false);
-      
+
     } catch (err) {
-      setError(err.message || "No se pudo registrar el usuario");
+      let errorMessage = err.message || "No se pudo registrar el usuario";
+
+      if (err?.errores) {
+        const errores = err.errores;
+
+        console.log("errores", errores)
+        errorMessage = (
+          <ul>
+            {Object.entries(errores).map(([campo, mensaje], index) => (
+              <li key={index}>
+                <strong>▪</strong> {mensaje}
+              </li>
+            ))}
+          </ul>
+        );
+      }
+      setMessage(errorMessage || "No se pudo registrar el usuario");
       setTitle("Error");
       setType("error");
       setIsSuccess(false);
@@ -71,7 +87,9 @@ export default function RegisterForm() {
     setShowModal(false);
 
     if (isSuccess) {
-      navigate('/login');
+      navigate('/verificar-correo', {
+        state: { numeroDocumento: formData.numeroDocumento }
+      });
     }
   };
 
@@ -82,7 +100,7 @@ export default function RegisterForm() {
       {showModal && (
         <Modal
           title={title}
-          message={error}
+          message={message}
           onClose={handleCloseModal}
           type={type}
         />
@@ -170,7 +188,7 @@ export default function RegisterForm() {
           <div className={styles.formGroup}>
             <label htmlFor="correo" className={styles.label}>Correo Electrónico</label>
             <input
-              type="email"
+              type="text"
               id="correo"
               name="correo"
               className={styles.input}

@@ -2,18 +2,18 @@ import { apiFetch } from '../../../api/AuthApi';
 
 // Servicio para registrar usuario
 export async function registerUser(data) {
-	return await apiFetch('/auth/registro', {
-		method: 'POST',
-		body: data
-	});
+    return await apiFetch('/auth/registro', {
+        method: 'POST',
+        body: data
+    });
 }
 
 // Servicio para iniciar sesion del usuario
 export async function loginUser(data) {
-	return await apiFetch('/auth/login', {
-		method: 'POST',
-		body: data
-	});
+    return await apiFetch('/auth/login', {
+        method: 'POST',
+        body: data
+    });
 }
 
 // Refresh token — renueva el accessToken usando el refreshToken
@@ -33,9 +33,10 @@ export async function logoutUser(refreshToken) {
 }
 
 // Servicio para verificar el correo con el token de la URL
-export async function verificarCorreo(token) {
-    return await apiFetch(`/auth/verificar-correo?token=${token}`, {
-        method: 'GET'
+export async function verificarCorreo(codigo, numeroDocumento) {
+    return await apiFetch('/auth/verificar-correo', {
+        method: 'POST',
+        body: { codigo, numeroDocumento }
     });
 }
 
