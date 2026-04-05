@@ -2,7 +2,7 @@ import { Filter, Plus } from 'lucide-react';
 import { SearchBar } from '../../../../components/ui/SearchBar/SearchBar';
 import styles from './UserFilters.module.css';
 
-export default function UserFilters() {
+export default function UserFilters({ onOpenNewUser }) {
   return (
     <div className={styles.filtersContainer}>
       <div className={styles.searchBox}>
@@ -21,7 +21,7 @@ export default function UserFilters() {
           </select>
         </div>
 
-        <button className={styles.newUserBtn}>
+        <button className={styles.newUserBtn} onClick={onOpenNewUser}>
           <Plus size={18} />
           Nuevo Usuario
         </button>

@@ -1,5 +1,4 @@
 import {
-    Bell,
     Car,
     CircleDollarSign,
     ClipboardList,
@@ -7,11 +6,13 @@ import {
     Package,
     Settings,
     UserCog,
-    Wrench
+    Menu,
+    X
 } from 'lucide-react';
 import { NavLink } from 'react-router-dom';
 import styles from './Sidebar.module.css';
 import { useAuth } from '../../../store/authContext';
+import logoInnoGarage from '../../../assets/logo/LogoInnoGarageFondoAzul.png';
 
 // Menú completo — cada item tiene los roles que pueden verlo
 const navItems = [
@@ -51,13 +52,7 @@ const navItems = [
         label: 'Inventario',
         roles: ['admin', 'mecanico']
     },
-    {
-        to: '/notificaciones',
-        icon: <Bell size={20} />,
-        label: 'Notificaciones',
-        roles: ['admin', 'mecanico', 'cliente'],
-        badge: 3
-    },
+
 ];
 
 // Mapea el rol interno al nombre visible
@@ -67,7 +62,7 @@ const rolLabel = {
     cliente: 'Cliente',
 };
 
-export default function Sidebar() {
+export default function Sidebar({ isCollapsed, toggleSidebar }) {
     const { user } = useAuth();
 
     // Filtra los items según el rol del usuario
@@ -77,13 +72,17 @@ export default function Sidebar() {
 
     return (
         <div className={styles.sidebarContainer}>
-            <div className={styles.logoSection}>
-                <div className={styles.logoIcon}>
-                    <Wrench size={20} color="white" />
-                </div>
-                <div className={styles.logoText}>
-                    <span className={styles.brand}>InnoGarage</span>
-                    <span className={styles.subtitle}>Repair Management</span>
+            <div className={`${styles.logoSection} ${isCollapsed ? styles.collapsed : ''}`}>
+                <div className={styles.logoWrapper}>
+                    <div className={styles.logoIcon} style={{ background: 'transparent' }}>
+                        <img src={logoInnoGarage} alt="InnoGarage" style={{ width: 45, height: 45, borderRadius: 4 }} />
+                    </div>
+                    {!isCollapsed && (
+                        <div className={styles.logoText}>
+                            <span className={styles.brand}>Inno Garage</span>
+                            <span className={styles.subtitle}>Administra y Repara</span>
+                        </div>
+                    )}
                 </div>
             </div>
 
@@ -94,33 +93,24 @@ export default function Sidebar() {
                         to={item.to}
                         end={item.to === '/'}
                         className={({ isActive }) =>
-                            `${styles.navItem} ${isActive ? styles.active : ''}`
+                            `${styles.navItem} ${isActive ? styles.active : ''} ${isCollapsed ? styles.collapsedItem : ''}`
                         }
+                        title={isCollapsed ? item.label : undefined}
                     >
                         {item.icon}
-                        <span className={styles.linkLabel}>{item.label}</span>
-                        {item.badge && (
+                        {!isCollapsed && <span className={styles.linkLabel}>{item.label}</span>}
+                        {item.badge && !isCollapsed && (
                             <span className={styles.badge}>{item.badge}</span>
                         )}
                     </NavLink>
                 ))}
             </nav>
 
-            <div className={styles.footerSection}>
+            <div className={`${styles.footerSection} ${isCollapsed ? styles.collapsed : ''}`}>
                 <div className={styles.userProfile}>
-                    <div className={styles.avatar}>
-                        <div className={styles.avatarPlaceholder}>
-                            {/* Inicial del nombre */}
-                            {user?.nombres?.charAt(0).toUpperCase()}
-                        </div>
-                    </div>
-                    <div className={styles.userInfo}>
-                        <span className={styles.userName}>{user?.nombres}</span>
-                        <span className={styles.userRole}>
-                            {rolLabel[user?.rol] || user?.rol}
-                        </span>
-                    </div>
-                    <button className={styles.settingsBtn}>
+
+
+                    <button className={styles.settingsBtn} title={isCollapsed ? "Configuración" : undefined}>
                         <Settings size={20} />
                     </button>
                 </div>

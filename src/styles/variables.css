@@ -6,7 +6,9 @@
   --bg-secondary: #1a1f2e;              /* Fondo secundario - cards */
   --bg-tertiary: #242d3f;               /* Fondo terciario - hover */
   --sidebar-bg: #0f172a;                /* Fondo del sidebar */
-  --topbar-bg: #1a1f2e;                 /* Fondo del topbar */
+  --topbar-bg: #1a1f2e;
+  --table-head-bg:#1a1f2e;       /* Fondo del header de tablas */
+  --table-body-bg:#1e293b80;       /* Fondo del topbar */
   
   /* ===== TEXT COLORS ===== */
   --text-primary: #e5e7eb;              /* Texto principal - blanco gris */

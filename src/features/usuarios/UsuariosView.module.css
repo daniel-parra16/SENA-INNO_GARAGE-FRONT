@@ -1,22 +1,22 @@
 .container {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
-  padding: 1rem 0;
+  gap: 32px;
   width: 100%;
+  animation: fadeIn 0.3s ease;
 }
 
 .header {
   display: flex;
   flex-direction: column;
   gap: 0.25rem;
+  text-align: left;
 }
 
 .title {
-  font-size: 1.5rem;
-  font-weight: 600;
+  font-size: 1.75rem;
+  font-weight: 700;
   color: var(--text-primary);
-  margin: 0;
 }
 
 .subtitle {
@@ -28,8 +28,16 @@
 .statsGrid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 1.5rem;
-  margin-bottom: 1rem;
+  gap: 15px;
+}
+
+.statsGrid > * {
+    position: relative;
+    transition: box-shadow 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.statsGrid > *:hover {
+    box-shadow: 0 0 0 1px #38bdf8; /* azul cielo */
 }
 
 @media (max-width: 1024px) {
@@ -42,4 +50,9 @@
   .statsGrid {
     grid-template-columns: 1fr;
   }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(5px); }
+  to { opacity: 1; transform: translateY(0); }
 }

@@ -2,40 +2,89 @@
   position: absolute;
   top: 110%;
   right: 0;
-  min-width: 180px;
-  background: var(--topbar-bg);
-  box-shadow: 0 4px 24px rgba(0,0,0,0.12);
+  min-width: 240px;
+  background: var(--topbar-bg, #1a1a1a);
+  box-shadow: 0 4px 24px rgba(0,0,0,0.25);
   border-radius: 10px;
   padding: 0.5rem 0;
   z-index: 100;
   display: flex;
   flex-direction: column;
   animation: fadeIn 0.2s;
+  border: 1px solid rgba(255, 255, 255, 0.08); /* Adapts to dark themes seamlessly */
+}
+
+.menuOpen {
+  box-shadow: 0 0 0 1.5px #3ba7f5, 0 4px 24px rgba(0,0,0,0.25);
+  border: 1.5px solid transparent;
+}
+
+
+.menuTitle {
+  font-weight: 600;
+  font-size: 1rem;
+  color: var(--text-primary, #fff);
+  display: block;
 }
 
 .menuItem {
-  background: none;
+  background: transparent;
   border: none;
   text-align: left;
-  padding: 0.75rem 1.5rem;
-  font-size: 1rem;
-  color: var(--text-primary);
+  padding: 0.6rem 0.8rem;
+  margin: 0.25rem 0.6rem;
+  font-size: 0.95rem;
+  color: var(--text-secondary, #9ca3af);
   cursor: pointer;
-  transition: background 0.15s;
+  transition: all 0.15s;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  border-radius: 6px;
+  width: calc(100% - 1.2rem);
 }
+
 .menuItem:hover {
-  background: #f2f4f8;
-  color: #0a58ca;
+  background: rgba(255, 255, 255, 0.05); /* Soft highlight matching header bg */
+  color: var(--text-primary, #fff);
+}
+
+.highlightItem {
+  background: var(--text-primary, #f3f4f6);
+  color: var(--topbar-bg, #111827);
+  font-weight: 500;
+}
+
+.highlightItem:hover {
+  background: var(--text-primary, #e5e7eb);
+  color: var(--topbar-bg, #111827);
+  opacity: 0.9;
+}
+
+.dangerItem {
+  color: rgba(239, 68, 68, 0.9);
+}
+
+.dangerItem:hover {
+  background: rgba(239, 68, 68, 0.1);
+  color: #ef4444;
+}
+
+.divider {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.08);
+  margin: 0.5rem 0;
+  width: 100%;
 }
 
 @media (max-width: 600px) {
   .menu {
-    min-width: 140px;
+    min-width: 200px;
     right: 0;
   }
   .menuItem {
-    font-size: 0.95rem;
-    padding: 0.7rem 1rem;
+    font-size: 0.9rem;
+    padding: 0.6rem 0.75rem;
   }
 }
 

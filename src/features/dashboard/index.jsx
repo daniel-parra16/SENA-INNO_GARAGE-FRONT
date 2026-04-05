@@ -1,10 +1,44 @@
 import { useAuth } from '../../store/authContext';
-import AdminDashboard from './components/AdminDashboard';
-import ClienteDashboard from './components/ClienteDashboard';
-import MecanicoDashboard from './components/MecanicoDashboard';
+import AdminDashboard from './pages/AdminDashboard';
+import ClienteDashboard from './pages/ClienteDashboard';
+import MecanicoDashboard from './pages/MecanicoDashboard';
 
 export default function DashboardView() {
-    const { user } = useAuth();
+  const { user } = useAuth();
+  const stats = [
+    { 
+      id: 1,
+      title: 'Vehículos en Taller', 
+      value: '18', 
+      change: '+2%', 
+      changeType: 'positive',
+      icon: <Car size={30} className={styles.iconBlue} /> 
+    },
+    { 
+      id: 2,
+      title: 'Servicios Pendientes', 
+      value: '5', 
+      change: '-5%', 
+      changeType: 'negative',
+      icon: <ClipboardList size={30} className={styles.iconOrange} /> 
+    },
+    { 
+      id: 3,
+      title: 'Completados Hoy', 
+      value: '12', 
+      change: '+10%', 
+      changeType: 'positive',
+      icon: <CheckCircle size={30} className={styles.iconGreen} /> 
+    },
+    { 
+      id: 4,
+      title: 'Resumen de Ingresos', 
+      value: '$4,250.00', 
+      change: '+15%', 
+      changeType: 'positive',
+      icon: <Wallet size={30} className={styles.iconPurple} /> 
+    }
+  ];
 
     if (user?.rol === 'admin') return <AdminDashboard />
     if (user?.rol === 'mecanico') return <MecanicoDashboard />

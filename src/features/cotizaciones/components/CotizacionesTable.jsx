@@ -40,9 +40,6 @@ export default function CotizacionesTable() {
 
   return (
     <div className={styles.tableContainer}>
-      <div className={styles.tableHeader}>
-        <h2 className={styles.tableTitle}>Cotizaciones Recientes</h2>
-      </div>
       
       <div className={styles.tableWrapper}>
         <table className={styles.table}>

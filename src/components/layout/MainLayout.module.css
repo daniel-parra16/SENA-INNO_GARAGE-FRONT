@@ -14,6 +14,11 @@
   flex-shrink: 0;
   display: flex;
   flex-direction: column;
+  transition: width 0.3s ease;
+}
+
+.sidebar.collapsed {
+  width: 80px;
 }
 
 .mainWrapper {

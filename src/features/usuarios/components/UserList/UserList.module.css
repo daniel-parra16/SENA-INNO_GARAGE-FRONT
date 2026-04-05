@@ -1,81 +1,77 @@
 .tableContainer {
-    background-color: var(--bg-secondary);
-    border: 1px solid var(--border-color);
-    border-radius: var(--radius-md);
-    overflow: hidden;
-    margin-top: 1.5rem;
-  }
-  
-  .tableWrapper {
-    overflow-x: auto;
-  }
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  overflow: hidden;
+}
 
-  .table {
-    width: 100%;
-    border-collapse: collapse;
-    text-align: left;
-    font-weight: 500;
-    white-space: nowrap;
-    background-color: var(--bg-secondary);
-  }
+.tableWrapper {
+  overflow-x: auto;
+}
 
-  .table th {
-    padding: 1rem 1.5rem;
-    color: var(--text-secondary);
-    font-size: 0.875rem;
-    font-weight: 500;
-    border-bottom: 1px solid var(--border-color);
-    background-color: rgba(30, 41, 59, 0.5);
-  }
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
 
-  .table td {
-    padding: 1rem 1.5rem;
-    border-bottom: 1px solid var(--border-color);
-    vertical-align: middle;
-  }
-  
-  .table tbody tr:last-child td {
-    border-bottom: none;
-  }
-  
-  .table tbody tr:hover {
-    background-color: rgba(255, 255, 255, 0.02);
-  }
-  
-  .idCell {
-    font-weight: 500;
-    color: var(--text-secondary);
-  }
-  
-  .nameCell {
-    font-weight: 600;
-    color: var(--text-primary);
-  }
-  
-  .actionButtons {
-    display: flex;
-    gap: 0.5rem;
-  }
-  
-  .actionBtn {
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    color: var(--text-secondary);
-    padding: 0.25rem;
-    border-radius: var(--radius-sm, 4px);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.2s ease;
-  }
-  
-  .actionBtn:hover {
-    background-color: rgba(255, 255, 255, 0.1);
-    color: var(--text-primary);
-  }
-  
-  .actionBtnDanger:hover {
-    background-color: rgba(239, 68, 68, 0.1);
-    color: var(--danger-color, #ef4444);
-  }
+.table th {
+  padding: 16px 20px;
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+  font-weight: 500;
+  border-bottom: 1px solid var(--border-color);
+  background-color: var(--table-head-bg);
+}
+
+.table td {
+  padding: 16px 20px;
+  color: var(--text-primary);
+  font-size: 0.875rem;
+  border-bottom: 1px solid var(--border-color);
+  background-color: var(--table-body-bg);
+}
+
+.table tr:hover td {
+  background-color: var(--bg-tertiary);
+}
+
+.table tr:last-child td {
+  border-bottom: none;
+}
+
+.idCell {
+  font-weight: 500;
+  color: var(--primary-color) !important;
+}
+
+.nameCell {
+  font-weight: 600;
+}
+
+.actionButtons {
+  display: flex;
+  gap: 8px;
+}
+
+.actionBtn {
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.actionBtn:hover {
+  background-color: var(--bg-primary);
+  color: var(--primary-color);
+}
+
+.actionBtnDanger:hover {
+  color: var(--error-color);
+}

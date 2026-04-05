@@ -1,12 +1,12 @@
 .card {
   background-color: var(--bg-secondary);
-  border: 1px solid var(--border-color);
-  border-radius: 12px;
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md, 8px);
+    padding: var(--spacing-md, 16px);
+    color: var(--text-primary);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm, 8px);
 }
 
 .header {
@@ -16,53 +16,41 @@
 }
 
 .title {
+  font-size: var(--text-sm, 0.875rem);
   color: var(--text-secondary);
-  font-size: 0.875rem;
   font-weight: 500;
   margin: 0;
 }
 
-.iconWrapper {
-  padding: 8px;
-  border-radius: 8px;
-  background-color: var(--bg-tertiary);
-}
-
-.iconTotal { color: var(--primary-color); }
-.iconPending { color: var(--warning-color); }
-.iconApproved { color: var(--success-color); }
-.iconRejected { color: var(--error-color); }
-
-.content {
+.body {
   display: flex;
-  flex-direction: column;
-  gap: 8px;
+  align-items: baseline;
+  gap: var(--spacing-sm, 8px);
 }
 
 .value {
-  color: var(--text-primary);
-  font-size: 2rem;
-  font-weight: 700;
-  line-height: 1;
+  font-size: var(--text-xl, 1.5rem);
+  font-weight: 600;
 }
 
 .trend {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  font-size: 0.875rem;
+  font-size: var(--text-xs, 0.75rem);
   font-weight: 500;
+  padding: 2px 6px;
+  border-radius: var(--radius-sm, 4px);
 }
 
 .positive {
+  background-color: rgba(16, 185, 129, 0.1);
   color: var(--success-color);
 }
 
 .negative {
+  background-color: rgba(239, 68, 68, 0.1);
   color: var(--error-color);
 }
 
-.trend span {
-  color: var(--text-secondary);
-  font-weight: 400;
-}
+.iconPending { color: var(--warning-color); }
+.iconCompleted { color: var(--success-color); }
+.iconCancelled { color: var(--error-color); }
+.iconTotal { color: var(--primary-color); }
