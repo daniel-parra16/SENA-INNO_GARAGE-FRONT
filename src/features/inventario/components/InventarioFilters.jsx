@@ -1,8 +1,18 @@
+import React, { useState } from 'react';
 import { Plus } from 'lucide-react';
 import { SearchBar } from '../../../components/ui/SearchBar/SearchBar';
+import FormModal from '../../../components/ui/Modal/FormModal';
+import InventarioForm from './InventarioForm/InventarioForm';
 import styles from './InventarioFilters.module.css';
 
 export default function InventarioFilters() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleCreateProduct = (data) => {
+    console.log('Nuevo producto a crear:', data);
+    setIsModalOpen(false);
+  };
+
   return (
     <div className={styles.filtersContainer}>
       <div className={styles.searchGroup}>
@@ -25,11 +35,19 @@ export default function InventarioFilters() {
           </select>
         </div>
 
-        <button className={styles.newProductBtn}>
+        <button className={styles.newProductBtn} onClick={() => setIsModalOpen(true)}>
           <Plus size={18} />
           Nuevo Producto
         </button>
       </div>
+
+      <FormModal 
+        isOpen={isModalOpen} 
+        onClose={() => setIsModalOpen(false)} 
+        title="Añadir Nuevo Producto"
+      >
+        <InventarioForm onSubmit={handleCreateProduct} onCancel={() => setIsModalOpen(false)} />
+      </FormModal>
     </div>
   );
 }
