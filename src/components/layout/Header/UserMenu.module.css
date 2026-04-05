@@ -45,8 +45,8 @@
 }
 
 .menuItem:hover {
-  background: rgba(255, 255, 255, 0.05); /* Soft highlight matching header bg */
-  color: var(--text-primary, #fff);
+  background: var(--bg-tertiary, #f3f4f6); /* Gris claro para modo light usando fallback, o el tertiary en dark */
+  color: var(--text-primary, #111827); /* Negro fuerte para light y blanco en dark */
 }
 
 .highlightItem {

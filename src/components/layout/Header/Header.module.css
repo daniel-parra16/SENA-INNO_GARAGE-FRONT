@@ -18,14 +18,14 @@
   border: none;
   cursor: pointer;
   padding: 2px;
-  color: #222;
+  color: var(--text-primary, #222); /* Fallback for light mode text */
   border-radius: 6px;
   transition: color 0.2s, background 0.2s;
 }
 
 .toggleBtn:hover {
-  color: #222;
-  background: #f1f5f9;
+  color: var(--text-primary, #000);
+  background: var(--bg-tertiary, #f1f5f9);
 }
 
 .headerSearch {
