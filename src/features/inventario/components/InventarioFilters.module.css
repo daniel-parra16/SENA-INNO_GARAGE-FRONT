@@ -63,7 +63,7 @@
 }
 
 .newProductBtn:hover {
-  opacity: 0.9;
+  background-color: #2563eb;
 }
 
 @media (max-width: 768px) {
