@@ -1,5 +1,5 @@
-import { Bell, Moon, ChevronDown, User, Menu, X } from 'lucide-react';
-import { useCallback, useState, useRef } from 'react';
+import { Bell, Moon, Sun, ChevronDown, User, Menu, X } from 'lucide-react';
+import { useCallback, useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from './Header.module.css';
 import UserMenu from './UserMenu';
@@ -16,6 +16,24 @@ export default function Header({ toggleSidebar, isCollapsed }) {
     const { user, logout } = useAuth();
     const navigate = useNavigate();
     const userProfileRef = useRef(null);
+
+    const [isLightMode, setIsLightMode] = useState(() => {
+        return localStorage.getItem('theme') === 'light' || document.documentElement.getAttribute('data-theme') === 'light';
+    });
+
+    useEffect(() => {
+        if (isLightMode) {
+            document.documentElement.setAttribute('data-theme', 'light');
+            localStorage.setItem('theme', 'light');
+        } else {
+            document.documentElement.removeAttribute('data-theme');
+            localStorage.setItem('theme', 'dark');
+        }
+    }, [isLightMode]);
+
+    const toggleTheme = useCallback(() => {
+        setIsLightMode((prev) => !prev);
+    }, []);
 
     const handleProfileClick = useCallback(() => {
         setMenuOpen((open) => !open);
@@ -55,8 +73,8 @@ export default function Header({ toggleSidebar, isCollapsed }) {
                 </button>
             </div>
             <div className={styles.rightSection}>
-                <button className={styles.iconBtn}>
-                    <Moon size={20} />
+                <button className={styles.iconBtn} onClick={toggleTheme}>
+                    {isLightMode ? <Moon size={20} /> : <Sun size={20} />}
                 </button>
                 <button className={styles.iconBtn}>
                     <Bell size={20} />

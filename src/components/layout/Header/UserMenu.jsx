@@ -32,11 +32,6 @@ export default function UserMenu({ open, onClose, onConfig, onLogout, userProfil
 
       <div className={styles.divider}></div>
 
-      <button className={styles.menuItem}>
-        <Bell size={18} />
-        <span>Notificaciones</span>
-      </button>
-
       <button className={styles.menuItem} onClick={onConfig}>
         <Settings size={18} />
         <span>Configuración</span>

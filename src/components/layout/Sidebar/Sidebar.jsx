@@ -105,9 +105,10 @@ export default function Sidebar({ isCollapsed, toggleSidebar }) {
                     </NavLink>
                 ))}
             </nav>
-
+            <div className={styles.divider}></div>
             <div className={`${styles.footerSection} ${isCollapsed ? styles.collapsed : ''}`}>
                 <div className={styles.userProfile}>
+                    
 
 
                     <button className={styles.settingsBtn} title={isCollapsed ? "Configuración" : undefined}>

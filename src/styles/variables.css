@@ -121,3 +121,34 @@
   --z-popover: 1060;
   --z-tooltip: 1070;
 }
+
+/* ===== TEMA CLARO (LIGHT MODE) ===== */
+[data-theme="light"] {
+  /* ===== BACKGROUND COLORS ===== */
+  --bg-primary: #d2e0ee;                /* Fondo principal del dashboard (gris) */
+  --bg-secondary: #ffffff;              /* Fondo secundario - cards y tablas (blanco) */
+  --bg-tertiary: #f1f5f9;               /* Fondo terciario - hover */
+  --sidebar-bg: #ffffff;                /* Fondo del sidebar (blanco) */
+  --topbar-bg: #ffffff;                 /* Fondo del header (blanco) */
+  --table-head-bg: #f8fafc;             /* Fondo del header de tablas */
+  --table-body-bg: #ffffff;             /* Fondo del cuerpo de tablas */
+  
+  /* ===== TEXT COLORS ===== */
+  --text-primary: #0f172a;              /* Texto principal (azul/negro muy oscuro) */
+  --text-secondary: #475569;            /* Texto secundario (gris oscuro) */
+  --text-tertiary: #64748b;             /* Texto terciario (gris medio) */
+  
+  /* ===== BORDER & DIVIDER ===== */
+  --border-color: #e2e8f0;              /* Bordes sutiles (gris claro) */
+  --border-light: #f1f5f9;              /* Bordes más claros */
+  --border-dark: #cbd5e1;               /* Bordes más oscuros */
+  
+  /* ===== BRAND COLORS ===== */
+  --primary-color: #0ea5e9;             /* Azul principal más claro/vibrante para light mode */
+  
+  /* ===== SHADOWS ===== */
+  --shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-sm: 0 2px 4px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}

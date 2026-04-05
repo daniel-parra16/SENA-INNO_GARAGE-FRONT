@@ -141,17 +141,25 @@
 
 
 
+
 .settingsBtn {
   background: transparent;
   border: none;
   color: var(--text-secondary);
   cursor: pointer;
   display: flex;
-  align-items: left;
-  justify-content:left;
-  padding: 4px;
+  align-items: center;
+  justify-content: center;
+  padding: 14px;
+  margin: 0 auto;
 }
 
 .settingsBtn:hover {
   color: var(--text-primary);
+}
+.divider {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.08);
+  margin: 0.5rem 0;
+  width: 100%;
 }
