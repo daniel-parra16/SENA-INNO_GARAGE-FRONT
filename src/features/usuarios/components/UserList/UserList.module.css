@@ -15,6 +15,11 @@
   text-align: left;
 }
 
+.table thead,
+tbody {
+  text-align: center;
+}
+
 .table th {
   padding: 16px 20px;
   color: var(--text-secondary);
@@ -47,6 +52,12 @@
 
 .nameCell {
   font-weight: 600;
+  min-width: 20vw;
+}
+
+.lastLogin {
+  min-width: 15vw;
+  text-align: center;
 }
 
 .actionButtons {

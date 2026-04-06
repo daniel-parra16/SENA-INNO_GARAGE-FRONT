@@ -6,8 +6,9 @@
 
 .roleSelection {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
   gap: 16px;
+  margin: 0 10vw;
 }
 
 .roleCard {
@@ -54,7 +55,8 @@
 
 .inputGroup {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  justify-content: center;
   column-gap: 20px;
   row-gap: 16px;
 }
@@ -71,7 +73,7 @@
   font-weight: 500;
 }
 
-.field input, 
+.field input,
 .field select {
   background-color: #242c3d;
   border: 1px solid rgba(255, 255, 255, 0.1);
@@ -85,7 +87,7 @@
   box-sizing: border-box;
 }
 
-.field input:focus, 
+.field input:focus,
 .field select:focus {
   border-color: #3b82f6;
   background-color: #2a3347;
@@ -107,7 +109,8 @@
   margin-top: 8px;
 }
 
-.cancelBtn, .submitBtn {
+.cancelBtn,
+.submitBtn {
   padding: 10px 16px;
   border-radius: 6px;
   font-size: 0.95rem;
@@ -119,12 +122,15 @@
 
 .cancelBtn {
   background-color: transparent;
-  color: #ef4444; /* Rojo llamativo pero suave */
+  color: #ef4444;
+  /* Rojo llamativo pero suave */
 }
 
 .cancelBtn:hover {
-  background-color: rgba(239, 68, 68, 0.1); /* Background rojo transparente y sútil */
-  color: #f87171; /* Texto ligeramente más brillante */
+  background-color: rgba(239, 68, 68, 0.1);
+  /* Background rojo transparente y sútil */
+  color: #f87171;
+  /* Texto ligeramente más brillante */
 }
 
 .submitBtn {

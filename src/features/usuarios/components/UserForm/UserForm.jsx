@@ -1,29 +1,33 @@
 import React, { useState } from 'react';
-import { User, Wrench } from 'lucide-react';
+import { User, Wrench, SquareUserRound } from 'lucide-react';
 import styles from './UserForm.module.css';
 
 export default function UserForm({ onSubmit, initialData = null }) {
   const [role, setRole] = useState(initialData?.role || 'cliente');
   const [formData, setFormData] = useState({
     nombre: initialData?.nombre || '',
-    identificacion: initialData?.identificacion || '',
+    apellido: initialData?.apellido || '',
+    tipoDocumento: initialData?.tipoDocumento || '',
+    numeroDocumento: initialData?.numeroDocumento || '',
     email: initialData?.email || '',
     telefono: initialData?.telefono || '',
-    // Campos de Cliente
-    placa: initialData?.placa || '',
-    modelo: initialData?.modelo || '',
     // Campos de Mecánico
     especialidad: initialData?.especialidad || '',
     certificado: initialData?.certificado || '',
+    anioExp: initialData?.anioExp || '',
   });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+    console.log(name)
+    console.log(value)
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log({ ...formData, role })
+    return;
     onSubmit({ ...formData, role });
   };
 
@@ -51,16 +55,60 @@ export default function UserForm({ onSubmit, initialData = null }) {
           </div>
           <span className={styles.roleTitle}>Mecánico</span>
         </button>
+
+        <button
+          type="button"
+          className={`${styles.roleCard} ${role === 'admin' ? styles.active : ''}`}
+          onClick={() => setRole('admin')}
+        >
+          <div className={styles.iconWrapper}>
+            <SquareUserRound size={18} />
+          </div>
+          <span className={styles.roleTitle}>Admin</span>
+        </button>
+
       </div>
 
       <div className={styles.inputGroup}>
+
         <div className={styles.field}>
-          <label htmlFor="nombre">Nombre Completo</label>
+          <label htmlFor="tipoDocumento" className={styles.label}>Tipo de Documento</label>
+          <select
+            id="tipoDocumento"
+            name="tipoDocumento"
+            className={styles.input}
+            value={formData.tipoDocumento}
+            onChange={handleChange}
+            required
+          >
+            <option value="" hidden>Seleccione una opción</option>
+            <option value="CC">Cédula de Ciudadanía</option>
+            <option value="TI">Tarjeta de Identidad</option>
+            <option value="CE">Cédula de Extranjería</option>
+            <option value="PASAPORTE">Pasaporte</option>
+          </select>
+        </div>
+
+        <div className={styles.field}>
+          <label htmlFor="numeroDocumento">Número de documento</label>
+          <input
+            type="text"
+            id="numeroDocumento"
+            name="numeroDocumento"
+            placeholder="Documento de identidad"
+            value={formData.numeroDocumento}
+            onChange={handleChange}
+            required
+          />
+        </div>
+
+        <div className={styles.field}>
+          <label htmlFor="nombre">Nombres</label>
           <input
             type="text"
             id="nombre"
             name="nombre"
-            placeholder="Ej: Juan Pérez"
+            placeholder="Ej: Juan"
             value={formData.nombre}
             onChange={handleChange}
             required
@@ -68,26 +116,13 @@ export default function UserForm({ onSubmit, initialData = null }) {
         </div>
 
         <div className={styles.field}>
-          <label htmlFor="identificacion">Identificación</label>
+          <label htmlFor="apellido">Apellidos</label>
           <input
             type="text"
-            id="identificacion"
-            name="identificacion"
-            placeholder="Documento de identidad"
-            value={formData.identificacion}
-            onChange={handleChange}
-            required
-          />
-        </div>
-
-        <div className={styles.field}>
-          <label htmlFor="email">Correo Electrónico</label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            placeholder="correo@ejemplo.com"
-            value={formData.email}
+            id="apellido"
+            name="apellido"
+            placeholder="Ej: Pérez"
+            value={formData.apellido}
             onChange={handleChange}
             required
           />
@@ -106,35 +141,18 @@ export default function UserForm({ onSubmit, initialData = null }) {
           />
         </div>
 
-        {/* Campos dinámicos según el Rol */}
-        {role === 'cliente' && (
-          <>
-            <div className={styles.field}>
-              <label htmlFor="placa">Placa del Vehículo</label>
-              <input
-                type="text"
-                id="placa"
-                name="placa"
-                placeholder="Ej: ABC-123"
-                value={formData.placa}
-                onChange={handleChange}
-                required
-              />
-            </div>
-            <div className={styles.field}>
-              <label htmlFor="modelo">Modelo (Año)</label>
-              <input
-                type="number"
-                id="modelo"
-                name="modelo"
-                placeholder="Ej: 2023"
-                value={formData.modelo}
-                onChange={handleChange}
-                required
-              />
-            </div>
-          </>
-        )}
+        <div className={styles.field}>
+          <label htmlFor="email">Correo Electrónico</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            placeholder="correo@ejemplo.com"
+            value={formData.email}
+            onChange={handleChange}
+            required
+          />
+        </div>
 
         {role === 'mecanico' && (
           <>
@@ -162,6 +180,18 @@ export default function UserForm({ onSubmit, initialData = null }) {
                 name="certificado"
                 placeholder="Ej: SENA Electromecánica 12345"
                 value={formData.certificado}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div className={styles.field}>
+              <label htmlFor="anioExp">Años de experiencia</label>
+              <input
+                type="text"
+                id="anioExp"
+                name="anioExp"
+                placeholder="Ej: 5 años"
+                value={formData.anioExp}
                 onChange={handleChange}
                 required
               />

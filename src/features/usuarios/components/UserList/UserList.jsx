@@ -1,15 +1,21 @@
 import { Edit, Eye, Trash2 } from 'lucide-react';
 import { StatusBadge } from '../../../../components/ui/StatusBadge';
 import styles from './UserList.module.css';
-
-const MOCK_USERS = [
-  { id: 'USR-001', name: 'Carlos Ruiz', role: 'Administrador', email: 'carlos.ruiz@autofix.com', status: 'Activo', lastLogin: 'Hace 2 horas' },
-  { id: 'USR-002', name: 'Ana Mendez', role: 'Mecánico', email: 'ana.mendez@autofix.com', status: 'Activo', lastLogin: 'Hace 5 horas' },
-  { id: 'USR-003', name: 'Luis Fonsi', role: 'Mecánico', email: 'luis.fonsi@autofix.com', status: 'Inactivo', lastLogin: 'Hace 2 días' },
-  { id: 'USR-004', name: 'Rosa Pineda', role: 'Recepcionista', email: 'rosa.pineda@autofix.com', status: 'Activo', lastLogin: 'Hace 1 hora' },
-];
+import { useEffect, useState } from 'react';
+import { getAllUsers } from '../../services';
 
 export default function UserList() {
+  const [users, setUsers] = useState([]);
+
+  useEffect(() => {
+    const getUsers = async () => {
+      const data = await getAllUsers();
+      setUsers(data);
+    }
+    getUsers();
+  }, []);
+
+  console.log(users)
   return (
     <div className={styles.tableContainer}>
       <div className={styles.tableWrapper}>
@@ -20,22 +26,37 @@ export default function UserList() {
               <th>Nombre</th>
               <th>Rol</th>
               <th>Email</th>
+              <th>Teléfono</th>
               <th>Estado</th>
               <th>Último Acceso</th>
               <th>Acciones</th>
             </tr>
           </thead>
           <tbody>
-            {MOCK_USERS.map((user) => (
-              <tr key={user.id}>
-                <td className={styles.idCell}>{user.id}</td>
-                <td className={styles.nameCell}>{user.name}</td>
-                <td>{user.role}</td>
-                <td>{user.email}</td>
+            {users.map((user, index) => (
+              <tr key={user.idUsuario}>
+                <td className={styles.idCell}>{index + 1}</td>
+                <td className={styles.nameCell}>{user.nombre + ' ' + user.apellido}</td>
                 <td>
-                  <StatusBadge status={user.status} />
+                  {user.roles?.map(rol =>
+                    rol.replace('ROLE_', '') // quitar prefijo
+                      .toLowerCase()        // todo en minúscula
+                      .replace(/^./, c => c.toUpperCase()) // primera mayúscula
+                  ).join(', ')}
                 </td>
-                <td>{user.lastLogin}</td>
+                <td>{user.correo}</td>
+                <td>{user.telefono}</td>
+                <td>
+                  <StatusBadge status={user.status ? "Activo" : "Inactivo"} />
+                </td>
+                <td className={styles.lastLogin}>
+                  {user.lastLogin && (
+                    <>
+                      <div>{user.lastLogin.split('T')[0]}</div>
+                      <div>{user.lastLogin.split('T')[1].split('.')[0]}</div>
+                    </>
+                  )}
+                </td>
                 <td>
                   <div className={styles.actionButtons}>
                     <button className={styles.actionBtn} title="Ver detalles">
