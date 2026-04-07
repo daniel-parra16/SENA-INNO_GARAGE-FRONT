@@ -16,9 +16,12 @@ export default function Modal({ isOpen = true, onClose, title, message, type = '
     }
   };
 
+  const isString = typeof message === "string";
+
   return (
     <div className={styles.overlay} onClick={onClose}>
       <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
+
         <div className={styles.header}>
           <div className={styles.titleContainer}>
             {getIcon()}
@@ -28,14 +31,21 @@ export default function Modal({ isOpen = true, onClose, title, message, type = '
             <X size={20} />
           </button>
         </div>
+
         <div className={styles.content}>
-          <p className={styles.message}>{message}</p>
+          {isString ? (
+            <p className={styles.message}>{message}</p>
+          ) : (
+            <div className={styles.message}>{message}</div>
+          )}
         </div>
+
         <div className={styles.footer}>
           <button className={styles.actionButton} onClick={onClose}>
             Entendido
           </button>
         </div>
+
       </div>
     </div>
   );

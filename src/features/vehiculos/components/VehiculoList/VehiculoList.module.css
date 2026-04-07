@@ -1,0 +1,66 @@
+.tableContainer {
+    background: var(--bg-secondary);
+    border-radius: 12px;
+    padding: 16px;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th {
+    text-align: center;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    padding: 10px;
+}
+
+td {
+    padding: 12px 10px;
+    border-top: 1px solid var(--border-color);
+}
+
+.badge {
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+}
+
+.active {
+    background: #22c55e20;
+    color: #22c55e;
+}
+
+.inactive {
+    background: #ef444420;
+    color: #ef4444;
+}
+
+.actionButtons {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+}
+
+.actionBtn {
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+}
+
+.actionBtn:hover {
+    background-color: var(--bg-primary);
+    color: var(--primary-color);
+}
+
+.actionBtnDanger:hover {
+    color: var(--error-color);
+}

@@ -79,12 +79,11 @@ export default function UsuariosView() {
     setIsLoading(true);
 
     try {
+      const data = mapUserToRequest(userData)
       if (selectedUser) {
-        const data = mapUserToUpdate(userData)
         await updateUser(selectedUser.numeroDocumento, data);
         setMessage("Usuario modificado correctamente");
       } else {
-        const data = mapUserToCreate(userData);
         await createUser(data);
         setMessage("Usuario guardado correctamente");
       }
@@ -145,7 +144,7 @@ export default function UsuariosView() {
         status: !userToDelete.status // 🔥 toggle
       };
 
-      const data = mapUserToUpdate({
+      const data = mapUserToRequest({
         nombre: updatedUser.nombre,
         apellido: updatedUser.apellido,
         tipoDocumento: updatedUser.documento.tipo,
@@ -206,7 +205,7 @@ export default function UsuariosView() {
     };
   };
 
-  const mapUserToCreate = (user) => {
+  const mapUserToRequest = (user) => {
     return {
       tipoDocumento: user.tipoDocumento,
       numeroDocumento: user.numeroDocumento,
@@ -217,33 +216,7 @@ export default function UsuariosView() {
       telefono: user.telefono?.trim(),
       correo: user.correo?.trim(),
 
-      rol: mapRoleToBackend(user.roles), // 🔥 NO ARRAY
-
-      // Solo si es mecánico
-      ...(user.roles === "mecanico" && {
-        especialidad: user.especialidad || null,
-        certificado: user.certificado || null,
-        anioExp: user.anioExp || null, // 🔥 STRING (como pide el DTO)
-      }),
-    };
-  };
-
-  const mapUserToUpdate = (user) => {
-    return {
-      nombre: user.nombre?.trim(),
-      apellido: user.apellido?.trim(),
-
-      documento: {
-        tipo: user.tipoDocumento,
-        numero: user.numeroDocumento,
-      },
-
-      correo: user.correo?.trim(),
-      telefono: user.telefono?.trim(),
-
-      roles: [mapRoleToBackend(user.roles)], // 👈 array
-
-      status: true, // o el valor actual si lo manejas
+      rol: mapRoleToBackend(user.roles),
 
       ...(user.roles === "mecanico" && {
         especialidad: user.especialidad || null,
@@ -310,8 +283,11 @@ export default function UsuariosView() {
       <ConfirmModal
         isOpen={confirmOpen}
         title={userToDelete?.status ? "Desactivar usuario" : "Reactivar usuario"}
-        message={`¿Seguro que deseas ${userToDelete?.status ? "desactivar" : "reactivar"
-          } a ${userToDelete?.nombre}?`}
+        message={
+          userToDelete?.status
+            ? `¿Estás seguro de que deseas desactivar al usuario ${userToDelete?.nombre}? Esta acción podrá revertirse más adelante.`
+            : `¿Deseas reactivar al usuario ${userToDelete?.nombre}?`
+        }
         onConfirm={handleConfirmDelete}
         onCancel={handleCancelDelete}
       />

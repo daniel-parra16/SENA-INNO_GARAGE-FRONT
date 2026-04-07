@@ -1,0 +1,83 @@
+.formContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+/* Inputs */
+.inputGroup {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 16px;
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.field label {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+.field input,
+.field select {
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    padding: 10px 12px;
+    border-radius: var(--radius-md, 8px);
+    font-size: 0.95rem;
+    outline: none;
+    width: 100%;
+}
+
+.field input:focus,
+.field select:focus {
+    border-color: var(--primary-color);
+}
+
+.field input::placeholder {
+    color: var(--text-secondary);
+}
+
+/* Actions */
+.actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 8px;
+}
+
+.cancelBtn,
+.submitBtn {
+    padding: 10px 16px;
+    border-radius: var(--radius-md, 8px);
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s ease;
+}
+
+.cancelBtn {
+    background-color: transparent;
+    color: #ef4444;
+}
+
+.cancelBtn:hover {
+    background-color: rgba(239, 68, 68, 0.1);
+    color: #f87171;
+}
+
+.submitBtn {
+    background-color: var(--primary-color);
+    color: var(--white);
+}
+
+.submitBtn:hover {
+    background-color: #2563eb;
+}

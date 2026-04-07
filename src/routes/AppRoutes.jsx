@@ -5,12 +5,12 @@ import RegisterView from '../features/auth/RegisterView';
 import RememberView from '../features/auth/RememberView';
 import CotizacionesView from '../features/cotizaciones/Index';
 import DashboardView from '../features/dashboard/Index';
-import InventarioView from '../features/inventario/Index.jsx';
-import OrdenesView from '../features/ordenes/Index';
+import OrdenesView from '../features/ordenes/index';
 import UsuariosView from '../features/usuarios/Index';
 import { useAuth } from '../store/authContext.jsx';
 import VerifyEmailView from '../features/auth/VerifyEmailView.jsx';
 import NewPasswordView from '../features/auth/NewPasswordView.jsx';
+import VehiculosView from '../features/vehiculos/index.jsx';
 
 // Permite que solo accedan los usuarios no logueados.
 function GuestRoute({ children }) {
@@ -81,9 +81,9 @@ export default function AppRoutes() {
             <UsuariosView />
           </RoleRoute>
         } />
-        <Route path="inventario" element={
-          <RoleRoute roles={["admin", "mecanico"]}>
-            <InventarioView />
+        <Route path="vehiculos" element={
+          <RoleRoute roles={["admin"]}>
+            <VehiculosView />
           </RoleRoute>
         } />
       </Route>

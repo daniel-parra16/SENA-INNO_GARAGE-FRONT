@@ -1,0 +1,51 @@
+.card {
+    background-color: var(--bg-secondary);
+    border-radius: 16px;
+    padding: 20px;
+    border: 1px solid var(--border-color);
+    transition: all 0.25s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* Tipos */
+
+.total {
+    border-left: 4px solid #38bdf8;
+}
+
+.active {
+    border-left: 4px solid #22c55e;
+}
+
+.inactive {
+    border-left: 4px solid #ef4444;
+}
+
+.maintenance {
+    border-left: 4px solid #f59e0b;
+}
+
+/* Contenido */
+
+.content {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.title {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+.value {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: var(--text-primary);
+}

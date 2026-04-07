@@ -62,7 +62,6 @@ export default function RegisterForm() {
       if (err?.errores) {
         const errores = err.errores;
 
-        console.log("errores", errores)
         errorMessage = (
           <ul>
             {Object.entries(errores).map(([campo, mensaje], index) => (

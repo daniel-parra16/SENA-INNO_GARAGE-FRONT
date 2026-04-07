@@ -50,7 +50,18 @@
   color: var(--error-color);
 }
 
-.iconTotal { color: var(--primary-color, #3b82f6); }
-.iconActive { color: var(--success-color, #22c55e); }
-.iconInactive { color: var(--danger-color, #ef4444); }
-.iconAdmin { color: var(--warning-color, #eab308); }
+.iconTotal {
+  color: var(--primary-color, #3b82f6);
+}
+
+.iconActive {
+  color: var(--success-color, #22c55e);
+}
+
+.iconInactive {
+  color: var(--danger-color, #ef4444);
+}
+
+.iconAdmin {
+  color: var(--warning-color, #eab308);
+}

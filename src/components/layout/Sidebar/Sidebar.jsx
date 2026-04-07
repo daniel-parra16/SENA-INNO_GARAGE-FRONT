@@ -41,12 +41,6 @@ const navItems = [
         roles: ['admin', 'mecanico', 'cliente']
     },
     {
-        to: '/cotizaciones',
-        icon: <CircleDollarSign size={20} />,
-        label: 'Cotizaciones',
-        roles: ['admin', 'mecanico', 'cliente']
-    },
-    {
         to: '/inventario',
         icon: <Package size={20} />,
         label: 'Inventario',
@@ -108,7 +102,7 @@ export default function Sidebar({ isCollapsed, toggleSidebar }) {
             <div className={styles.divider}></div>
             <div className={`${styles.footerSection} ${isCollapsed ? styles.collapsed : ''}`}>
                 <div className={styles.userProfile}>
-                    
+
 
 
                     <button className={styles.settingsBtn} title={isCollapsed ? "Configuración" : undefined}>

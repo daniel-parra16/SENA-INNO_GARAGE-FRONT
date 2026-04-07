@@ -3,7 +3,6 @@ import { User, Wrench, SquareUserRound } from 'lucide-react';
 import styles from './UserForm.module.css';
 
 export default function UserForm({ onSubmit, initialData = null }) {
-  console.log(initialData)
   const [roles, setRoles] = useState(initialData?.roles || 'cliente');
   const [formData, setFormData] = useState({
     nombre: initialData?.nombre || '',
