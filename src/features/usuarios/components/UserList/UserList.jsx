@@ -1,21 +1,11 @@
-import { Edit, Eye, Trash2 } from 'lucide-react';
+import { Edit, Eye, Trash2, Undo2 } from 'lucide-react';
 import { StatusBadge } from '../../../../components/ui/StatusBadge';
 import styles from './UserList.module.css';
 import { useEffect, useState } from 'react';
 import { getAllUsers } from '../../services';
 
-export default function UserList() {
-  const [users, setUsers] = useState([]);
+export default function UserList({ users, onUpdateUser, onDeleteUser }) {
 
-  useEffect(() => {
-    const getUsers = async () => {
-      const data = await getAllUsers();
-      setUsers(data);
-    }
-    getUsers();
-  }, []);
-
-  console.log(users)
   return (
     <div className={styles.tableContainer}>
       <div className={styles.tableWrapper}>
@@ -34,7 +24,7 @@ export default function UserList() {
           </thead>
           <tbody>
             {users.map((user, index) => (
-              <tr key={user.idUsuario}>
+              <tr key={index + 1}>
                 <td className={styles.idCell}>{index + 1}</td>
                 <td className={styles.nameCell}>{user.nombre + ' ' + user.apellido}</td>
                 <td>
@@ -62,11 +52,16 @@ export default function UserList() {
                     <button className={styles.actionBtn} title="Ver detalles">
                       <Eye size={18} />
                     </button>
-                    <button className={styles.actionBtn} title="Editar">
+                    <button className={styles.actionBtn} title="Editar" onClick={() => onUpdateUser(user)}>
                       <Edit size={18} />
                     </button>
-                    <button className={`${styles.actionBtn} ${styles.actionBtnDanger}`} title="Eliminar">
-                      <Trash2 size={18} />
+                    <button
+                      className={`${styles.actionBtn} ${user.status ? styles.actionBtnDanger : styles.actionBtnSuccess
+                        }`}
+                      title={user.status ? "Desactivar" : "Reactivar"}
+                      onClick={() => onDeleteUser(user)}
+                    >
+                      {user.status ? <Trash2 size={18} /> : <Undo2 size={18} />}
                     </button>
                   </div>
                 </td>

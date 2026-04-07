@@ -3,13 +3,14 @@ import { User, Wrench, SquareUserRound } from 'lucide-react';
 import styles from './UserForm.module.css';
 
 export default function UserForm({ onSubmit, initialData = null }) {
-  const [role, setRole] = useState(initialData?.role || 'cliente');
+  console.log(initialData)
+  const [roles, setRoles] = useState(initialData?.roles || 'cliente');
   const [formData, setFormData] = useState({
     nombre: initialData?.nombre || '',
     apellido: initialData?.apellido || '',
     tipoDocumento: initialData?.tipoDocumento || '',
     numeroDocumento: initialData?.numeroDocumento || '',
-    email: initialData?.email || '',
+    correo: initialData?.correo || '',
     telefono: initialData?.telefono || '',
     // Campos de Mecánico
     especialidad: initialData?.especialidad || '',
@@ -19,16 +20,12 @@ export default function UserForm({ onSubmit, initialData = null }) {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    console.log(name)
-    console.log(value)
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log({ ...formData, role })
-    return;
-    onSubmit({ ...formData, role });
+    onSubmit({ ...formData, roles });
   };
 
   return (
@@ -36,8 +33,8 @@ export default function UserForm({ onSubmit, initialData = null }) {
       <div className={styles.roleSelection}>
         <button
           type="button"
-          className={`${styles.roleCard} ${role === 'cliente' ? styles.active : ''}`}
-          onClick={() => setRole('cliente')}
+          className={`${styles.roleCard} ${roles === 'cliente' ? styles.active : ''}`}
+          onClick={() => setRoles('cliente')}
         >
           <div className={styles.iconWrapper}>
             <User size={18} />
@@ -47,8 +44,8 @@ export default function UserForm({ onSubmit, initialData = null }) {
 
         <button
           type="button"
-          className={`${styles.roleCard} ${role === 'mecanico' ? styles.active : ''}`}
-          onClick={() => setRole('mecanico')}
+          className={`${styles.roleCard} ${roles === 'mecanico' ? styles.active : ''}`}
+          onClick={() => setRoles('mecanico')}
         >
           <div className={styles.iconWrapper}>
             <Wrench size={18} />
@@ -58,8 +55,8 @@ export default function UserForm({ onSubmit, initialData = null }) {
 
         <button
           type="button"
-          className={`${styles.roleCard} ${role === 'admin' ? styles.active : ''}`}
-          onClick={() => setRole('admin')}
+          className={`${styles.roleCard} ${roles === 'admin' ? styles.active : ''}`}
+          onClick={() => setRoles('admin')}
         >
           <div className={styles.iconWrapper}>
             <SquareUserRound size={18} />
@@ -142,19 +139,19 @@ export default function UserForm({ onSubmit, initialData = null }) {
         </div>
 
         <div className={styles.field}>
-          <label htmlFor="email">Correo Electrónico</label>
+          <label htmlFor="correo">Correo Electrónico</label>
           <input
-            type="email"
-            id="email"
-            name="email"
+            type="correo"
+            id="correo"
+            name="correo"
             placeholder="correo@ejemplo.com"
-            value={formData.email}
+            value={formData.correo}
             onChange={handleChange}
             required
           />
         </div>
 
-        {role === 'mecanico' && (
+        {roles === 'mecanico' && (
           <>
             <div className={styles.field}>
               <label htmlFor="especialidad">Especialidad</label>

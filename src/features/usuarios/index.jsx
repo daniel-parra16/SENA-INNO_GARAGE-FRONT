@@ -1,63 +1,359 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import UserFilters from './components/UserFilters/UserFilters';
 import UserList from './components/UserList/UserList';
 import UserStatCard from './components/UserStatCard/UserStatCard';
 import FormModal from '../../components/ui/Modal/FormModal';
 import UserForm from './components/UserForm/UserForm';
 import styles from './UsuariosView.module.css';
+import { createUser, deleteUsers, getAllUsers, updateUser } from './services';
+import LoadingModal from '../../components/ui/LoadingModal/LoadingModal';
+import Modal from '../../components/ui/Modal/modal';
+import ConfirmModal from '../../components/ui/ConfirmModal/ConfirmModal';
 
 export default function UsuariosView() {
   const [isUserModalOpen, setIsUserModalOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [users, setUsers] = useState([]);
+  const [message, setMessage] = useState('');
+  const [title, setTitle] = useState('');
+  const [type, setType] = useState('info');
+  const [showModal, setShowModal] = useState(false);
+  const [selectedUser, setSelectedUser] = useState(null);
+  const [filters, setFilters] = useState({
+    search: '',
+    status: 'all'
+  });
+  const [confirmOpen, setConfirmOpen] = useState(false);
+  const [userToDelete, setUserToDelete] = useState(null);
 
   const stats = [
-    { id: 1, title: 'Usuarios Totales', value: '45', type: 'total', trend: 12 },
-    { id: 2, title: 'Usuarios Activos', value: '42', type: 'active', trend: 5 },
-    { id: 3, title: 'Administradores', value: '4', type: 'admin', trend: 0 },
-    { id: 4, title: 'Inactivos', value: '3', type: 'inactive', trend: -2 },
+    {
+      id: 1,
+      title: 'Usuarios Totales',
+      value: users.length,
+      type: 'total',
+    },
+    {
+      id: 2,
+      title: 'Usuarios Activos',
+      value: users.filter(u => u.status).length,
+      type: 'active',
+    },
+    {
+      id: 3,
+      title: 'Administradores',
+      value: users.filter(u =>
+        u.roles?.includes('ROLE_ADMIN')
+      ).length,
+      type: 'admin',
+    },
+    {
+      id: 4,
+      title: 'Inactivos',
+      value: users.filter(u => !u.status).length,
+      type: 'inactive',
+    }
   ];
 
-  const handleUserSubmit = (userData) => {
+  // 🔥 Cargar usuarios
+  const fetchUsers = async () => {
+    const data = await getAllUsers();
+    setUsers(data);
+  };
+
+  useEffect(() => {
+    fetchUsers();
+  }, []);
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+  };
+
+  // 🔥 SUBMIT (CREAR / EDITAR)
+  const handleUserSubmit = async (userData) => {
     if (!userData) {
-      // Cancelado
       setIsUserModalOpen(false);
       return;
     }
-    console.log('Nuevo usuario guardado:', userData);
+
+    setIsLoading(true);
+
+    try {
+      if (selectedUser) {
+        const data = mapUserToUpdate(userData)
+        await updateUser(selectedUser.numeroDocumento, data);
+        setMessage("Usuario modificado correctamente");
+      } else {
+        const data = mapUserToCreate(userData);
+        await createUser(data);
+        setMessage("Usuario guardado correctamente");
+      }
+
+      await fetchUsers(); // 🔥 recargar lista
+
+      setTitle("Success");
+      setType("success");
+      setShowModal(true);
+
+    } catch (err) {
+      const type = (selectedUser) ? "modificar" : "registrar";
+      let errorMessage = err.message || `No se pudo ${type} el usuario`;
+
+      if (err?.errores) {
+        errorMessage = (
+          <ul>
+            {Object.entries(err.errores).map(([campo, mensaje], index) => (
+              <li key={index}>
+                <strong>▪</strong> {mensaje}
+              </li>
+            ))}
+          </ul>
+        );
+      }
+
+      setMessage(errorMessage);
+      setTitle("Error");
+      setType("error");
+      setShowModal(true);
+    }
+
+    setSelectedUser(null);
     setIsUserModalOpen(false);
-    // Aquí puedes agregar la lógica para enviar a la API
+    setIsLoading(false);
   };
 
+  // 🔥 Abrir modal para editar
+  const handleUpdateUser = (user) => {
+    const mappedUser = mapUserToForm(user);
+    setSelectedUser(mappedUser);
+    setIsUserModalOpen(true);
+  };
+
+  const handleAskDeleteUser = (user) => {
+    setUserToDelete(user);
+    setConfirmOpen(true);
+  };
+
+  const handleConfirmDelete = async () => {
+    if (!userToDelete) return;
+
+    setIsLoading(true);
+
+    try {
+      const updatedUser = {
+        ...userToDelete,
+        status: !userToDelete.status // 🔥 toggle
+      };
+
+      const data = mapUserToUpdate({
+        nombre: updatedUser.nombre,
+        apellido: updatedUser.apellido,
+        tipoDocumento: updatedUser.documento.tipo,
+        numeroDocumento: updatedUser.documento.numero,
+        correo: updatedUser.correo,
+        telefono: updatedUser.telefono,
+        roles: mapRoleFromBackend(updatedUser.roles?.[0]),
+        especialidad: updatedUser.especialidad,
+        certificado: updatedUser.certificado,
+        anioExp: updatedUser.anioExp,
+      });
+
+      data.status = !userToDelete.status; // 🔥 importante
+
+      await updateUser(userToDelete.documento.numero, data);
+
+      await fetchUsers();
+
+      setTitle("Success");
+      setType("success");
+      setMessage(
+        userToDelete.status
+          ? "Usuario desactivado correctamente"
+          : "Usuario reactivado correctamente"
+      );
+      setShowModal(true);
+
+    } catch (err) {
+      setTitle("Error");
+      setType("error");
+      setMessage("No se pudo actualizar el estado del usuario");
+      setShowModal(true);
+    }
+
+    setConfirmOpen(false);
+    setUserToDelete(null);
+    setIsLoading(false);
+  };
+
+  const handleCancelDelete = () => {
+    setConfirmOpen(false);
+    setUserToDelete(null);
+  };
+
+  // 🔥 Mapper backend → form
+  const mapUserToForm = (user) => {
+    return {
+      nombre: user.nombre || '',
+      apellido: user.apellido || '',
+      tipoDocumento: user.documento?.tipo || '',
+      numeroDocumento: user.documento?.numero || '',
+      correo: user.correo || '',
+      telefono: user.telefono || '',
+      especialidad: user.especialidad || '',
+      certificado: user.certificado || '',
+      anioExp: user.anioExp || '',
+      roles: mapRoleFromBackend(user.roles?.[0])
+    };
+  };
+
+  const mapUserToCreate = (user) => {
+    return {
+      tipoDocumento: user.tipoDocumento,
+      numeroDocumento: user.numeroDocumento,
+
+      nombres: user.nombre?.trim(),
+      apellidos: user.apellido?.trim(),
+
+      telefono: user.telefono?.trim(),
+      correo: user.correo?.trim(),
+
+      rol: mapRoleToBackend(user.roles), // 🔥 NO ARRAY
+
+      // Solo si es mecánico
+      ...(user.roles === "mecanico" && {
+        especialidad: user.especialidad || null,
+        certificado: user.certificado || null,
+        anioExp: user.anioExp || null, // 🔥 STRING (como pide el DTO)
+      }),
+    };
+  };
+
+  const mapUserToUpdate = (user) => {
+    return {
+      nombre: user.nombre?.trim(),
+      apellido: user.apellido?.trim(),
+
+      documento: {
+        tipo: user.tipoDocumento,
+        numero: user.numeroDocumento,
+      },
+
+      correo: user.correo?.trim(),
+      telefono: user.telefono?.trim(),
+
+      roles: [mapRoleToBackend(user.roles)], // 👈 array
+
+      status: true, // o el valor actual si lo manejas
+
+      ...(user.roles === "mecanico" && {
+        especialidad: user.especialidad || null,
+        certificado: user.certificado || null,
+        anioExp: user.anioExp || null,
+      }),
+    };
+  };
+
+  const mapRoleFromBackend = (rol) => {
+    switch (rol) {
+      case "ROLE_ADMIN":
+        return "admin";
+      case "ROLE_MECANICO":
+        return "mecanico";
+      default:
+        return "cliente";
+    }
+  };
+
+  const mapRoleToBackend = (rol) => {
+    switch (rol) {
+      case "admin":
+        return "ROLE_ADMIN";
+      case "mecanico":
+        return "ROLE_MECANICO";
+      default:
+        return "ROLE_CLIENTE";
+    }
+  };
+
+  const filteredUsers = users.filter(user => {
+
+    // 🔍 BUSCADOR
+    const searchMatch =
+      user.nombre?.toLowerCase().includes(filters.search.toLowerCase()) ||
+      user.apellido?.toLowerCase().includes(filters.search.toLowerCase()) ||
+      user.correo?.toLowerCase().includes(filters.search.toLowerCase()) ||
+      user.roles?.some(r => r.toLowerCase().includes(filters.search.toLowerCase()));
+
+    // 🔘 ESTADO
+    const statusMatch =
+      filters.status === 'all' ||
+      (filters.status === 'active' && user.status) ||
+      (filters.status === 'inactive' && !user.status);
+
+    return searchMatch && statusMatch;
+  });
+
+
   return (
-    <div className={styles.container}>
-      <div className={styles.header}>
-        <h1 className={styles.title}>Gestión de Usuarios</h1>
-        <p className={styles.subtitle}>Administra los accesos y roles del personal del taller</p>
-      </div>
+    <>
+      {isLoading && <LoadingModal mensaje="Procesando..." />}
 
-      <div className={styles.statsGrid}>
-        {stats.map(stat => (
-          <UserStatCard
-            key={stat.id}
-            title={stat.title}
-            value={stat.value}
-            type={stat.type}
-            trend={stat.trend}
-          />
-        ))}
-      </div>
-
-      <UserFilters onOpenNewUser={() => setIsUserModalOpen(true)} />
-      <UserList />
-
-      {isUserModalOpen && (
-        <FormModal 
-          isOpen={isUserModalOpen} 
-          onClose={() => setIsUserModalOpen(false)}
-          title="Agregar Nuevo Usuario"
-        >
-          <UserForm onSubmit={handleUserSubmit} />
-        </FormModal>
+      {showModal && (
+        <Modal
+          title={title}
+          message={message}
+          onClose={handleCloseModal}
+          type={type}
+        />
       )}
-    </div>
+
+      <ConfirmModal
+        isOpen={confirmOpen}
+        title={userToDelete?.status ? "Desactivar usuario" : "Reactivar usuario"}
+        message={`¿Seguro que deseas ${userToDelete?.status ? "desactivar" : "reactivar"
+          } a ${userToDelete?.nombre}?`}
+        onConfirm={handleConfirmDelete}
+        onCancel={handleCancelDelete}
+      />
+
+      <div className={styles.container}>
+        <div className={styles.header}>
+          <h1 className={styles.title}>Gestión de Usuarios</h1>
+          <p className={styles.subtitle}>
+            Administra los accesos y roles del personal del taller
+          </p>
+        </div>
+
+        <div className={styles.statsGrid}>
+          {stats.map(stat => (
+            <UserStatCard key={stat.id} {...stat} />
+          ))}
+        </div>
+
+        <UserFilters
+          filters={filters}
+          onFilterChange={setFilters}
+          onOpenNewUser={() => {
+            setSelectedUser(null);
+            setIsUserModalOpen(true);
+          }}
+        />
+
+        <UserList users={filteredUsers} onUpdateUser={handleUpdateUser} onDeleteUser={handleAskDeleteUser} />
+
+        {isUserModalOpen && (
+          <FormModal
+            isOpen={isUserModalOpen}
+            onClose={() => setIsUserModalOpen(false)}
+            title={selectedUser ? "Modificar Usuario" : "Agregar Usuario"}
+          >
+            <UserForm
+              initialData={selectedUser}
+              onSubmit={handleUserSubmit}
+            />
+          </FormModal>
+        )}
+      </div>
+    </>
   );
 }
