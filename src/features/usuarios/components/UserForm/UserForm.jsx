@@ -18,6 +18,7 @@ export default function UserForm({ onSubmit, initialData = null }) {
     certificado: initialData?.certificado || '',
     anioExp: initialData?.anioExp || '',
   });
+  console.log(initialData);
 
   const handleChange = (e) => {
     const { name, value } = e.target;

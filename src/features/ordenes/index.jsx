@@ -50,7 +50,7 @@ export default function OrdenesView() {
         tipo: filters.tipo !== 'all' ? filters.tipo : ''
       });
 
-      setOrdenes(data.content || []);
+      setOrdenes(data.contenido || []);
     } catch {
       setTitle("Error");
       setType("error");
@@ -171,6 +171,7 @@ export default function OrdenesView() {
           }}
           onChangeEstado={changeEstado}
           onConvert={convertToOrden}
+          onRefresh={fetchOrdenes}
         />
 
         {isModalOpen && (
@@ -182,6 +183,7 @@ export default function OrdenesView() {
             <OrdenForm
               initialData={selectedOrden}
               onSubmit={handleSubmit}
+              onClose={() => setIsModalOpen(false)}
             />
           </FormModal>
         )}

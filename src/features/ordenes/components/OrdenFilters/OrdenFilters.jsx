@@ -39,10 +39,17 @@ export default function OrdenFilters({ onNew, filters, onFilterChange }) {
             onChange={handleEstadoChange}
           >
             <option value="all">Todos los estados</option>
-            <option value="COTIZACION_PENDIENTE">Pendiente</option>
-            <option value="COTIZACION_APROBADA">Aprobada</option>
-            <option value="ORDEN_EN_REPARACION">En proceso</option>
-            <option value="ORDEN_FINALIZADA">Finalizada</option>
+            <option value="COTIZACION_PENDIENTE">Cotización pendiente</option>
+            <option value="COTIZACION_APROBADA">Cotización aprobada</option>
+            <option value="COTIZACION_RECHAZADA">Cotización rechazada</option>
+            <option value="COTIZACION_VENCIDA">Cotización vencida</option>
+            <option value="ORDEN_RECIBIDO">Recibido</option>
+            <option value="ORDEN_EN_DIAGNOSTICO">En diagnóstico</option>
+            <option value="ORDEN_ESPERANDO_REPUESTOS">Esperando repuestos</option>
+            <option value="ORDEN_EN_REPARACION">En reparación</option>
+            <option value="ORDEN_LISTA">Lista</option>
+            <option value="ORDEN_ENTREGADA">Entregada</option>
+            <option value="ORDEN_CANCELADA">Cancelada</option>
           </select>
         </div>
 

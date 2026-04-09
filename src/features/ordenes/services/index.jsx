@@ -1,6 +1,28 @@
 import { apiFetch } from '../../../api/AuthApi';
 
-// 🔥 Obtener paginado
+// Obtener usuarios para asignar cotizacion/orden
+export async function getAllSimpleUsers() {
+    return await apiFetch('usuarios/getUsuarios', {
+        method: 'GET'
+    });
+}
+
+// Obtener mecanicos para asignar cotizacion/orden
+export async function getAllSimpleMecanicos() {
+    return await apiFetch('usuarios/getMecanicos', {
+        method: 'GET'
+    });
+}
+
+// Obtener el vehiculo del usuario
+export async function getAllVehicleByNumDoc(numDoc) {
+    return await apiFetch(`/vehiculos/getVehiculosUser/${numDoc}`, {
+        method: 'GET'
+    })
+
+}
+
+//  Obtener paginado
 export async function getAllOrdenes(params = {}) {
     const query = new URLSearchParams(params).toString();
 
@@ -9,40 +31,55 @@ export async function getAllOrdenes(params = {}) {
     });
 }
 
-// 🔥 Crear
+//  Crear
 export async function createOrden(data) {
     return await apiFetch('/ordenes', {
         method: 'POST',
-        body: JSON.stringify(data)
+        body: data
     });
 }
 
-// 🔥 Actualizar
+//  Actualizar
 export async function updateOrden(id, data) {
     return await apiFetch(`/ordenes/${id}`, {
         method: 'PUT',
-        body: JSON.stringify(data)
+        body: data
     });
 }
 
-// 🔥 Cambiar estado
+//  Cambiar estado
 export async function changeEstado(id, estado) {
     return await apiFetch(`/ordenes/${id}/estado`, {
         method: 'PATCH',
-        body: JSON.stringify({ estado })
+        body: { estado }
     });
 }
 
-// 🔥 Convertir cotización → orden
+//  Convertir cotización → orden
 export async function convertToOrden(id) {
     return await apiFetch(`/ordenes/${id}/convertir`, {
         method: 'PATCH'
     });
 }
 
-// 🔥 Eliminar (soft delete)
+//  Eliminar (soft delete)
 export async function deleteOrden(id) {
     return await apiFetch(`/ordenes/${id}`, {
         method: 'DELETE'
+    });
+}
+
+// Obtener repuestos para items de la orden
+export async function getAllRepuestos() {
+    return await apiFetch('/repuestos', {
+        method: 'GET'
+    });
+}
+
+// Cambiar estado con refresh
+export async function changeEstadoOrden(id, estado) {
+    return await apiFetch(`/ordenes/${id}/estado`, {
+        method: 'PATCH',
+        body: { estado }
     });
 }

@@ -15,6 +15,11 @@
   text-align: left;
 }
 
+.table thead,
+.table tbody {
+  text-align: center;
+}
+
 .table th {
   padding: 16px 20px;
   color: var(--text-secondary);
@@ -25,7 +30,7 @@
 }
 
 .table td {
-  padding: 16px 20px;
+  padding: 14px 20px;
   color: var(--text-primary);
   font-size: 0.875rem;
   border-bottom: 1px solid var(--border-color);
@@ -40,47 +45,135 @@
   border-bottom: none;
 }
 
+/* ── Celdas especiales ── */
 .idCell {
   font-weight: 500;
   color: var(--primary-color) !important;
+}
+
+.nameCell {
+  font-weight: 600;
+  text-align: left;
+  min-width: 160px;
+}
+
+.subText {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  margin-top: 2px;
+}
+
+.vehiculoInfo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.placa {
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: var(--primary-color);
 }
 
 .totalCell {
   font-weight: 600;
 }
 
-.statusBadge {
-  display: inline-flex;
-  align-items: center;
-  padding: 4px 10px;
-  border-radius: 9999px;
+.noAsignado {
+  color: var(--text-secondary);
+  font-style: italic;
+  font-size: 0.8rem;
+}
+
+/* ── Tipo badge ── */
+.tipoBadge {
   font-size: 0.75rem;
   font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 20px;
 }
 
-.statusCompleted {
-  background-color: var(--success-dark);
-  color: var(--success-light);
+.tipoCotizacion {
+  background-color: rgba(139, 92, 246, 0.12);
+  color: #8b5cf6;
 }
 
-.statusProgress {
-  background-color: rgba(59, 130, 246, 0.2);
+.tipoOrden {
+  background-color: rgba(59, 130, 246, 0.12);
   color: #3b82f6;
 }
 
-.statusPending {
-  background-color: var(--warning-dark);
-  color: var(--warning-light);
+/* ── Estado badges ── */
+.badge {
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 20px;
+  white-space: nowrap;
 }
 
-.statusCancelled {
-  background-color: var(--error-dark);
-  color: var(--error-light);
+.badgePending {
+  background-color: rgba(234, 179, 8, 0.12);
+  color: #ca8a04;
 }
 
+.badgeApproved {
+  background-color: rgba(34, 197, 94, 0.12);
+  color: #16a34a;
+}
+
+.badgeRejected {
+  background-color: rgba(239, 68, 68, 0.12);
+  color: #dc2626;
+}
+
+.badgeExpired {
+  background-color: rgba(107, 114, 128, 0.12);
+  color: #6b7280;
+}
+
+.badgeReceived {
+  background-color: rgba(59, 130, 246, 0.12);
+  color: #2563eb;
+}
+
+.badgeDiag {
+  background-color: rgba(139, 92, 246, 0.12);
+  color: #7c3aed;
+}
+
+.badgeWaiting {
+  background-color: rgba(249, 115, 22, 0.12);
+  color: #ea580c;
+}
+
+.badgeRepair {
+  background-color: rgba(14, 165, 233, 0.12);
+  color: #0284c7;
+}
+
+.badgeReady {
+  background-color: rgba(34, 197, 94, 0.12);
+  color: #15803d;
+}
+
+.badgeDelivered {
+  background-color: rgba(16, 185, 129, 0.12);
+  color: #059669;
+}
+
+.badgeCancelled {
+  background-color: rgba(239, 68, 68, 0.12);
+  color: #dc2626;
+}
+
+/* ── Acciones ── */
 .actionButtons {
   display: flex;
-  gap: 8px;
+  gap: 6px;
+  justify-content: center;
+  align-items: center;
 }
 
 .actionBtn {
@@ -88,8 +181,8 @@
   border: none;
   color: var(--text-secondary);
   cursor: pointer;
-  padding: 4px;
-  border-radius: 4px;
+  padding: 5px;
+  border-radius: 6px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -103,4 +196,48 @@
 
 .actionBtnDanger:hover {
   color: var(--error-color);
+}
+
+.actionBtnConvert:hover {
+  color: #16a34a;
+}
+
+/* ── Select de estado ── */
+.estadoSelect {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.estadoSelect svg {
+  position: absolute;
+  left: 6px;
+  color: var(--text-secondary);
+  pointer-events: none;
+}
+
+.estadoSelect select {
+  appearance: none;
+  background-color: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+  font-size: 0.75rem;
+  padding: 5px 8px 5px 22px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+
+.estadoSelect select:hover {
+  border-color: var(--primary-color);
+}
+
+/* ── Empty state ── */
+.empty {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--text-secondary);
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
 }

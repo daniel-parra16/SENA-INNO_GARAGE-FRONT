@@ -5,7 +5,7 @@ import { getAllSimpleUsers } from '../../services';
 export default function VehiculoForm({ initialData, onSubmit }) {
     const [users, setUsers] = useState([]);
     const [form, setForm] = useState({
-        cedula_usuario: '',
+        numero_documento: '',
         placa: '',
         marca: '',
         modelo: '',
@@ -69,10 +69,10 @@ export default function VehiculoForm({ initialData, onSubmit }) {
                 <div className={styles.field}>
                     <label className={styles.label}>Usuario</label>
                     <select
-                        id='cedula_usuario'
-                        name="cedula_usuario"
+                        id='numero_documento'
+                        name="numero_documento"
                         className={styles.input}
-                        value={form.cedula_usuario}
+                        value={form.numero_documento}
                         onChange={handleChange}
                         required
                     >
