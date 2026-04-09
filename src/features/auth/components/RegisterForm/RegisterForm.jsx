@@ -1,9 +1,10 @@
-import { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { registerUser } from '../../services/authService';
 import LoadingModal from '../../../../components/ui/LoadingModal/LoadingModal';
 import styles from './RegisterForm.module.css';
 import Modal from '../../../../components/ui/Modal/modal';
+import { getTipoDoc } from '../../services/authService';
 
 export default function RegisterForm() {
 
@@ -26,6 +27,7 @@ export default function RegisterForm() {
   const [title, setTitle] = useState('');
   const [type, setType] = useState('info');
   const [showModal, setShowModal] = useState(false);
+  const [tiposDocumento, setTiposDocumento] = useState([]);
 
   const navigate = useNavigate();
 
@@ -92,6 +94,15 @@ export default function RegisterForm() {
     }
   };
 
+  const getTipoDocumento = async () => {
+    const data = await getTipoDoc();
+    setTiposDocumento(data)
+  }
+
+  useEffect(() => {
+    getTipoDocumento();
+  }, []);
+
   return (
     <>
       {isLoading && <LoadingModal message="Creando tu cuenta..." />}
@@ -120,11 +131,12 @@ export default function RegisterForm() {
               onChange={handleChange}
               required
             >
-              <option value="" disabled hidden></option>
-              <option value="CC">Cédula de Ciudadanía</option>
-              <option value="TI">Tarjeta de Identidad</option>
-              <option value="CE">Cédula de Extranjería</option>
-              <option value="PASAPORTE">Pasaporte</option>
+              <option value="" hidden>Seleccione una opción</option>
+              {tiposDocumento.map((tipo) => (
+                <option key={tipo.value} value={tipo.value}>
+                  {tipo.label}
+                </option>
+              ))}
             </select>
           </div>
 

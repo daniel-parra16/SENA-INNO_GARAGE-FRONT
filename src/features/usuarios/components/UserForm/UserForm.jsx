@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { User, Wrench, SquareUserRound } from 'lucide-react';
 import styles from './UserForm.module.css';
+import { getTipoDoc } from '../../services';
 
 export default function UserForm({ onSubmit, initialData = null }) {
   const [roles, setRoles] = useState(initialData?.roles || 'cliente');
+  const [tiposDocumento, setTiposDocumento] = useState([]);
   const [formData, setFormData] = useState({
     nombre: initialData?.nombre || '',
     apellido: initialData?.apellido || '',
@@ -26,6 +28,15 @@ export default function UserForm({ onSubmit, initialData = null }) {
     e.preventDefault();
     onSubmit({ ...formData, roles });
   };
+
+  const getTipoDocumento = async () => {
+    const data = await getTipoDoc();
+    setTiposDocumento(data)
+  }
+
+  useEffect(() => {
+    getTipoDocumento();
+  }, [])
 
   return (
     <form onSubmit={handleSubmit} className={styles.formContainer}>
@@ -78,10 +89,11 @@ export default function UserForm({ onSubmit, initialData = null }) {
             required
           >
             <option value="" hidden>Seleccione una opción</option>
-            <option value="CC">Cédula de Ciudadanía</option>
-            <option value="TI">Tarjeta de Identidad</option>
-            <option value="CE">Cédula de Extranjería</option>
-            <option value="PASAPORTE">Pasaporte</option>
+            {tiposDocumento.map((tipo) => (
+              <option key={tipo.value} value={tipo.value}>
+                {tipo.label}
+              </option>
+            ))}
           </select>
         </div>
 

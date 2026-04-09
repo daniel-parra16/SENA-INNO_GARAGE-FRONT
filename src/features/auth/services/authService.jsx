@@ -55,3 +55,8 @@ export async function restablecerPassword(data) {
         body: data
     });
 }
+
+// Servicio para consultar los tipos de documentos
+export async function getTipoDoc() {
+    return await apiFetch('/auth/tipoDocumento')
+}

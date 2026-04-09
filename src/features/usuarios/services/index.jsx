@@ -29,3 +29,8 @@ export async function deleteUsers(id) {
         method: 'DELETE'
     })
 }
+
+// Servicio para consultar los tipos de documentos
+export async function getTipoDoc() {
+    return await apiFetch('/usuarios/tipoDocumento')
+}
