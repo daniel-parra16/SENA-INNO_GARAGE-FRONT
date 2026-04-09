@@ -42,3 +42,7 @@ export async function deleteVehiculo(placa) {
         method: 'DELETE'
     });
 }
+
+export async function getAllSimpleUsers() {
+    return await apiFetch('/vehiculos/getUsuarios')
+}

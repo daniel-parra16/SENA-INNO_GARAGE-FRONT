@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react';
 import styles from './VehiculoForm.module.css';
+import { getAllSimpleUsers } from '../../services';
 
 export default function VehiculoForm({ initialData, onSubmit }) {
+    const [users, setUsers] = useState([]);
     const [form, setForm] = useState({
-        usuario_id: '',
+        cedula_usuario: '',
         placa: '',
         marca: '',
         modelo: '',
@@ -12,6 +14,12 @@ export default function VehiculoForm({ initialData, onSubmit }) {
         vin: '',
         kilometraje: ''
     });
+
+    const getUsers = async () => {
+        const data = await getAllSimpleUsers();
+        setUsers(data);
+
+    }
 
     // 🔥 Cargar datos cuando es edición
     useEffect(() => {
@@ -28,7 +36,8 @@ export default function VehiculoForm({ initialData, onSubmit }) {
                 kilometraje: initialData.kilometraje || '',
                 activo: initialData.activo ?? true
             });
-        }
+        };
+        getUsers();
     }, [initialData]);
 
     // 🔥 Manejo de cambios
@@ -47,7 +56,8 @@ export default function VehiculoForm({ initialData, onSubmit }) {
 
         onSubmit({
             ...form,
-            kilometraje: form.kilometraje || null
+            anio: form.anio ? Number(form.anio) : null, // 🔥 aquí conviertes
+            kilometraje: form.kilometraje ? Number(form.kilometraje) : null
         });
     };
 
@@ -57,14 +67,22 @@ export default function VehiculoForm({ initialData, onSubmit }) {
             <div className={styles.inputGroup}>
 
                 <div className={styles.field}>
-                    <label className={styles.label}>ID Usuario</label>
-                    <input
+                    <label className={styles.label}>Usuario</label>
+                    <select
+                        id='cedula_usuario'
+                        name="cedula_usuario"
                         className={styles.input}
-                        name="usuario_id"
-                        value={form.usuario_id}
+                        value={form.cedula_usuario}
                         onChange={handleChange}
                         required
-                    />
+                    >
+                        <option value="" hidden>Seleccioe un usuario</option>
+                        {users.map((user) => (
+                            <option key={user.numeroDocumento} value={user.numeroDocumento}>
+                                {user.nombreCompleto}
+                            </option>
+                        ))}
+                    </select>
                 </div>
 
                 <div className={styles.field}>
@@ -103,10 +121,21 @@ export default function VehiculoForm({ initialData, onSubmit }) {
                 <div className={styles.field}>
                     <label className={styles.label}>Año</label>
                     <input
+                        type='text'
                         className={styles.input}
                         name="anio"
                         value={form.anio}
-                        onChange={handleChange}
+                        onChange={(e) => {
+                            const value = e.target.value;
+
+                            // Solo permite números
+                            if (/^\d*$/.test(value)) {
+                                setForm(prev => ({
+                                    ...prev,
+                                    anio: value
+                                }));
+                            }
+                        }}
                         required
                     />
                 </div>
