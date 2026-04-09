@@ -16,7 +16,7 @@ export default function VehiculoFilters({ filters, onFilterChange, onNew }) {
         <div className={styles.filtersContainer}>
             <div className={styles.searchBox}>
                 <SearchBar
-                    placeholder="Buscar por placa o marca..."
+                    placeholder="Buscar por propietario, placa o marca..."
                     onChange={handleSearchChange}
                 />
             </div>

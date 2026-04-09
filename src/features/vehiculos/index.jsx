@@ -176,6 +176,7 @@ export default function VehiculosView() {
 
         // 🔍 BUSCADOR
         const searchMatch =
+            v.nombre_completo.toLowerCase().includes(filters.search.toLowerCase()) ||
             v.placa.toLowerCase().includes(filters.search.toLowerCase()) ||
             v.marca.toLowerCase().includes(filters.search.toLowerCase());
 

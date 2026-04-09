@@ -11,10 +11,12 @@ export default function VehiculoList({ vehiculos, onEdit, onToggle }) {
                     <thead>
                         <tr>
                             <th>#</th>
+                            <th>Propietario</th>
                             <th>Placa</th>
                             <th>Marca</th>
                             <th>Modelo</th>
                             <th>Color</th>
+                            <th>Registrado por</th>
                             <th>Estado</th>
                             <th>Acciones</th>
                         </tr>
@@ -25,10 +27,12 @@ export default function VehiculoList({ vehiculos, onEdit, onToggle }) {
                             <tr key={index + 1}>
                                 <td className={styles.idCell}>{index + 1}</td>
 
+                                <td>{v.nombre_completo}</td>
                                 <td>{v.placa}</td>
                                 <td>{v.marca}</td>
                                 <td>{v.modelo}</td>
                                 <td>{v.color}</td>
+                                <td>{v.registrado_por}</td>
 
                                 <td>
                                     <StatusBadge
@@ -51,8 +55,8 @@ export default function VehiculoList({ vehiculos, onEdit, onToggle }) {
                                         {/* TOGGLE */}
                                         <button
                                             className={`${styles.actionBtn} ${v.activo
-                                                    ? styles.actionBtnDanger
-                                                    : styles.actionBtnSuccess
+                                                ? styles.actionBtnDanger
+                                                : styles.actionBtnSuccess
                                                 }`}
                                             title={v.activo ? "Desactivar" : "Reactivar"}
                                             onClick={() => onToggle(v)}
