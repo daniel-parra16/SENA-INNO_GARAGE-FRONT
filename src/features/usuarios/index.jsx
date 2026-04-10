@@ -218,6 +218,8 @@ export default function UsuariosView() {
 
       rol: mapRoleToBackend(user.roles),
 
+      status: true,
+
       ...(user.roles === "mecanico" && {
         especialidad: user.especialidad || null,
         certificado: user.certificado || null,
