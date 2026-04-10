@@ -27,7 +27,7 @@
   font-weight: 500;
 }
 
-.field input, 
+.field input,
 .field select {
   background-color: #242c3d;
   border: 1px solid rgba(255, 255, 255, 0.1);
@@ -41,7 +41,7 @@
   box-sizing: border-box;
 }
 
-.field input:focus, 
+.field input:focus,
 .field select:focus {
   border-color: #3b82f6;
   background-color: #2a3347;
@@ -56,6 +56,30 @@
   color: #64748b;
 }
 
+.field textarea {
+  background-color: #242c3d;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+  padding: 10px 12px;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  transition: border-color 0.2s;
+  outline: none;
+  width: 100%;
+  box-sizing: border-box;
+  resize: vertical;
+  min-height: 90px;
+}
+
+.field textarea:focus {
+  border-color: #3b82f6;
+  background-color: #2a3347;
+}
+
+.field textarea::placeholder {
+  color: #64748b;
+}
+
 .actions {
   display: flex;
   justify-content: flex-end;
@@ -63,7 +87,8 @@
   margin-top: 8px;
 }
 
-.cancelBtn, .submitBtn {
+.cancelBtn,
+.submitBtn {
   padding: 10px 16px;
   border-radius: 6px;
   font-size: 0.95rem;

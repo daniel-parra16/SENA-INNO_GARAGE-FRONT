@@ -1,41 +1,196 @@
-import InventarioFilters from './components/InventarioFilters';
-import InventarioStatCard from './components/InventarioStatCard';
-import InventarioTable from './components/InventarioTable';
+import { useEffect, useState } from 'react';
 import styles from './InventarioView.module.css';
 
+import InventarioFilters from './components/InventarioFilters';
+import { InventarioList } from './components/InventarioList';
+import InventarioStatCard from './components/InventarioStatCard';
+import { InventarioFormModal } from './components/InventarioForm';
+
+import FormModal from '../../components/ui/Modal/FormModal';
+import LoadingModal from '../../components/ui/LoadingModal/LoadingModal';
+import Modal from '../../components/ui/Modal/modal';
+import ConfirmModal from '../../components/ui/ConfirmModal/ConfirmModal';
+
+import { useInventario } from './hooks';
+
 export default function InventarioView() {
+  const {
+    repuestos,
+    loading,
+    handleCreate,
+    handleUpdate,
+    handleDelete,
+    fetchRepuestos
+  } = useInventario();
+
+  const [openModal, setOpenModal] = useState(false);
+  const [selected, setSelected] = useState(null);
+
+  const [filters, setFilters] = useState({
+    search: '',
+  });
+
+  const [confirmOpen, setConfirmOpen] = useState(false);
+  const [selectedItem, setSelectedItem] = useState(null);
+
+  const [message, setMessage] = useState('');
+  const [title, setTitle] = useState('');
+  const [type, setType] = useState('info');
+  const [showModal, setShowModal] = useState(false);
+
+  // 📊 STATS
   const stats = [
-    { id: 1, title: 'Total Productos', value: '450', type: 'total', trend: 5 },
-    { id: 2, title: 'Bajo Stock', value: '15', type: 'warning', trend: 2 },
-    { id: 3, title: 'Agotados', value: '3', type: 'critical', trend: -1 },
-    { id: 4, title: 'Valor Inventario', value: '$45,200', type: 'value', trend: 8 },
+    {
+      id: 1,
+      title: 'Total Repuestos',
+      value: repuestos.length,
+      type: 'total'
+    },
+    {
+      id: 2,
+      title: 'Stock Bajo',
+      value: repuestos.filter(r => r.stockBajo).length,
+      type: 'warning'
+    },
+    {
+      id: 3,
+      title: 'Stock Total',
+      value: repuestos.reduce((acc, r) => acc + (r.stock || 0), 0),
+      type: 'active'
+    }
   ];
 
-  return (
-    <div className={styles.container}>
-      <div className={styles.header}>
-        <div className={styles.headerTitle}>
-          <h1 className={styles.title}>Inventario</h1>
-          <p className={styles.subtitle}>Gestiona tus productos y niveles de stock</p>
-        </div>
-      </div>
-
-      <div className={styles.statsGrid}>
-        {stats.map(stat => (
-          <InventarioStatCard
-            key={stat.id}
-            title={stat.title}
-            value={stat.value}
-            type={stat.type}
-            trend={stat.trend}
-          />
-        ))}
-      </div>
-
-      <InventarioFilters />
-      <div className={styles.tableContainer}>
-        <InventarioTable />
-      </div>
-    </div>
+  // 🔍 FILTRO
+  const filtered = repuestos.filter(r =>
+    r.nombre?.toLowerCase().includes(filters.search.toLowerCase()) ||
+    r.referencia?.toLowerCase().includes(filters.search.toLowerCase()) ||
+    r.marca?.toLowerCase().includes(filters.search.toLowerCase())
   );
-} 
+
+  // 💾 GUARDAR
+  const handleSave = async (data) => {
+    if (!data) return;
+
+    try {
+      if (selected) {
+        await handleUpdate(selected.id, data);
+        setMessage("Repuesto actualizado correctamente");
+      } else {
+        await handleCreate(data);
+        setMessage("Repuesto creado correctamente");
+      }
+
+      setTitle("Success");
+      setType("success");
+      setShowModal(true);
+
+      await fetchRepuestos();
+
+    } catch (err) {
+      setTitle("Error");
+      setType("error");
+      setMessage("Error al guardar repuesto");
+      setShowModal(true);
+    }
+
+    setOpenModal(false);
+    setSelected(null);
+  };
+
+  // 🗑 ELIMINAR
+  const handleAskDelete = (item) => {
+    setSelectedItem(item);
+    setConfirmOpen(true);
+  };
+
+  const handleConfirmDelete = async () => {
+    if (!selectedItem) return; // 🔥 PROTECCIÓN
+
+    await handleDelete(selectedItem.id);
+
+    setConfirmOpen(false);
+    setSelectedItem(null); // 🔥 limpiar estado
+    fetchRepuestos();
+  };
+
+  return (
+    <>
+      {loading && <LoadingModal mensaje="Procesando..." />}
+
+      {showModal && (
+        <Modal
+          title={title}
+          message={message}
+          onClose={() => setShowModal(false)}
+          type={type}
+        />
+      )}
+
+      <ConfirmModal
+        isOpen={confirmOpen}
+        title="Eliminar repuesto"
+        message={
+          selectedItem
+            ? `¿Deseas eliminar ${selectedItem.nombre}?`
+            : ''
+        }
+        onConfirm={handleConfirmDelete}
+        onCancel={() => {
+          setConfirmOpen(false);
+          setSelectedItem(null);
+        }}
+      />
+
+      <div className={styles.container}>
+        <div className={styles.header}>
+          <h1 className={styles.title}>Gestión de Inventario</h1>
+          <p className={styles.subtitle}>
+            Administra los repuestos del taller
+          </p>
+        </div>
+
+        {/* 📊 CARDS */}
+        <div className={styles.statsGrid}>
+          {stats.map(stat => (
+            <InventarioStatCard key={stat.id} {...stat} />
+          ))}
+        </div>
+
+        {/* 🔍 FILTROS */}
+        <InventarioFilters
+          filters={filters}
+          onFilterChange={setFilters}
+          onNew={() => {
+            setSelected(null);
+            setOpenModal(true);
+          }}
+        />
+
+        {/* 📋 LISTA */}
+        <InventarioList
+          repuestos={filtered}
+          onEdit={(rep) => {
+            setSelected(rep);
+            setOpenModal(true);
+          }}
+          onDelete={handleAskDelete}
+        />
+
+        {/* 🧾 MODAL */}
+        {openModal && (
+          <FormModal
+            isOpen={openModal}
+            onClose={() => setOpenModal(false)}
+            title={selected ? "Editar Repuesto" : "Nuevo Repuesto"}
+          >
+            <InventarioFormModal
+              initialData={selected}
+              onSave={handleSave}
+              onClose={() => setOpenModal(false)}
+            />
+          </FormModal>
+        )}
+      </div>
+    </>
+  );
+}

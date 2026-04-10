@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
-import UserFilters from './components/UserFilters/UserFilters';
-import UserList from './components/UserList/UserList';
-import UserStatCard from './components/UserStatCard/UserStatCard';
+import UserFilters from './components/UserFilters';
+import UserList from './components/UserList';
+import UserStatCard from './components/UserStatCard';
 import FormModal from '../../components/ui/Modal/FormModal';
-import UserForm from './components/UserForm/UserForm';
+import UserForm from './components/UserForm';
 import styles from './UsuariosView.module.css';
 import { createUser, getAllUsers, updateUser } from './services';
 import LoadingModal from '../../components/ui/LoadingModal/LoadingModal';

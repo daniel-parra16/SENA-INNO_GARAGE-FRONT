@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
-import VehiculoList from './components/VehiculoList/VehiculoList';
-import VehiculoForm from './components/VehiculoForm/VehiculoForm';
-import VehiculoFilters from './components/VehiculoFilters/VehiculoFilters';
+import VehiculoList from './components/VehiculoList';
+import VehiculoForm from './components/VehiculoForm';
+import VehiculoFilters from './components/VehiculoFilters';
 import FormModal from '../../components/ui/Modal/FormModal';
 import LoadingModal from '../../components/ui/LoadingModal/LoadingModal';
 import Modal from '../../components/ui/Modal/modal';
@@ -15,7 +15,7 @@ import {
     deleteVehiculo
 } from './services';
 import ConfirmModal from '../../components/ui/ConfirmModal/ConfirmModal';
-import VehiculoStatCard from './components/VehiculoStatCard/VehiculoStatCard';
+import VehiculoStatCard from './components/VehiculoStatCard';
 
 export default function VehiculosView() {
 

@@ -3,7 +3,6 @@ import MainLayout from '../components/layout/MainLayout';
 import LoginView from '../features/auth/Index';
 import RegisterView from '../features/auth/RegisterView';
 import RememberView from '../features/auth/RememberView';
-import CotizacionesView from '../features/cotizaciones/Index';
 import DashboardView from '../features/dashboard/Index';
 import OrdenesView from '../features/ordenes/index';
 import UsuariosView from '../features/usuarios/Index';
@@ -11,6 +10,7 @@ import { useAuth } from '../store/authContext.jsx';
 import VerifyEmailView from '../features/auth/VerifyEmailView.jsx';
 import NewPasswordView from '../features/auth/NewPasswordView.jsx';
 import VehiculosView from '../features/vehiculos/index.jsx';
+import InventarioView from '../features/inventario/index.jsx';
 
 // Permite que solo accedan los usuarios no logueados.
 function GuestRoute({ children }) {
@@ -73,7 +73,6 @@ export default function AppRoutes() {
       }>
         <Route index element={<DashboardView />} />
         <Route path="ordenes" element={<OrdenesView />} />
-        <Route path="cotizaciones" element={<CotizacionesView />} />
 
         {/* Solo admin puede ver usuarios e inventario */}
         <Route path="usuarios" element={
@@ -84,6 +83,11 @@ export default function AppRoutes() {
         <Route path="vehiculos" element={
           <RoleRoute roles={["admin"]}>
             <VehiculosView />
+          </RoleRoute>
+        } />
+        <Route path="inventario" element={
+          <RoleRoute roles={["admin"]}>
+            <InventarioView />
           </RoleRoute>
         } />
       </Route>

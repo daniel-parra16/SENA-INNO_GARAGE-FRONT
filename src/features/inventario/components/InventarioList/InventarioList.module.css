@@ -1,0 +1,173 @@
+.tableContainer {
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.tableWrapper {
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+
+.table th {
+  padding: 16px 20px;
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+  font-weight: 500;
+  border-bottom: 1px solid var(--border-color);
+  background-color: var(--table-head-bg);
+  /* subtle header bg */
+}
+
+.table td {
+  padding: 16px 20px;
+  color: var(--text-primary);
+  font-size: 0.875rem;
+  border-bottom: 1px solid var(--border-color);
+  background-color: var(--table-body-bg);
+  /* subtle body bg */
+}
+
+.table tr:hover td {
+  background-color: var(--bg-tertiary);
+}
+
+.table tr:last-child td {
+  border-bottom: none;
+}
+
+.idCell {
+  font-weight: 500;
+  color: var(--primary-color) !important;
+}
+
+.totalCell {
+  font-weight: 600;
+}
+
+/* Status Badges */
+.statusBadge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.statusApproved {
+  background-color: var(--success-dark);
+  color: var(--success-light);
+}
+
+.statusPending {
+  background-color: var(--warning-dark);
+  color: var(--warning-light);
+}
+
+.statusRejected {
+  background-color: var(--error-dark);
+  color: var(--error-light);
+}
+
+.statusExpired {
+  background-color: var(--border-color);
+  color: var(--text-secondary);
+}
+
+/* Actions */
+.actions {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+
+.actionBtn {
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.actionBtn:hover {
+  background-color: var(--bg-primary);
+  color: var(--primary-color);
+}
+
+.actionDelete:hover {
+  color: var(--error-color);
+}
+
+.stockCell {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* ⚠ ICONO */
+.warning {
+  color: var(--danger-color, #ef4444);
+  font-size: 14px;
+  cursor: pointer;
+}
+
+/* 📦 CONTENEDOR TOOLTIP */
+.tooltipContainer {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+/* 💬 TOOLTIP */
+.tooltip {
+  position: absolute;
+  bottom: 130%;
+  left: 50%;
+  transform: translateX(-50%);
+
+  background-color: #111827;
+  color: #e5e7eb;
+  font-size: 0.75rem;
+  padding: 8px 10px;
+  border-radius: 6px;
+
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+
+  transition: opacity 0.2s ease;
+  z-index: 10;
+
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* 🔽 flechita */
+.tooltip::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+
+  border-width: 5px;
+  border-style: solid;
+  border-color: #111827 transparent transparent transparent;
+}
+
+/* ✨ HOVER */
+.tooltipContainer:hover .tooltip {
+  opacity: 1;
+}

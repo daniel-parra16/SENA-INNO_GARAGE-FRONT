@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react';
-import OrdenList from './components/OrdenList/OrdenList';
-import OrdenForm from './components/OrdenForm/OrdenForm';
-import OrdenFilters from './components/OrdenFilters/OrdenFilters';
-import OrdenStatCard from './components/OrdenStatCard/OrdenStatCard';
+import OrdenList from './components/OrdenList';
+import OrdenForm from './components/OrdenForm';
+import OrdenFilters from './components/OrdenFilters';
 
 import FormModal from '../../components/ui/Modal/FormModal';
 import LoadingModal from '../../components/ui/LoadingModal/LoadingModal';
@@ -19,6 +18,7 @@ import {
 } from './services';
 
 import styles from './OrdenesView.module.css';
+import OrdenStatCard from './components/OrdenStatCard';
 
 export default function OrdenesView() {
 
@@ -40,6 +40,27 @@ export default function OrdenesView() {
 
   const [confirmOpen, setConfirmOpen] = useState(false);
   const [ordenToDelete, setOrdenToDelete] = useState(null);
+
+  const estadosCotizacion = [
+    'COTIZACION_PENDIENTE',
+    'COTIZACION_APROBADA',
+    'COTIZACION_RECHAZADA',
+    'COTIZACION_VENCIDA'
+  ];
+
+  const estadosOrden = [
+    'ORDEN_RECIBIDO',
+    'ORDEN_EN_DIAGNOSTICO',
+    'ORDEN_ESPERANDO_REPUESTOS',
+    'ORDEN_EN_REPARACION',
+    'ORDEN_LISTA',
+    'ORDEN_ENTREGADA',
+    'ORDEN_CANCELADA'
+  ];
+
+  const getCountByEstado = (estado) => {
+    return ordenes.filter(o => o.estado === estado).length;
+  };
 
   // 🔥 FETCH
   const fetchOrdenes = async () => {
@@ -148,6 +169,28 @@ export default function OrdenesView() {
           <p className={styles.subtitle}>
             Administra las ordenes del taller
           </p>
+        </div>
+
+        <div className={styles.dualGrid}>
+
+          <OrdenStatCard
+            title="Órdenes"
+            estados={estadosOrden}
+            getCount={getCountByEstado}
+            onClickEstado={(estado) =>
+              setFilters(prev => ({ ...prev, estado }))
+            }
+          />
+
+          <OrdenStatCard
+            title="Cotizaciones"
+            estados={estadosCotizacion}
+            getCount={getCountByEstado}
+            onClickEstado={(estado) =>
+              setFilters(prev => ({ ...prev, estado }))
+            }
+          />
+
         </div>
 
         <OrdenFilters

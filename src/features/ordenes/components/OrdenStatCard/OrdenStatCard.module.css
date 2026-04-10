@@ -1,56 +1,79 @@
 .card {
-  background-color: var(--bg-secondary);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-md, 8px);
-  padding: var(--spacing-md, 16px);
-  color: var(--text-primary);
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-sm, 8px);
+  background-color: #1e293b;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  overflow: hidden;
+  /* 🔥 clave para que las líneas se vean bien */
 }
 
-.header {
+/* 🔥 HEADER tipo tabla */
+.title {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #e2e8f0;
+
+  padding: 14px 20px;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.2);
+}
+
+/* 🔥 LISTA */
+.list {
+  display: flex;
+  flex-direction: column;
+}
+
+/* 🔥 FILAS tipo tabla */
+.item {
   display: flex;
   justify-content: space-between;
   align-items: center;
+
+  padding: 6px 20px;
+  transition: background 0.2s ease;
 }
 
-.title {
-  font-size: var(--text-sm, 0.875rem);
-  color: var(--text-secondary);
-  font-weight: 500;
-  margin: 0;
+/* 🔥 separación tipo tabla */
+.item:not(:last-child) {
+  border-bottom: 1px solid rgba(148, 163, 184, 0.15);
 }
 
-.body {
-  display: flex;
-  align-items: baseline;
-  gap: var(--spacing-sm, 8px);
+/* 🔥 hover elegante */
+.item:hover {
+  background-color: rgba(59, 130, 246, 0.05);
 }
 
-.value {
-  font-size: var(--text-xl, 1.5rem);
+/* 🔥 TEXTO ESTADO */
+.estado {
+  font-size: 0.85rem;
+  color: #94a3b8;
+  text-transform: capitalize;
+}
+
+/* 🔥 BOTÓN REDONDO */
+.countBtn {
+  min-width: 32px;
+  height: 32px;
+  padding: 0 10px;
+
+  border-radius: 999px;
+  border: none;
+
+  background-color: #3b82f6;
+  color: white;
   font-weight: 600;
+  font-size: 0.8rem;
+
+  cursor: pointer;
+  transition: all 0.2s ease;
 }
 
-.trend {
-  font-size: var(--text-xs, 0.75rem);
-  font-weight: 500;
-  padding: 2px 6px;
-  border-radius: var(--radius-sm, 4px);
+/* 🔥 hover botón */
+.countBtn:hover {
+  background-color: #2563eb;
+  transform: scale(1.08);
 }
 
-.positive {
-  background-color: rgba(16, 185, 129, 0.1);
-  color: var(--success-color);
+/* 🔥 activo (cuando lo selecciones luego) */
+.countBtn:active {
+  transform: scale(0.95);
 }
-
-.negative {
-  background-color: rgba(239, 68, 68, 0.1);
-  color: var(--error-color);
-}
-
-.iconPending { color: var(--warning-color); }
-.iconCompleted { color: var(--success-color); }
-.iconCancelled { color: var(--error-color); }
-.iconTotal { color: var(--primary-color); }

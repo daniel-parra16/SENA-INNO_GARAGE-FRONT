@@ -1,5 +1,5 @@
 import styles from './RegisterView.module.css';
-import RegisterForm from './components/RegisterForm/RegisterForm';
+import RegisterForm from './components/RegisterForm';
 
 export default function RegisterView() {
   return (

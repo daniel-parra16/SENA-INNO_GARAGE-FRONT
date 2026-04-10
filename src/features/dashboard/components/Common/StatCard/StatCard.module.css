@@ -1,0 +1,29 @@
+/* StatCard.module.css */
+.card {
+  background: var(--bg-secondary);
+  border-radius: 12px;
+  padding: 18px;
+  border: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+.card h2 {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+}
