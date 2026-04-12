@@ -1,1 +1,155 @@
-/* Placeholder: estilos de OrderStatus */
+.stack {
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+}
+
+.card {
+	background: var(--bg-secondary);
+	border: 1px solid var(--border-color);
+	border-radius: 12px;
+	padding: 18px;
+}
+
+.sectionHeader {
+	margin-bottom: 14px;
+}
+
+.sectionHeader h3 {
+	color: var(--text-primary);
+	font-size: 1.1rem;
+}
+
+.appointmentCard {
+	border-radius: 12px;
+	padding: 14px;
+	background: linear-gradient(160deg, #0ea5e9, #38bdf8 60%, #22d3ee);
+	color: #ecfeff;
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+}
+
+.titleRow {
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+	font-weight: 700;
+	font-size: 0.92rem;
+}
+
+.dateBox {
+	background: rgba(12, 74, 110, 0.35);
+	border-radius: 10px;
+	padding: 10px;
+	border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.dateBox span {
+	font-size: 0.7rem;
+	letter-spacing: 0.04em;
+	opacity: 0.9;
+}
+
+.dateBox strong {
+	margin-top: 4px;
+	display: block;
+	font-size: 1.5rem;
+	line-height: 1.1;
+}
+
+.dateBox p {
+	margin-top: 4px;
+	font-size: 1.1rem;
+	font-weight: 600;
+}
+
+.branchInfo {
+	display: flex;
+	align-items: flex-start;
+	gap: 8px;
+}
+
+.branchInfo h4 {
+	font-size: 0.95rem;
+	font-weight: 700;
+}
+
+.branchInfo p {
+	font-size: 0.82rem;
+	opacity: 0.95;
+}
+
+.primaryButton {
+	border: none;
+	border-radius: 10px;
+	background: white;
+	color: #0369a1;
+	font-weight: 700;
+	padding: 10px 12px;
+	cursor: pointer;
+}
+
+.workshopCard {
+	border-radius: 10px;
+	border: 1px solid var(--border-color);
+	background: rgba(15, 23, 42, 0.35);
+	padding: 14px;
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+}
+
+.workshopTop {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+}
+
+.workshopIcon {
+	width: 38px;
+	height: 38px;
+	border-radius: 10px;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	color: #38bdf8;
+	background: rgba(56, 189, 248, 0.12);
+}
+
+.workshopTop h4 {
+	font-size: 1rem;
+	color: var(--text-primary);
+}
+
+.rating {
+	margin-top: 4px;
+	display: inline-flex;
+	align-items: center;
+	gap: 3px;
+	color: #fbbf24;
+	font-size: 0.82rem;
+}
+
+.starActive {
+	fill: #fbbf24;
+	color: #fbbf24;
+}
+
+.starInactive {
+	color: rgba(251, 191, 36, 0.35);
+}
+
+.specialty {
+	color: var(--text-secondary);
+	font-size: 0.84rem;
+	line-height: 1.45;
+}
+
+.contact {
+	color: #7dd3fc;
+	font-size: 0.84rem;
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+}
