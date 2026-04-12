@@ -12,7 +12,7 @@
 .table {
   width: 100%;
   border-collapse: collapse;
-  text-align: left;
+  text-align: center;
 }
 
 
@@ -35,6 +35,12 @@
   /* subtle body bg */
 }
 
+.table th,
+.table td {
+  text-align: center;
+  vertical-align: middle;
+}
+
 .table tr:hover td {
   background-color: var(--bg-tertiary);
 }
@@ -48,8 +54,58 @@
   color: var(--primary-color) !important;
 }
 
+.priceCell {
+  font-weight: 600;
+  white-space: nowrap;
+}
+
 .totalCell {
   font-weight: 600;
+}
+
+.categoryBadge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 10px;
+  border-radius: 9999px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  white-space: nowrap;
+  background-color: rgba(59, 130, 246, 0.14);
+  color: #60a5fa;
+  border: 1px solid rgba(96, 165, 250, 0.35);
+}
+
+.categoryBadge[data-category*='freno'],
+.categoryBadge[data-category*='brake'] {
+  background-color: rgba(59, 130, 246, 0.16);
+  color: #60a5fa;
+  border-color: rgba(96, 165, 250, 0.45);
+}
+
+.categoryBadge[data-category*='motor'],
+.categoryBadge[data-category*='engine'],
+.categoryBadge[data-category*='filtro'],
+.categoryBadge[data-category*='aceite'],
+.categoryBadge[data-category*='lubric'] {
+  background-color: rgba(249, 115, 22, 0.16);
+  color: #fb923c;
+  border-color: rgba(251, 146, 60, 0.45);
+}
+
+.categoryBadge[data-category*='susp'] {
+  background-color: rgba(168, 85, 247, 0.16);
+  color: #c084fc;
+  border-color: rgba(192, 132, 252, 0.45);
+}
+
+.categoryBadge[data-category*='elec'],
+.categoryBadge[data-category*='spark'],
+.categoryBadge[data-category*='bateria'] {
+  background-color: rgba(34, 197, 94, 0.16);
+  color: #4ade80;
+  border-color: rgba(74, 222, 128, 0.45);
 }
 
 /* Status Badges */
@@ -112,9 +168,57 @@
 }
 
 .stockCell {
-  display: flex;
+  text-align: center;
+}
+
+.stockBlock {
+  display: inline-flex;
+  flex-direction: column;
   align-items: center;
+  justify-content: center;
+  min-width: 92px;
   gap: 6px;
+}
+
+.stockHeader {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.stockValue {
+  font-weight: 600;
+  line-height: 1;
+}
+
+.stockBar {
+  width: 92px;
+  height: 6px;
+  border-radius: 9999px;
+  background-color: rgba(148, 163, 184, 0.25);
+  overflow: hidden;
+}
+
+.stockFill {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  transition: width 0.25s ease;
+}
+
+.stockFillOk {
+  background: linear-gradient(90deg, #22c55e, #10b981);
+}
+
+.stockFillLow {
+  background: linear-gradient(90deg, #ef4444, #f97316);
+}
+
+.emptyCell {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--text-secondary);
 }
 
 /* ⚠ ICONO */

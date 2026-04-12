@@ -4,21 +4,31 @@
     padding: 16px;
 }
 
+.tableWrapper {
+    overflow-x: auto;
+}
+
 .table {
     width: 100%;
     border-collapse: collapse;
 }
 
-th {
+.table th {
     text-align: center;
     font-size: 0.8rem;
     color: var(--text-secondary);
     padding: 10px;
 }
 
-td {
+.table td {
     padding: 12px 10px;
     border-top: 1px solid var(--border-color);
+}
+
+.emptyCell {
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--text-secondary);
 }
 
 .idCell {
@@ -68,4 +78,55 @@ td {
 
 .actionBtnDanger:hover {
     color: var(--error-color);
+}
+
+.paginationBar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid var(--border-color);
+}
+
+.paginationInfo {
+    margin: 0;
+    color: var(--text-secondary);
+    font-size: 0.78rem;
+}
+
+.paginationControls {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.paginationBtn {
+    min-width: 34px;
+    height: 30px;
+    padding: 0 10px;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    background-color: var(--table-body-bg);
+    color: var(--text-secondary);
+    font-size: 0.78rem;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.paginationBtn:hover:not(:disabled) {
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+}
+
+.paginationBtn:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+}
+
+.paginationBtnActive {
+    border-color: var(--primary-color);
+    background-color: rgba(59, 130, 246, 0.14);
+    color: var(--primary-color);
 }

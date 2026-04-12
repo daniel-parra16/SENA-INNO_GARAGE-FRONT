@@ -45,8 +45,8 @@ function formatFecha(fecha) {
   });
 }
 
-export default function OrdenList({ ordenes, onEdit, onDelete, onChangeEstado, onConvert, onRefresh }) {
 
+export default function OrdenList({ ordenes, onEdit, onDelete, onChangeEstado, onConvert, onRefresh }) {
   const [loadingId, setLoadingId] = useState(null);
 
   const handleEstado = async (id, estado) => {
@@ -69,14 +69,7 @@ export default function OrdenList({ ordenes, onEdit, onDelete, onChangeEstado, o
     }
   };
 
-  if (!ordenes.length) {
-    return (
-      <div className={styles.empty}>
-        <p>No hay órdenes registradas</p>
-      </div>
-    );
-  }
-
+  // SIEMPRE renderiza la tabla, aunque no haya órdenes
   return (
     <div className={styles.tableContainer}>
       <div className={styles.tableWrapper}>
@@ -95,102 +88,110 @@ export default function OrdenList({ ordenes, onEdit, onDelete, onChangeEstado, o
             </tr>
           </thead>
           <tbody>
-            {ordenes.map((o, index) => {
-              const badge = ESTADO_BADGE[o.estado] || { label: o.estado, className: 'badgePending' };
-              const estados = o.tipo === 'COTIZACION' ? ESTADOS_COTIZACION : ESTADOS_ORDEN;
-              const isLoading = loadingId === o.id;
+            {ordenes.length === 0 ? (
+              <tr>
+                <td colSpan={9} style={{ textAlign: 'center', padding: '60px 20px', color: 'var(--text-secondary)' }}>
+                  No hay órdenes registradas
+                </td>
+              </tr>
+            ) : (
+              ordenes.map((o, index) => {
+                const badge = ESTADO_BADGE[o.estado] || { label: o.estado, className: 'badgePending' };
+                const estados = o.tipo === 'COTIZACION' ? ESTADOS_COTIZACION : ESTADOS_ORDEN;
+                const isLoading = loadingId === o.id;
 
-              return (
-                <tr key={o.id}>
-                  <td className={styles.idCell}>{index + 1}</td>
+                return (
+                  <tr key={o.id}>
+                    <td className={styles.idCell}>{index + 1}</td>
 
-                  <td>
-                    <span className={`${styles.tipoBadge} ${o.tipo === 'COTIZACION' ? styles.tipoCotizacion : styles.tipoOrden}`}>
-                      {o.tipo === 'COTIZACION' ? 'Cotización' : 'Orden'}
-                    </span>
-                  </td>
+                    <td>
+                      <span className={`${styles.tipoBadge} ${o.tipo === 'COTIZACION' ? styles.tipoCotizacion : styles.tipoOrden}`}>
+                        {o.tipo === 'COTIZACION' ? 'Cotización' : 'Orden'}
+                      </span>
+                    </td>
 
-                  <td className={styles.nameCell}>
-                    <div>{o.usuarioNombres} {o.usuarioApellidos}</div>
-                    <div className={styles.subText}>{o.usuarioDocumento}</div>
-                  </td>
+                    <td className={styles.nameCell}>
+                      <div>{o.usuarioNombres} {o.usuarioApellidos}</div>
+                      <div className={styles.subText}>{o.usuarioDocumento}</div>
+                    </td>
 
-                  <td>
-                    <div className={styles.vehiculoInfo}>
-                      <span className={styles.placa}>{o.vehiculoPlaca}</span>
-                      <span className={styles.subText}>{o.vehiculoMarca} {o.vehiculoModelo} {o.vehiculoAnio}</span>
-                    </div>
-                  </td>
-
-                  <td>{o.mecanicoNombres || <span className={styles.noAsignado}>Sin asignar</span>}</td>
-
-                  <td>
-                    <span className={`${styles.badge} ${styles[badge.className]}`}>
-                      {badge.label}
-                    </span>
-                  </td>
-
-                  <td className={styles.totalCell}>{formatCurrency(o.total)}</td>
-
-                  <td>{formatFecha(o.fechaIngreso)}</td>
-
-                  <td>
-                    <div className={styles.actionButtons}>
-
-                      {/* Cambiar estado */}
-                      <div className={styles.estadoSelect}>
-                        <ChevronDown size={12} />
-                        <select
-                          disabled={isLoading}
-                          onChange={(e) => {
-                            if (e.target.value) handleEstado(o.id, e.target.value);
-                            e.target.value = '';
-                          }}
-                          defaultValue=""
-                          title="Cambiar estado"
-                        >
-                          <option value="" disabled>Estado</option>
-                          {estados.map(e => (
-                            <option key={e.value} value={e.value}>{e.label}</option>
-                          ))}
-                        </select>
+                    <td>
+                      <div className={styles.vehiculoInfo}>
+                        <span className={styles.placa}>{o.vehiculoPlaca}</span>
+                        <span className={styles.subText}>{o.vehiculoMarca} {o.vehiculoModelo} {o.vehiculoAnio}</span>
                       </div>
+                    </td>
 
-                      {/* Convertir cotización → orden */}
-                      {o.tipo === 'COTIZACION' && o.estado === 'COTIZACION_APROBADA' && (
+                    <td>{o.mecanicoNombres || <span className={styles.noAsignado}>Sin asignar</span>}</td>
+
+                    <td>
+                      <span className={`${styles.badge} ${styles[badge.className]}`}>
+                        {badge.label}
+                      </span>
+                    </td>
+
+                    <td className={styles.totalCell}>{formatCurrency(o.total)}</td>
+
+                    <td>{formatFecha(o.fechaIngreso)}</td>
+
+                    <td>
+                      <div className={styles.actionButtons}>
+
+                        {/* Cambiar estado */}
+                        <div className={styles.estadoSelect}>
+                          <ChevronDown size={12} />
+                          <select
+                            disabled={isLoading}
+                            onChange={(e) => {
+                              if (e.target.value) handleEstado(o.id, e.target.value);
+                              e.target.value = '';
+                            }}
+                            defaultValue=""
+                            title="Cambiar estado"
+                          >
+                            <option value="" disabled>Estado</option>
+                            {estados.map(e => (
+                              <option key={e.value} value={e.value}>{e.label}</option>
+                            ))}
+                          </select>
+                        </div>
+
+                        {/* Convertir cotización → orden */}
+                        {o.tipo === 'COTIZACION' && o.estado === 'COTIZACION_APROBADA' && (
+                          <button
+                            className={`${styles.actionBtn} ${styles.actionBtnConvert}`}
+                            title="Convertir a orden"
+                            disabled={isLoading}
+                            onClick={() => handleConvert(o.id)}
+                          >
+                            <ArrowRightCircle size={18} />
+                          </button>
+                        )}
+
+                        {/* Editar */}
                         <button
-                          className={`${styles.actionBtn} ${styles.actionBtnConvert}`}
-                          title="Convertir a orden"
-                          disabled={isLoading}
-                          onClick={() => handleConvert(o.id)}
+                          className={styles.actionBtn}
+                          title="Editar"
+                          onClick={() => onEdit(o)}
                         >
-                          <ArrowRightCircle size={18} />
+                          <Edit size={18} />
                         </button>
-                      )}
 
-                      {/* Editar */}
-                      <button
-                        className={styles.actionBtn}
-                        title="Editar"
-                        onClick={() => onEdit(o)}
-                      >
-                        <Edit size={18} />
-                      </button>
+                        {/* Eliminar */}
+                        <button
+                          className={`${styles.actionBtn} ${styles.actionBtnDanger}`}
+                          title="Desactivar"
+                          onClick={() => onDelete(o)}
+                        >
+                          <Trash2 size={18} />
+                        </button>
 
-                      {/* Eliminar */}
-                      <button
-                        className={`${styles.actionBtn} ${styles.actionBtnDanger}`}
-                        title="Desactivar"
-                        onClick={() => onDelete(o)}
-                      >
-                        <Trash2 size={18} />
-                      </button>
-
-                    </div>
-                  </td>
-                </tr>
-              );
-            })}
+                      </div>
+                    </td>
+                  </tr>
+                );
+              })
+            )}
           </tbody>
         </table>
       </div>
