@@ -98,7 +98,6 @@
 
 .delayText {
   color: var(--error-color);
-  font-size: 0.9rem;
   font-weight: 500;
 }
 
@@ -106,43 +105,43 @@
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  padding: 6px 12px;
-  border-radius: 6px;
+  padding: 4px 12px;
+  border-radius: 12px;
   font-size: 0.85rem;
   font-weight: 500;
 }
 
 .statusDot {
-  width: 6px;
-  height: 6px;
+  width: 8px;
+  height: 8px;
   border-radius: 50%;
 }
 
 .warning {
-  background-color: rgba(249, 115, 22, 0.1);
-  color: var(--warning-color);
+  background-color: rgba(234, 179, 8, 0.1);
+  color: var(--warning-color, #eab308);
 }
 
 .warning .statusDot {
-  background-color: var(--warning-color);
+  background-color: var(--warning-color, #eab308);
 }
 
 .info {
   background-color: rgba(59, 130, 246, 0.1);
-  color: var(--info-color);
+  color: var(--info-color, #3b82f6);
 }
 
 .info .statusDot {
-  background-color: var(--info-color);
+  background-color: var(--info-color, #3b82f6);
 }
 
 .neutral {
   background-color: rgba(107, 114, 128, 0.1);
-  color: var(--text-secondary);
+  color: var(--neutral-color, #6b7280);
 }
 
 .neutral .statusDot {
-  background-color: var(--text-secondary);
+  background-color: var(--neutral-color, #6b7280);
 }
 
 .actionBtn {
@@ -150,11 +149,10 @@
   border: none;
   color: var(--text-secondary);
   cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  padding: 0;
+  transition: color 0.2s;
 }
 
 .actionBtn:hover {
-  color: var(--text-primary);
+  color: var(--primary-color);
 }

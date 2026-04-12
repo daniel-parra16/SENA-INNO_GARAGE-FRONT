@@ -6,7 +6,7 @@
 }
 
 .tableWrapper {
-  overflow-x: auto;
+  overflow-x: hidden;
 }
 
 .table {
@@ -21,18 +21,19 @@ tbody {
 }
 
 .table th {
-  padding: 16px 20px;
+  padding: 12px 10px;
   color: var(--text-secondary);
-  font-size: 0.875rem;
+  font-size: 0.8rem;
   font-weight: 500;
   border-bottom: 1px solid var(--border-color);
   background-color: var(--table-head-bg);
+  white-space: nowrap;
 }
 
 .table td {
-  padding: 16px 20px;
+  padding: 12px 10px;
   color: var(--text-primary);
-  font-size: 0.875rem;
+  font-size: 0.8rem;
   border-bottom: 1px solid var(--border-color);
   background-color: var(--table-body-bg);
 }
@@ -52,12 +53,13 @@ tbody {
 
 .nameCell {
   font-weight: 600;
-  min-width: 20vw;
+  min-width: 12vw;
 }
 
 .lastLogin {
-  min-width: 15vw;
+  min-width: auto;
   text-align: center;
+  font-size: 0.75rem;
 }
 
 .actionButtons {

@@ -4,7 +4,7 @@ import { getAdminDashboard } from '../../services';
 
 import styles from './AdminDashboard.module.css';
 import { AdminStats } from '../../components/Admin/AdminStats';
-import { RecentOrders } from '../../components/Admin/RecentOrders';
+import Table from '../../components/Admin/Table';
 import { AlertsPanel } from '../../components/Admin/AlertsPanel';
 
 export default function AdminDashboard() {
@@ -34,7 +34,7 @@ export default function AdminDashboard() {
             </div>
 
             <div className={styles.contentGrid}>
-                <RecentOrders />
+                <Table />
                 <AlertsPanel data={data} />
             </div>
 

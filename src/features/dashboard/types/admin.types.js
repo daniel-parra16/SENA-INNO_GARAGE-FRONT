@@ -1,0 +1,1 @@
+// Placeholder: tipos para admin

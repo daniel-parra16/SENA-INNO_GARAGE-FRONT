@@ -27,3 +27,15 @@
   font-weight: 700;
   color: var(--text-secondary);
 }
+
+/* Icon styles */
+.icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon svg {
+  width: 24px;
+  height: 24px;
+}
