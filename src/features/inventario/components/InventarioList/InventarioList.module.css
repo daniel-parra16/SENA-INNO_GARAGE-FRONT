@@ -194,9 +194,10 @@
 
 .stockBar {
   width: 92px;
-  height: 6px;
+  height: 7px;
   border-radius: 9999px;
-  background-color: rgba(148, 163, 184, 0.25);
+  background-color: rgba(148, 163, 184, 0.28);
+  border: 1px solid rgba(148, 163, 184, 0.22);
   overflow: hidden;
 }
 
@@ -209,10 +210,12 @@
 
 .stockFillOk {
   background: linear-gradient(90deg, #22c55e, #10b981);
+  box-shadow: 0 0 8px rgba(16, 185, 129, 0.35);
 }
 
 .stockFillLow {
   background: linear-gradient(90deg, #ef4444, #f97316);
+  box-shadow: 0 0 8px rgba(239, 68, 68, 0.35);
 }
 
 .emptyCell {
@@ -274,4 +277,55 @@
 /* ✨ HOVER */
 .tooltipContainer:hover .tooltip {
   opacity: 1;
+}
+
+.paginationBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 14px;
+  border-top: 1px solid var(--border-color);
+  background-color: var(--bg-secondary);
+}
+
+.paginationInfo {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: 0.78rem;
+}
+
+.paginationControls {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.paginationBtn {
+  min-width: 34px;
+  height: 30px;
+  padding: 0 10px;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  background-color: var(--table-body-bg);
+  color: var(--text-secondary);
+  font-size: 0.78rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.paginationBtn:hover:not(:disabled) {
+  border-color: var(--primary-color);
+  color: var(--primary-color);
+}
+
+.paginationBtn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.paginationBtnActive {
+  border-color: var(--primary-color);
+  background-color: rgba(59, 130, 246, 0.14);
+  color: var(--primary-color);
 }
