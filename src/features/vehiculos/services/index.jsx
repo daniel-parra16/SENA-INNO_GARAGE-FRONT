@@ -29,6 +29,7 @@ export async function updateVehiculo(placa, data) {
     const payload = {
         ...data,
         actualizado_por: userId
+
     };
 
     return await apiFetch(`/vehiculos/${placa}`, {

@@ -303,7 +303,7 @@ export default function UsuariosView() {
         </div>
 
         <div className={styles.statsGrid}>
-          {stats.map(stat => (
+          {stats && stats.map(stat => (
             <UserStatCard key={stat.id} {...stat} />
           ))}
         </div>

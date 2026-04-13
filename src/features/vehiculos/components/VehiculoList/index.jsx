@@ -53,7 +53,7 @@ export default function VehiculoList({ vehiculos, onEdit, onToggle }) {
                     </thead>
 
                     <tbody>
-                        {vehiculos.length === 0 ? (
+                        {!vehiculos || vehiculos.length === 0 ? (
                             <tr>
                                 <td colSpan={9} className={styles.emptyCell}>
                                     No hay vehículos registrados

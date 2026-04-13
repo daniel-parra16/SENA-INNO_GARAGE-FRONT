@@ -89,7 +89,7 @@ export default function InventarioView() {
     } catch (err) {
       setTitle("Error");
       setType("error");
-      setMessage("Error al guardar repuesto");
+      setMessage(err.message);
       setShowModal(true);
     }
 

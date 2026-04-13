@@ -51,7 +51,7 @@ export default function UserList({ users, onUpdateUser, onDeleteUser }) {
             </tr>
           </thead>
           <tbody>
-            {users.length === 0 ? (
+            {!users || users.length === 0 ? (
               <tr>
                 <td colSpan={8} className={styles.emptyCell}>
                   No hay usuarios registrados

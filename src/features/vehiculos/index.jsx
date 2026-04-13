@@ -80,6 +80,8 @@ export default function VehiculosView() {
     // 🔥 SUBMIT CON LOADING + MODAL
     const handleSubmit = async (data) => {
 
+        if (!data) return setIsModalOpen(false);
+
         setIsLoading(true);
 
         try {
@@ -225,7 +227,7 @@ export default function VehiculosView() {
                 </div>
 
                 <div className={styles.statsGrid}>
-                    {stats.map(stat => (
+                    {stats && stats.map(stat => (
                         <VehiculoStatCard key={stat.id} {...stat} />
                     ))}
                 </div>
