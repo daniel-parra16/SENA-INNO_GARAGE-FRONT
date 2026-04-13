@@ -12,6 +12,7 @@ import Modal from '../../components/ui/Modal/modal';
 import ConfirmModal from '../../components/ui/ConfirmModal/ConfirmModal';
 
 import { useInventario } from './hooks';
+import { useSearchParams } from 'react-router-dom';
 
 export default function InventarioView() {
   const {
@@ -26,9 +27,31 @@ export default function InventarioView() {
   const [openModal, setOpenModal] = useState(false);
   const [selected, setSelected] = useState(null);
 
-  const [filters, setFilters] = useState({
-    search: '',
-  });
+  const [searchParams] = useSearchParams();
+
+  const mapStockFromParams = (stock) => {
+    switch (stock) {
+      case 'bajo':
+        return 'low';
+      case 'normal':
+        return 'normal';
+      default:
+        return 'all';
+    }
+  };
+
+  const getInitialFilters = () => {
+    const stockParam = searchParams.get('stock');
+
+    return {
+      search: '',
+      stock: stockParam
+        ? mapStockFromParams(stockParam)
+        : 'all'
+    };
+  };
+
+  const [filters, setFilters] = useState(getInitialFilters);
 
   const [confirmOpen, setConfirmOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
@@ -44,28 +67,42 @@ export default function InventarioView() {
       id: 1,
       title: 'Total Repuestos',
       value: repuestos.length,
-      type: 'total'
+      type: 'total',
+      action: () => setFilters(prev => ({ ...prev, stock: 'all' }))
     },
     {
       id: 2,
       title: 'Stock Bajo',
       value: repuestos.filter(r => r.stockBajo).length,
-      type: 'warning'
+      type: 'warning',
+      action: () => setFilters(prev => ({ ...prev, stock: 'low' }))
     },
     {
       id: 3,
       title: 'Stock Total',
       value: repuestos.reduce((acc, r) => acc + (r.stock || 0), 0),
-      type: 'active'
+      type: 'active',
+      action: () => setFilters(prev => ({ ...prev, stock: 'normal' }))
     }
   ];
 
   // 🔍 FILTRO
-  const filtered = repuestos.filter(r =>
-    r.nombre?.toLowerCase().includes(filters.search.toLowerCase()) ||
-    r.referencia?.toLowerCase().includes(filters.search.toLowerCase()) ||
-    r.marca?.toLowerCase().includes(filters.search.toLowerCase())
-  );
+  const filtered = repuestos.filter(r => {
+
+    // 🔍 BUSCADOR
+    const searchMatch =
+      r.nombre?.toLowerCase().includes(filters.search.toLowerCase()) ||
+      r.referencia?.toLowerCase().includes(filters.search.toLowerCase()) ||
+      r.marca?.toLowerCase().includes(filters.search.toLowerCase());
+
+    // 📦 FILTRO STOCK
+    const stockMatch =
+      filters.stock === 'all' ||
+      (filters.stock === 'low' && r.stockBajo) ||
+      (filters.stock === 'normal' && !r.stockBajo);
+
+    return searchMatch && stockMatch;
+  });
 
   // 💾 GUARDAR
   const handleSave = async (data) => {
@@ -152,7 +189,7 @@ export default function InventarioView() {
         {/* 📊 CARDS */}
         <div className={styles.statsGrid}>
           {stats.map(stat => (
-            <InventarioStatCard key={stat.id} {...stat} />
+            <InventarioStatCard key={stat.id} {...stat} onClick={stat.action} />
           ))}
         </div>
 

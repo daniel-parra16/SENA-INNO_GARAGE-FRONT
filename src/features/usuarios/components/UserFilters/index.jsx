@@ -26,6 +26,21 @@ export default function UserFilters({ onOpenNewUser, filters, onFilterChange }) 
           <Filter size={16} />
           <select
             className={styles.select}
+            value={filters.rol}
+            onChange={(e) =>
+              onFilterChange({ ...filters, rol: e.target.value })
+            }
+          >
+            <option value="all">Todos los roles</option>
+            <option value="ADMIN">Admin</option>
+            <option value="MECANICO">Mecánico</option>
+            <option value="CLIENTE">Cliente</option>
+          </select>
+        </div>
+        <div className={styles.filterSelect}>
+          <Filter size={16} />
+          <select
+            className={styles.select}
             value={filters.status}
             onChange={handleStatusChange}
           >

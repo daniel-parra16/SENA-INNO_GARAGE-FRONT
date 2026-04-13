@@ -19,15 +19,11 @@ import {
 
 import styles from './OrdenesView.module.css';
 import OrdenStatCard from './components/OrdenStatCard';
+import { useSearchParams } from 'react-router-dom';
 
 export default function OrdenesView() {
 
   const [ordenes, setOrdenes] = useState([]);
-  const [filters, setFilters] = useState({
-    search: '',
-    estado: 'all',
-    tipo: 'all'
-  });
 
   const [selectedOrden, setSelectedOrden] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -58,6 +54,11 @@ export default function OrdenesView() {
     'ORDEN_CANCELADA'
   ];
 
+  const [searchParams] = useSearchParams();
+
+  const estadoParam = searchParams.get('estado');
+  const tipoParam = searchParams.get('tipo');
+
   const getCountByEstado = (estado) => {
     return ordenes.filter(o => o.estado === estado).length;
   };
@@ -79,6 +80,48 @@ export default function OrdenesView() {
       setShowModal(true);
     }
   };
+
+  const mapEstadoFromDashboard = (estado) => {
+    switch (estado) {
+      case 'PENDIENTE':
+        return 'COTIZACION_PENDIENTE';
+
+      case 'EN_PROCESO':
+        return 'ORDEN_EN_REPARACION';
+
+      case 'FINALIZADA':
+        return 'ORDEN_ENTREGADA';
+
+      case 'RECIBIDO':
+        return 'ORDEN_RECIBIDO';
+
+      default:
+        return estado;
+    }
+  };
+
+  const getInitialFilters = () => {
+    const estadoParam = searchParams.get('estado');
+    const tipoParam = searchParams.get('tipo');
+
+    const mappedEstado = estadoParam
+      ? mapEstadoFromDashboard(estadoParam)
+      : 'all';
+
+    return {
+      search: '',
+      estado: mappedEstado,
+      tipo: tipoParam
+        ? tipoParam
+        : mappedEstado.startsWith('COTIZACION')
+          ? 'COTIZACION'
+          : mappedEstado.startsWith('ORDEN')
+            ? 'ORDEN'
+            : 'all'
+    };
+  };
+
+  const [filters, setFilters] = useState(getInitialFilters);
 
   useEffect(() => {
     fetchOrdenes();
@@ -178,7 +221,11 @@ export default function OrdenesView() {
             estados={estadosOrden}
             getCount={getCountByEstado}
             onClickEstado={(estado) =>
-              setFilters(prev => ({ ...prev, estado }))
+              setFilters(prev => ({
+                ...prev,
+                estado,
+                tipo: estado.startsWith('COTIZACION') ? 'COTIZACION' : 'ORDEN'
+              }))
             }
           />
 
