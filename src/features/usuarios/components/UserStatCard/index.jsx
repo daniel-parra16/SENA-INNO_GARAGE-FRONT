@@ -1,7 +1,7 @@
 import { Shield, UserCheck, Users, UserX } from 'lucide-react';
 import styles from './UserStatCard.module.css';
 
-export default function UserStatCard({ title, value, type, trend }) {
+export default function UserStatCard({ title, value, type, trend, onClick }) {
   const getIcon = () => {
     switch (type) {
       case 'active': return <UserCheck className={styles.iconActive} size={24} />;
@@ -12,7 +12,7 @@ export default function UserStatCard({ title, value, type, trend }) {
   };
 
   return (
-    <div className={styles.card}>
+    <div className={styles.card} onClick={onClick}>
       <div className={styles.header}>
         <h3 className={styles.title}>{title}</h3>
         {getIcon()}

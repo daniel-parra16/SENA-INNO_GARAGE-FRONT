@@ -9,6 +9,7 @@ import { createUser, getAllUsers, updateUser } from './services';
 import LoadingModal from '../../components/ui/LoadingModal/LoadingModal';
 import Modal from '../../components/ui/Modal/modal';
 import ConfirmModal from '../../components/ui/ConfirmModal/ConfirmModal';
+import { useSearchParams } from 'react-router-dom';
 
 export default function UsuariosView() {
   const [isUserModalOpen, setIsUserModalOpen] = useState(false);
@@ -21,10 +22,14 @@ export default function UsuariosView() {
   const [selectedUser, setSelectedUser] = useState(null);
   const [filters, setFilters] = useState({
     search: '',
-    status: 'all'
+    status: 'all',
+    rol: 'all'
   });
   const [confirmOpen, setConfirmOpen] = useState(false);
   const [userToDelete, setUserToDelete] = useState(null);
+  const [searchParams] = useSearchParams();
+  const rolParam = searchParams.get('rol');
+  console.log(rolParam)
 
   const stats = [
     {
@@ -32,12 +37,14 @@ export default function UsuariosView() {
       title: 'Usuarios Totales',
       value: users.length,
       type: 'total',
+      action: () => setFilters(prev => ({ ...prev, rol: 'all', status: 'all' }))
     },
     {
       id: 2,
       title: 'Usuarios Activos',
       value: users.filter(u => u.status).length,
       type: 'active',
+      action: () => setFilters(prev => ({ ...prev, rol: 'all', status: 'active' }))
     },
     {
       id: 3,
@@ -46,12 +53,14 @@ export default function UsuariosView() {
         u.roles?.includes('ROLE_ADMIN')
       ).length,
       type: 'admin',
+      action: () => setFilters(prev => ({ ...prev, rol: 'ADMIN', status: 'all' }))
     },
     {
       id: 4,
       title: 'Inactivos',
       value: users.filter(u => !u.status).length,
       type: 'inactive',
+      action: () => setFilters(prev => ({ ...prev, rol: 'all', status: 'inactive' }))
     }
   ];
 
@@ -63,6 +72,13 @@ export default function UsuariosView() {
 
   useEffect(() => {
     fetchUsers();
+    if (rolParam) {
+      console.log("filtro")
+      setFilters(prev => ({
+        ...prev,
+        rol: rolParam
+      }));
+    }
   }, []);
 
   const handleCloseModal = () => {
@@ -265,7 +281,12 @@ export default function UsuariosView() {
       (filters.status === 'active' && user.status) ||
       (filters.status === 'inactive' && !user.status);
 
-    return searchMatch && statusMatch;
+    // ROl
+    const rolMatch =
+      filters.rol === 'all' ||
+      user.roles?.includes(`ROLE_${filters.rol}`);
+
+    return searchMatch && statusMatch && rolMatch;
   });
 
 
@@ -304,7 +325,7 @@ export default function UsuariosView() {
 
         <div className={styles.statsGrid}>
           {stats && stats.map(stat => (
-            <UserStatCard key={stat.id} {...stat} />
+            <UserStatCard key={stat.id} {...stat} onClick={stat.action} />
           ))}
         </div>
 

@@ -1,6 +1,6 @@
 import styles from './VehiculoStatCard.module.css';
 
-export default function VehiculoStatCard({ title, value, type }) {
+export default function VehiculoStatCard({ title, value, type, onClick }) {
 
     const getTypeClass = () => {
         switch (type) {
@@ -18,7 +18,7 @@ export default function VehiculoStatCard({ title, value, type }) {
     };
 
     return (
-        <div className={`${styles.card} ${getTypeClass()}`}>
+        <div className={`${styles.card} ${getTypeClass()}`} onClick={onClick}>
             <div className={styles.content}>
                 <p className={styles.title}>{title}</p>
                 <h2 className={styles.value}>{value}</h2>

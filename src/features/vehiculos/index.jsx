@@ -61,19 +61,22 @@ export default function VehiculosView() {
             id: 1,
             title: 'Total Vehículos',
             value: vehiculos.length,
-            type: 'total'
+            type: 'total',
+            action: () => setFilters(prev => ({ ...prev, status: 'all' }))
         },
         {
             id: 2,
             title: 'Activos',
             value: vehiculos.filter(v => v.activo).length,
-            type: 'active'
+            type: 'active',
+            action: () => setFilters(prev => ({ ...prev, status: 'active' }))
         },
         {
             id: 3,
             title: 'Inactivos',
             value: vehiculos.filter(v => !v.activo).length,
-            type: 'inactive'
+            type: 'inactive',
+            action: () => setFilters(prev => ({ ...prev, status: 'inactive' }))
         }
     ];
 
@@ -228,7 +231,7 @@ export default function VehiculosView() {
 
                 <div className={styles.statsGrid}>
                     {stats && stats.map(stat => (
-                        <VehiculoStatCard key={stat.id} {...stat} />
+                        <VehiculoStatCard key={stat.id} {...stat} onClick={stat.action} />
                     ))}
                 </div>
 

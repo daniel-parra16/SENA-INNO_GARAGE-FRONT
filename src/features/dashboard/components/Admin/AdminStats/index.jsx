@@ -37,21 +37,21 @@ export function AdminStats({ data }) {
             value: data.ordenesPendientes,
             icon: <Clock size={24} />,
             color: '#ef4444',
-            action: () => navigate('/ordenes?estado=PENDIENTE')
+            action: () => navigate('/ordenes?tipo=ORDEN&estado=RECIBIDO')
         },
         {
             title: "Órdenes en Proceso",
             value: data.ordenesProceso,
             icon: <ClipboardList size={24} />,
             color: '#22c55e',
-            action: () => navigate('/ordenes?estado=EN_PROCESO')
+            action: () => navigate('/ordenes?tipo=ORDEN&estado=EN_PROCESO')
         },
         {
             title: "Órdenes Finalizadas",
             value: data.ordenesFinalizadas,
             icon: <CheckCircle size={24} />,
             color: '#22c55e',
-            action: () => navigate('/ordenes?estado=FINALIZADA')
+            action: () => navigate('/ordenes?tipo=ORDEN&estado=FINALIZADA')
         },
         {
             title: "Cotizaciones Pendientes",

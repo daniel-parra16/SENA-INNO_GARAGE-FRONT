@@ -1,7 +1,7 @@
 import { Package, AlertTriangle, Boxes } from 'lucide-react';
 import styles from './InventarioStatCard.module.css';
 
-export default function InventarioStatCard({ title, value, type }) {
+export default function InventarioStatCard({ title, value, type, onClick }) {
 
   const getIcon = () => {
     switch (type) {
@@ -12,7 +12,7 @@ export default function InventarioStatCard({ title, value, type }) {
   };
 
   return (
-    <div className={styles.card}>
+    <div className={styles.card} onClick={onClick}>
       <div className={styles.header}>
         <span>{title}</span>
         {getIcon()}
