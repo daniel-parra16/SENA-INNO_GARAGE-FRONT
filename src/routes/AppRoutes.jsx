@@ -23,21 +23,13 @@ function GuestRoute({ children }) {
 function ProtectedRoute({ children }) {
   const { user } = useAuth();
   return user ? children : <Navigate to="/login" replace />;
-  return children; // Temporalmente permite el acceso sin autenticación
 }
 
 // Proteje las rutas que requieren un rol específico
 function RoleRoute({ children, roles }) {
   const { user } = useAuth();
-
   if (!user) return <Navigate to="/login" replace />;
-
-  if (!roles.includes(user.rol)) {
-    return <Navigate to="/" replace />;
-    // Redirige al dashboard si no tiene el rol requerido
-  }
-
-  // Permitir acceso a todas las rutas sin restricción de rol
+  if (!roles.includes(user.rol)) return <Navigate to="/" replace />;
   return children;
 }
 

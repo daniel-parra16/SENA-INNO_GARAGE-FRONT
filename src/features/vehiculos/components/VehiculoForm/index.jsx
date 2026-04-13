@@ -23,10 +23,10 @@ export default function VehiculoForm({ initialData, onSubmit }) {
 
     // 🔥 Cargar datos cuando es edición
     useEffect(() => {
+        getUsers();
         if (initialData) {
             setForm({
-                usuario_id: initialData.usuario_id || '',
-                registrado_por: initialData.registrado_por || '',
+                numero_documento: initialData.numero_documento || '',
                 placa: initialData.placa || '',
                 marca: initialData.marca || '',
                 modelo: initialData.modelo || '',
@@ -37,7 +37,6 @@ export default function VehiculoForm({ initialData, onSubmit }) {
                 activo: initialData.activo ?? true
             });
         };
-        getUsers();
     }, [initialData]);
 
     // 🔥 Manejo de cambios
@@ -76,12 +75,17 @@ export default function VehiculoForm({ initialData, onSubmit }) {
                         onChange={handleChange}
                         required
                     >
-                        <option value="" hidden>Seleccioe un usuario</option>
-                        {users.map((user) => (
-                            <option key={user.numeroDocumento} value={user.numeroDocumento}>
-                                {user.nombreCompleto}
-                            </option>
-                        ))}
+                        <option value="" hidden>Seleccione un usuario</option>
+                        {users && users.length > 0
+                            ? (users.map((user) => (
+                                <option key={user.numeroDocumento} value={user.numeroDocumento}>
+                                    {user.nombreCompleto}
+                                </option>
+                            )))
+                            : (
+                                <option disabled>No hay usuarios registrados</option>
+                            )
+                        }
                     </select>
                 </div>
 

@@ -164,11 +164,17 @@ export default function OrdenForm({ initialData, onSubmit, onClose }) {
               value={form.cedulaUsuario} onChange={handleChange}
               required disabled={esEdicion}>
               <option value="" hidden>Seleccione un usuario</option>
-              {users.map(u => (
-                <option key={u.numeroDocumento} value={u.numeroDocumento}>
-                  {u.nombreCompleto}
-                </option>
-              ))}
+              {users && users.length > 0
+                ? (
+                  users.map(u => (
+                    <option key={u.numeroDocumento} value={u.numeroDocumento}>
+                      {u.nombreCompleto}
+                    </option>
+                  ))
+                ) : (
+                  <option disabled>No hay usuarios registrados</option>
+                )
+              }
             </select>
           </div>
 
@@ -180,11 +186,16 @@ export default function OrdenForm({ initialData, onSubmit, onClose }) {
               <option value="" hidden>
                 {form.cedulaUsuario ? 'Seleccione un vehículo' : 'Primero seleccione un usuario'}
               </option>
-              {vehiculos.map(v => (
-                <option key={v.placa} value={v.placa}>
-                  {v.placa} — {v.marca} {v.modelo}
-                </option>
-              ))}
+              {vehiculos && vehiculos.length > 0
+                ? (
+                  vehiculos.map(v => (
+                    <option key={v.placa} value={v.placa}>
+                      {v.placa} — {v.marca} {v.modelo}
+                    </option>
+                  ))
+                ) : (
+                  <option disabled>No hay vehiculos registrados para este usuario</option>
+                )}
             </select>
           </div>
 
@@ -195,11 +206,16 @@ export default function OrdenForm({ initialData, onSubmit, onClose }) {
             <select name="cedulaMecanico" className={styles.input}
               value={form.cedulaMecanico} onChange={handleChange}>
               <option value="">Sin asignar</option>
-              {mecanicos.map(m => (
-                <option key={m.numeroDocumento} value={m.numeroDocumento}>
-                  {m.nombreCompleto}
-                </option>
-              ))}
+              {mecanicos && mecanicos.length > 0
+                ? (
+                  mecanicos.map(m => (
+                    <option key={m.numeroDocumento} value={m.numeroDocumento}>
+                      {m.nombreCompleto}
+                    </option>
+                  ))
+                ) : (
+                  <option disabled>No hay usuarios con rol mecanico.</option>
+                )}
             </select>
           </div>
         </div>
@@ -276,7 +292,7 @@ export default function OrdenForm({ initialData, onSubmit, onClose }) {
         </button>
       </div>
 
-      {items.length === 0 ? (
+      {!items || items.length === 0 ? (
         <p className={styles.emptyItems}>No hay ítems agregados. La cotización se creará sin repuestos.</p>
       ) : (
         <div className={styles.itemsContainer}>

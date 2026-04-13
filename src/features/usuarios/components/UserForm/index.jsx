@@ -90,11 +90,17 @@ export default function UserForm({ onSubmit, initialData = null }) {
             required
           >
             <option value="" hidden>Seleccione una opción</option>
-            {tiposDocumento.map((tipo) => (
-              <option key={tipo.value} value={tipo.value}>
-                {tipo.label}
-              </option>
-            ))}
+            {tiposDocumento && tiposDocumento.length > 0
+              ? (
+                tiposDocumento.map((tipo) => (
+                  <option key={tipo.value} value={tipo.value}>
+                    {tipo.label}
+                  </option>
+                ))
+              ) : (
+                <option disabled>No hay tipos de documentos registrados</option>
+              )
+            }
           </select>
         </div>
 
