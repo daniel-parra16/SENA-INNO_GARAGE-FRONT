@@ -81,12 +81,12 @@ export default function AppRoutes() {
           </RoleRoute>
         } />
         <Route path="vehiculos" element={
-          <RoleRoute roles={["admin"]}>
+          <RoleRoute roles={["admin", "mecanico"]}>
             <VehiculosView />
           </RoleRoute>
         } />
         <Route path="inventario" element={
-          <RoleRoute roles={["admin"]}>
+          <RoleRoute roles={["admin", "mecanico"]}>
             <InventarioView />
           </RoleRoute>
         } />
