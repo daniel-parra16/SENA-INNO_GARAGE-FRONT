@@ -1,4 +1,5 @@
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8080/api';
+// const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8080/api';
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://63.180.6.133:8080/api';
 
 function buildUrl(endpoint) {
   if (endpoint.startsWith('http://') || endpoint.startsWith('https://')) {
