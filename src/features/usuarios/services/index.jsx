@@ -34,3 +34,12 @@ export async function deleteUsers(id) {
 export async function getTipoDoc() {
     return await apiFetch('/usuarios/tipoDocumento')
 }
+
+// Servicio para consultar las especialidades mecánicas dinámicas
+export async function getEspecialidadMecanico() {
+    return await apiFetch('/usuarios/especialidadMecanico')
+}
+
+export async function getEspecialidades() {
+    return await getEspecialidadMecanico();
+}

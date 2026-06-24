@@ -160,20 +160,7 @@ export default function UsuariosView() {
         status: !userToDelete.status // 🔥 toggle
       };
 
-      const data = mapUserToRequest({
-        nombre: updatedUser.nombre,
-        apellido: updatedUser.apellido,
-        tipoDocumento: updatedUser.documento.tipo,
-        numeroDocumento: updatedUser.documento.numero,
-        correo: updatedUser.correo,
-        telefono: updatedUser.telefono,
-        roles: mapRoleFromBackend(updatedUser.roles?.[0]),
-        especialidad: updatedUser.especialidad,
-        certificado: updatedUser.certificado,
-        anioExp: updatedUser.anioExp,
-      });
-
-      data.status = !userToDelete.status; // 🔥 importante
+      const data = mapUserToRequest(updatedUser);
 
       await updateUser(userToDelete.documento.numero, data);
 
@@ -208,21 +195,30 @@ export default function UsuariosView() {
   // 🔥 Mapper backend → form
   const mapUserToForm = (user) => {
     return {
-      nombre: user.nombre || '',
-      apellido: user.apellido || '',
+      nombre: user.nombre || user.nombres || '',
+      apellido: user.apellido || user.apellidos || '',
       tipoDocumento: user.documento?.tipo || '',
       numeroDocumento: user.documento?.numero || '',
       correo: user.correo || '',
       telefono: user.telefono || '',
-      especialidad: user.especialidad || '',
-      certificado: user.certificado || '',
-      anioExp: user.anioExp || '',
-      roles: mapRoleFromBackend(user.roles?.[0])
+      direccion: user.direccion || {
+        calle: '',
+        carrera: '',
+        ciudad: '',
+        pais: ''
+      },
+      mecanico: {
+        especialidades: user.mecanico?.especialidades || user.especialidades || [],
+        aniosExperiencia: user.mecanico?.aniosExperiencia || user.anioExp || '',
+        descripcion: user.mecanico?.descripcion || '',
+        disponible: typeof user.mecanico?.disponible === 'boolean' ? user.mecanico.disponible : true
+      },
+      roles: Array.isArray(user.roles) ? user.roles : ['ROLE_CLIENTE']
     };
   };
 
   const mapUserToRequest = (user) => {
-    return {
+    const payload = {
       tipoDocumento: user.tipoDocumento,
       numeroDocumento: user.numeroDocumento,
 
@@ -232,44 +228,32 @@ export default function UsuariosView() {
       telefono: user.telefono?.trim(),
       correo: user.correo?.trim(),
 
-      rol: mapRoleToBackend(user.roles),
-
-      status: true,
-
-      ...(user.roles === "mecanico" && {
-        especialidad: user.especialidad || null,
-        certificado: user.certificado || null,
-        anioExp: user.anioExp || null,
-      }),
+      rol: Array.isArray(user.roles) ? user.roles : [user.roles],
+      direccion: user.direccion,
+      status: typeof user.status === 'boolean' ? user.status : true
     };
-  };
 
-  const mapRoleFromBackend = (rol) => {
-    switch (rol) {
-      case "ROLE_ADMIN":
-        return "admin";
-      case "ROLE_MECANICO":
-        return "mecanico";
-      default:
-        return "cliente";
+    if (Array.isArray(user.roles) && user.roles.includes('ROLE_MECANICO')) {
+      payload.mecanico = {
+        especialidades: Array.isArray(user.mecanico?.especialidades)
+          ? user.mecanico.especialidades
+          : [],
+        aniosExperiencia: Number(user.mecanico?.aniosExperiencia) || 0,
+        descripcion: user.mecanico?.descripcion || '',
+        disponible: typeof user.mecanico?.disponible === 'boolean'
+          ? user.mecanico.disponible
+          : true
+      };
     }
-  };
 
-  const mapRoleToBackend = (rol) => {
-    switch (rol) {
-      case "admin":
-        return "ROLE_ADMIN";
-      case "mecanico":
-        return "ROLE_MECANICO";
-      default:
-        return "ROLE_CLIENTE";
-    }
+    return payload;
   };
 
   const filteredUsers = users.filter(user => {
 
     // 🔍 BUSCADOR
     const searchMatch =
+      user.documento.numero?.toLowerCase().includes(filters.search.toLowerCase()) ||
       user.nombre?.toLowerCase().includes(filters.search.toLowerCase()) ||
       user.apellido?.toLowerCase().includes(filters.search.toLowerCase()) ||
       user.correo?.toLowerCase().includes(filters.search.toLowerCase()) ||

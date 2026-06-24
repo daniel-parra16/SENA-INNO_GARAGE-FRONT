@@ -74,8 +74,8 @@ export async function apiFetch(endpoint, options = {}) {
     body: body ? JSON.stringify(body) : undefined
   });
 
-  // Token vencido — intentar renovar y reintentar
-  if (response.status === 401) {
+  // Token vencido — intentar renovar y reintentar;
+  if (response.status === 401 && accessToken) {
     const newToken = await refreshAccessToken();
     if (!newToken) return;
 

@@ -8,7 +8,7 @@
 .logoSection {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   gap: 12px;
   padding: 24px 16px;
   margin-bottom: 16px;
@@ -157,6 +157,7 @@
 .settingsBtn:hover {
   color: var(--text-primary);
 }
+
 .divider {
   height: 1px;
   background: rgba(255, 255, 255, 0.08);

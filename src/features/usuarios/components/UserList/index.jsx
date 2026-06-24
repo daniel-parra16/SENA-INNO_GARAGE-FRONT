@@ -40,7 +40,7 @@ export default function UserList({ users, onUpdateUser, onDeleteUser }) {
         <table className={styles.table}>
           <thead>
             <tr>
-              <th>ID</th>
+              <th>Identificación</th>
               <th>Nombre</th>
               <th>Rol</th>
               <th>Email</th>
@@ -63,10 +63,13 @@ export default function UserList({ users, onUpdateUser, onDeleteUser }) {
 
                 return (
                   <tr key={user.id ?? user.correo ?? itemIndex}>
-                    <td className={styles.idCell}>{itemIndex}</td>
+                    <td className={styles.idCell}>{user.documento.numero}</td>
                     <td className={styles.nameCell}>{user.nombre + ' ' + user.apellido}</td>
                     <td>
-                      {user.roles?.map(rol =>
+                      {user.roles?.slice().sort((a, b) => {
+                        const priority = ['ROLE_ADMIN', 'ROLE_MECANICO', 'ROLE_CLIENTE'];
+                        return priority.indexOf(a) - priority.indexOf(b);
+                      }).map(rol =>
                         rol.replace('ROLE_', '')
                           .toLowerCase()
                           .replace(/^./, c => c.toUpperCase())
