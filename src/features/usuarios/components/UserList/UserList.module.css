@@ -6,7 +6,9 @@
 }
 
 .tableWrapper {
-  overflow-x: hidden;
+  overflow-x: scroll;
+  scrollbar-width: thin;
+  scrollbar-color: gray transparent;
 }
 
 .table {
@@ -53,8 +55,8 @@ tbody {
 }
 
 .idCell {
-  font-weight: 500;
-  color: var(--primary-color) !important;
+  font-weight: 700;
+  color: white !important;
 }
 
 .nameCell {

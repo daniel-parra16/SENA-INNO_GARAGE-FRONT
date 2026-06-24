@@ -45,11 +45,15 @@ export default function RegisterForm() {
     }
 
     const { confirmPassword, ...payload } = formData;
+    const payloadWithRole = {
+      ...payload,
+      rol: ['ROLE_CLIENTE']
+    };
 
     setIsLoading(true);
 
     try {
-      await registerUser(payload);
+      await registerUser(payloadWithRole);
 
       setTitle("Success");
       setType("success");
