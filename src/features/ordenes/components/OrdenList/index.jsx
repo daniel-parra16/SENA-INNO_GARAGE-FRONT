@@ -1,4 +1,4 @@
-import { Edit, Trash2, ArrowRightCircle, ChevronDown } from 'lucide-react';
+import { Edit, Trash2, ChevronDown } from 'lucide-react';
 import { useState } from 'react';
 import styles from './OrdenList.module.css';
 
@@ -46,23 +46,13 @@ function formatFecha(fecha) {
 }
 
 
-export default function OrdenList({ ordenes, onEdit, onDelete, onChangeEstado, onConvert, onRefresh }) {
+export default function OrdenList({ ordenes, onEdit, onDelete, onChangeEstado, onRefresh, canEdit = true }) {
   const [loadingId, setLoadingId] = useState(null);
 
   const handleEstado = async (id, estado) => {
     setLoadingId(id);
     try {
       await onChangeEstado(id, estado);
-      onRefresh();
-    } finally {
-      setLoadingId(null);
-    }
-  };
-
-  const handleConvert = async (id) => {
-    setLoadingId(id);
-    try {
-      await onConvert(id);
       onRefresh();
     } finally {
       setLoadingId(null);
@@ -141,7 +131,7 @@ export default function OrdenList({ ordenes, onEdit, onDelete, onChangeEstado, o
                         <div className={styles.estadoSelect}>
                           <ChevronDown size={12} />
                           <select
-                            disabled={isLoading}
+                            disabled={isLoading || !canEdit}
                             onChange={(e) => {
                               if (e.target.value) handleEstado(o.id, e.target.value);
                               e.target.value = '';
@@ -156,35 +146,28 @@ export default function OrdenList({ ordenes, onEdit, onDelete, onChangeEstado, o
                           </select>
                         </div>
 
-                        {/* Convertir cotización → orden */}
-                        {o.tipo === 'COTIZACION' && o.estado === 'COTIZACION_APROBADA' && (
-                          <button
-                            className={`${styles.actionBtn} ${styles.actionBtnConvert}`}
-                            title="Convertir a orden"
-                            disabled={isLoading}
-                            onClick={() => handleConvert(o.id)}
-                          >
-                            <ArrowRightCircle size={18} />
-                          </button>
+                        {canEdit ? (
+                          <>
+                            <button
+                              className={styles.actionBtn}
+                              title="Editar"
+                              onClick={() => onEdit(o)}
+                            >
+                              <Edit size={18} />
+                            </button>
+
+                            {/* Eliminar */}
+                            <button
+                              className={`${styles.actionBtn} ${styles.actionBtnDanger}`}
+                              title="Desactivar"
+                              onClick={() => onDelete(o)}
+                            >
+                              <Trash2 size={18} />
+                            </button>
+                          </>
+                        ) : (
+                          <span className={styles.readOnlyText}>Solo lectura</span>
                         )}
-
-                        {/* Editar */}
-                        <button
-                          className={styles.actionBtn}
-                          title="Editar"
-                          onClick={() => onEdit(o)}
-                        >
-                          <Edit size={18} />
-                        </button>
-
-                        {/* Eliminar */}
-                        <button
-                          className={`${styles.actionBtn} ${styles.actionBtnDanger}`}
-                          title="Desactivar"
-                          onClick={() => onDelete(o)}
-                        >
-                          <Trash2 size={18} />
-                        </button>
 
                       </div>
                     </td>

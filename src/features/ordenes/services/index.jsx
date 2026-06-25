@@ -55,13 +55,6 @@ export async function changeEstado(id, estado) {
     });
 }
 
-//  Convertir cotización → orden
-export async function convertToOrden(id) {
-    return await apiFetch(`/ordenes/${id}/convertir`, {
-        method: 'PATCH'
-    });
-}
-
 //  Eliminar (soft delete)
 export async function deleteOrden(id) {
     return await apiFetch(`/ordenes/${id}`, {

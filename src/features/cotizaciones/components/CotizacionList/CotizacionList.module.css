@@ -1,0 +1,42 @@
+.tableContainer {
+    overflow-x: auto;
+    background: var(--surface);
+    border-radius: 16px;
+    box-shadow: var(--shadow-soft);
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th,
+td {
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--border);
+    text-align: left;
+}
+
+th {
+    background: var(--surface-secondary);
+    color: var(--text-secondary);
+}
+
+.actionBtnDanger {
+    border: none;
+    background: var(--danger-color);
+    color: white;
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.emptyMessage {
+    padding: 24px;
+    text-align: center;
+    color: var(--text-secondary);
+}

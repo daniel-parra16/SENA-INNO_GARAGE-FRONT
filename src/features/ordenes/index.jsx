@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useAuth } from '../../store/authContext';
 import OrdenList from './components/OrdenList';
 import OrdenForm from './components/OrdenForm';
 import OrdenFilters from './components/OrdenFilters';
@@ -13,8 +14,7 @@ import {
   createOrden,
   updateOrden,
   deleteOrden,
-  changeEstado,
-  convertToOrden
+  changeEstado
 } from './services';
 
 import styles from './OrdenesView.module.css';
@@ -121,6 +121,7 @@ export default function OrdenesView() {
     };
   };
 
+  const { user } = useAuth();
   const [filters, setFilters] = useState(getInitialFilters);
 
   useEffect(() => {
@@ -251,6 +252,7 @@ export default function OrdenesView() {
 
         <OrdenList
           ordenes={ordenes}
+          canEdit={user?.rol !== 'cliente'}
           onEdit={(o) => {
             setSelectedOrden(o);
             setIsModalOpen(true);
@@ -260,7 +262,6 @@ export default function OrdenesView() {
             setConfirmOpen(true);
           }}
           onChangeEstado={changeEstado}
-          onConvert={convertToOrden}
           onRefresh={fetchOrdenes}
         />
 
