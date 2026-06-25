@@ -1,7 +1,9 @@
 import {
+    CalendarDays,
     Car,
     CircleDollarSign,
     ClipboardList,
+    FileText,
     LayoutGrid,
     Package,
     Settings,
@@ -33,6 +35,18 @@ const navItems = [
         icon: <Car size={20} />,
         label: 'Vehículos',
         roles: ['admin', 'mecanico']
+    },
+    {
+        to: '/agendamientos',
+        icon: <CalendarDays size={20} />,
+        label: 'Agendamientos',
+        roles: ['admin', 'mecanico', 'cliente']
+    },
+    {
+        to: '/cotizaciones',
+        icon: <FileText size={20} />,
+        label: 'Cotizaciones',
+        roles: ['admin', 'mecanico', 'cliente']
     },
     {
         to: '/ordenes',
