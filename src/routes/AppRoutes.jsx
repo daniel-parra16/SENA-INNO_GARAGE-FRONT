@@ -6,6 +6,8 @@ import RememberView from '../features/auth/RememberView';
 import DashboardView from '../features/dashboard/Index.jsx';
 import OrdenesView from '../features/ordenes/Index';
 import UsuariosView from '../features/usuarios/Index.jsx';
+import AgendamientosView from '../features/agendamiento/Index.jsx';
+import CotizacionesView from '../features/cotizaciones/Index.jsx';
 import { useAuth } from '../store/authContext.jsx';
 import VerifyEmailView from '../features/auth/VerifyEmailView.jsx';
 import NewPasswordView from '../features/auth/NewPasswordView.jsx';
@@ -65,10 +67,20 @@ export default function AppRoutes() {
       }>
         <Route index element={<DashboardView />} />
         <Route path="ordenes" element={<OrdenesView />} />
+        <Route path="agendamientos" element={
+          <RoleRoute roles={["admin", "mecanico", "cliente"]}>
+            <AgendamientosView />
+          </RoleRoute>
+        } />
+        <Route path="cotizaciones" element={
+          <RoleRoute roles={["admin", "mecanico", "cliente"]}>
+            <CotizacionesView />
+          </RoleRoute>
+        } />
 
         {/* Solo admin puede ver usuarios e inventario */}
         <Route path="usuarios" element={
-          <RoleRoute roles={["admin"]}>
+          <RoleRoute roles={["admin", "mecanico"]}>
             <UsuariosView />
           </RoleRoute>
         } />

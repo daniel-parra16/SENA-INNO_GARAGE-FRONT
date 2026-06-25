@@ -2,9 +2,10 @@ import { apiFetch } from '../../../api/AuthApi';
 
 // Servicio para traer todos los usuarios registrados
 export async function getAllUsers() {
-    return await apiFetch('/usuarios', {
+    const data = await apiFetch('/usuarios', {
         method: 'GET'
-    })
+    });
+    return data?.contenido || [];
 }
 
 // Servicio para crear un usuario
