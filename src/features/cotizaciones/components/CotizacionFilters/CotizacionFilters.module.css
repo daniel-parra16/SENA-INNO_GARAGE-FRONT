@@ -1,0 +1,128 @@
+.filtersContainer {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    padding: 16px 0;
+}
+
+.searchBox {
+    flex: 1;
+    min-width: 200px;
+}
+
+.searchInput {
+    width: 100%;
+    background: #1a2236;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    padding: 10px 14px;
+    color: #e2e8f0;
+    font-size: 0.9rem;
+    outline: none;
+    box-sizing: border-box;
+    transition: border-color 0.2s;
+    height: 40px;
+}
+
+.searchInput:focus {
+    border-color: #3b82f6;
+}
+
+.searchInput::placeholder {
+    color: #475569;
+}
+
+.actions {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.select {
+    background: #1a2236;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    padding: 10px 14px;
+    color: #e2e8f0;
+    font-size: 0.9rem;
+    outline: none;
+    cursor: pointer;
+    transition: border-color 0.2s;
+    height: 40px;
+}
+
+.select:focus {
+    border-color: #3b82f6;
+}
+
+.select option {
+    background: #1e293b;
+    color: #e2e8f0;
+}
+
+.agendamientoInput {
+    background: #1a2236;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    padding: 10px 14px;
+    color: #e2e8f0;
+    font-size: 0.9rem;
+    outline: none;
+    box-sizing: border-box;
+    transition: border-color 0.2s;
+    height: 40px;
+    width: 180px;
+}
+
+.agendamientoInput:focus {
+    border-color: #3b82f6;
+}
+
+.agendamientoInput::placeholder {
+    color: #475569;
+}
+
+.resetBtn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    min-width: 40px;
+    background: #1a2236;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    color: #94a3b8;
+    cursor: pointer;
+    transition: border-color 0.2s, color 0.2s;
+    flex-shrink: 0;
+}
+
+.resetBtn:hover {
+    border-color: #3b82f6;
+    color: #60a5fa;
+}
+
+.newBtn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #3b82f6;
+    border: none;
+    border-radius: 10px;
+    padding: 0 18px;
+    height: 40px;
+    color: #ffffff;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background-color 0.2s;
+    flex-shrink: 0;
+}
+
+.newBtn:hover {
+    background: #2563eb;
+}
