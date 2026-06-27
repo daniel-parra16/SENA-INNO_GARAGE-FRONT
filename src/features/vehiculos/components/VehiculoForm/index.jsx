@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
 import styles from './VehiculoForm.module.css';
-import { getAllSimpleUsers } from '../../services';
+import { getUsuariosSimples } from '../../../usuarios/services';
 
 export default function VehiculoForm({ initialData, onSubmit }) {
     const [users, setUsers] = useState([]);
     const [form, setForm] = useState({
-        numero_documento: '',
+        numero_documento_propietario: '',
         placa: '',
         marca: '',
         modelo: '',
@@ -16,7 +16,7 @@ export default function VehiculoForm({ initialData, onSubmit }) {
     });
 
     const getUsers = async () => {
-        const data = await getAllSimpleUsers();
+        const data = await getUsuariosSimples();
         setUsers(data);
 
     }
@@ -25,8 +25,9 @@ export default function VehiculoForm({ initialData, onSubmit }) {
     useEffect(() => {
         getUsers();
         if (initialData) {
+            console.log(initialData);
             setForm({
-                numero_documento: initialData.numero_documento || '',
+                numero_documento_propietario: initialData.numero_documento_propietario || '',
                 placa: initialData.placa || '',
                 marca: initialData.marca || '',
                 modelo: initialData.modelo || '',
@@ -68,10 +69,10 @@ export default function VehiculoForm({ initialData, onSubmit }) {
                 <div className={styles.field}>
                     <label className={styles.label}>Usuario</label>
                     <select
-                        id='numero_documento'
-                        name="numero_documento"
+                        id='numero_documento_propietario'
+                        name="numero_documento_propietario"
                         className={styles.input}
-                        value={form.numero_documento}
+                        value={form.numero_documento_propietario}
                         onChange={handleChange}
                         required
                     >
