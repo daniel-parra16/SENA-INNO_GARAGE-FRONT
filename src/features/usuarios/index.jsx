@@ -10,6 +10,7 @@ import LoadingModal from '../../components/ui/LoadingModal/LoadingModal';
 import Modal from '../../components/ui/Modal/modal';
 import ConfirmModal from '../../components/ui/ConfirmModal/ConfirmModal';
 import { useSearchParams } from 'react-router-dom';
+import UserDetailsModal from './components/UserDetailsModal';
 
 export default function UsuariosView() {
   const [isUserModalOpen, setIsUserModalOpen] = useState(false);
@@ -27,6 +28,8 @@ export default function UsuariosView() {
   });
   const [confirmOpen, setConfirmOpen] = useState(false);
   const [userToDelete, setUserToDelete] = useState(null);
+  const [isUserDetailsModalOpen, setIsUserDetailsModalOpen] = useState(false);
+  const [selectedUserDetails, setSelectedUserDetails] = useState(null);
   const [searchParams] = useSearchParams();
   const rolParam = searchParams.get('rol');
   console.log(rolParam)
@@ -95,7 +98,7 @@ export default function UsuariosView() {
     setIsLoading(true);
 
     try {
-      const data = mapUserToRequest(userData)
+      const data = mapUserToRequest(userData, { isEdit: Boolean(selectedUser) });
       if (selectedUser) {
         await updateUser(selectedUser.numeroDocumento, data);
         setMessage("Usuario modificado correctamente");
@@ -144,6 +147,16 @@ export default function UsuariosView() {
     setIsUserModalOpen(true);
   };
 
+  const handleViewUser = (user) => {
+    setSelectedUserDetails(user);
+    setIsUserDetailsModalOpen(true);
+  };
+
+  const handleCloseUserDetailsModal = () => {
+    setIsUserDetailsModalOpen(false);
+    setSelectedUserDetails(null);
+  };
+
   const handleAskDeleteUser = (user) => {
     setUserToDelete(user);
     setConfirmOpen(true);
@@ -157,7 +170,7 @@ export default function UsuariosView() {
     try {
       const updatedUser = {
         ...userToDelete,
-        status: !userToDelete.status // 🔥 toggle
+        status: !userToDelete.status
       };
 
       const data = mapUserToRequest(updatedUser);
@@ -201,49 +214,87 @@ export default function UsuariosView() {
       numeroDocumento: user.documento?.numero || '',
       correo: user.correo || '',
       telefono: user.telefono || '',
-      direccion: user.direccion || {
-        calle: '',
-        carrera: '',
-        ciudad: '',
-        pais: ''
+      direccion: {
+        tipoVia: user.direccion?.tipoVia || '',
+        numero: user.direccion?.numero || '',
+        numeroSecundario: user.direccion?.numeroSecundario || '',
+        numeroTercero: user.direccion?.numeroTercero || '',
+        complemento: user.direccion?.complemento || ''
       },
       mecanico: {
-        especialidades: user.mecanico?.especialidades || user.especialidades || [],
-        aniosExperiencia: user.mecanico?.aniosExperiencia || user.anioExp || '',
-        descripcion: user.mecanico?.descripcion || '',
-        disponible: typeof user.mecanico?.disponible === 'boolean' ? user.mecanico.disponible : true
+        especialidades: user.mecanicoPerfil?.especialidades || user.mecanico?.especialidades || user.especialidades || [],
+        aniosExperiencia: user.mecanicoPerfil?.aniosExperiencia || user.mecanico?.aniosExperiencia || user.anioExp || '',
+        descripcion: user.mecanicoPerfil?.descripcion || user.mecanico?.descripcion || '',
+        disponible: typeof user.mecanicoPerfil?.disponible === 'boolean'
+          ? user.mecanicoPerfil.disponible
+          : typeof user.mecanico?.disponible === 'boolean'
+            ? user.mecanico.disponible
+            : true
       },
       roles: Array.isArray(user.roles) ? user.roles : ['ROLE_CLIENTE']
     };
   };
 
-  const mapUserToRequest = (user) => {
-    const payload = {
-      tipoDocumento: user.tipoDocumento,
-      numeroDocumento: user.numeroDocumento,
+  const mapUserToRequest = (user, { isEdit = false } = {}) => {
+    const normalizedRoles = Array.isArray(user.roles)
+      ? user.roles
+      : Array.isArray(user.rol)
+        ? user.rol
+        : user.roles
+          ? [user.roles]
+          : ['ROLE_CLIENTE'];
 
-      nombres: user.nombre?.trim(),
-      apellidos: user.apellido?.trim(),
+    const normalizedDireccion = user.direccion ? {
+      tipoVia: user.direccion?.tipoVia || '',
+      numero: user.direccion?.numero || '',
+      numeroSecundario: user.direccion?.numeroSecundario || '',
+      numeroTercero: user.direccion?.numeroTercero || '',
+      complemento: user.direccion?.complemento || ''
+    } : null;
+
+    const hasAddressValues = normalizedDireccion && Object.values(normalizedDireccion).some((value) => value);
+    const direccionCompleta = user.direccionCompleta || (
+      hasAddressValues
+        ? [normalizedDireccion.tipoVia, normalizedDireccion.numero, normalizedDireccion.numeroSecundario, normalizedDireccion.numeroTercero, normalizedDireccion.complemento]
+          .filter(Boolean)
+          .join(' ')
+        : ''
+    );
+
+    const payload = {
+      tipoDocumento: user.tipoDocumento || user.documento?.tipo,
+      numeroDocumento: user.numeroDocumento || user.documento?.numero,
+
+      nombres: user.nombre?.trim() || user.nombres?.trim(),
+      apellidos: user.apellido?.trim() || user.apellidos?.trim(),
 
       telefono: user.telefono?.trim(),
       correo: user.correo?.trim(),
 
-      rol: Array.isArray(user.roles) ? user.roles : [user.roles],
-      direccion: user.direccion,
+      roles: normalizedRoles,
       status: typeof user.status === 'boolean' ? user.status : true
     };
 
-    if (Array.isArray(user.roles) && user.roles.includes('ROLE_MECANICO')) {
-      payload.mecanico = {
-        especialidades: Array.isArray(user.mecanico?.especialidades)
-          ? user.mecanico.especialidades
-          : [],
-        aniosExperiencia: Number(user.mecanico?.aniosExperiencia) || 0,
-        descripcion: user.mecanico?.descripcion || '',
-        disponible: typeof user.mecanico?.disponible === 'boolean'
-          ? user.mecanico.disponible
-          : true
-      };
+    payload.direccionCompleta = direccionCompleta;
+    payload.direccion = hasAddressValues ? normalizedDireccion : null;
+
+    if (!isEdit) {
+      payload.password = user.password || 'Password123!';
+    }
+
+    if (normalizedRoles.includes('ROLE_MECANICO')) {
+      payload.especialidades = Array.isArray(user.mecanico?.especialidades)
+        ? user.mecanico.especialidades
+        : Array.isArray(user.especialidades)
+          ? user.especialidades
+          : [];
+      payload.disponible = typeof user.mecanico?.disponible === 'boolean'
+        ? user.mecanico.disponible
+        : typeof user.disponible === 'boolean'
+          ? user.disponible
+          : true;
+      payload.aniosExperiencia = Number(user.mecanico?.aniosExperiencia ?? user.mecanicoPerfil?.aniosExperiencia ?? 0);
+      payload.descripcion = user.mecanico?.descripcion || user.mecanicoPerfil?.descripcion || '';
     }
 
     return payload;
@@ -322,7 +373,7 @@ export default function UsuariosView() {
           }}
         />
 
-        <UserList users={filteredUsers} onUpdateUser={handleUpdateUser} onDeleteUser={handleAskDeleteUser} />
+        <UserList users={filteredUsers} onUpdateUser={handleUpdateUser} onViewUser={handleViewUser} onDeleteUser={handleAskDeleteUser} />
 
         {isUserModalOpen && (
           <FormModal
@@ -336,6 +387,12 @@ export default function UsuariosView() {
             />
           </FormModal>
         )}
+
+        <UserDetailsModal
+          isOpen={isUserDetailsModalOpen}
+          onClose={handleCloseUserDetailsModal}
+          user={selectedUserDetails}
+        />
       </div>
     </>
   );

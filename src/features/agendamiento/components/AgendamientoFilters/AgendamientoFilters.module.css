@@ -1,0 +1,49 @@
+.filtersContainer {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    padding: 16px 0;
+}
+
+.searchGroup {
+    flex: 1;
+}
+
+.searchInput,
+.select,
+.resetBtn,
+.newBtn {
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 10px 14px;
+}
+
+.searchInput {
+    width: 100%;
+}
+
+.select {
+    background: white;
+}
+
+.actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.resetBtn,
+.newBtn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--primary-color);
+    color: white;
+    cursor: pointer;
+}
+
+.resetBtn {
+    background: var(--surface-secondary);
+    color: var(--text-primary);
+}
