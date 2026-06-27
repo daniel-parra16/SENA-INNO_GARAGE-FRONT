@@ -1,4 +1,10 @@
-import { apiFetch } from '../../api/AuthApi';
+import { apiFetch } from "../../../api/AuthApi";
+
+
+// GET /usuarios/tipoVia → [{ value, label }]
+export async function getTiposEstado() {
+    return await apiFetch('/agendamientos/estadoAgendamiento');
+}
 
 export async function getAllAgendamientos(params = {}) {
     const query = new URLSearchParams(params).toString();
@@ -19,4 +25,11 @@ export async function changeAgendamientoLlegada(id) {
 
 export async function deleteAgendamiento(id) {
     return await apiFetch(`/agendamientos/${id}`, { method: 'DELETE' });
+}
+
+export async function changeAgendamientoEstado(id, estado) {
+    return await apiFetch(`/agendamientos/${id}/estado`, {
+        method: 'PATCH',
+        body: { estado }
+    });
 }
