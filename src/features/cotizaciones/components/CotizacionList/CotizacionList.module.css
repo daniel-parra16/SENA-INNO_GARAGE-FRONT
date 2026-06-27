@@ -1,42 +1,161 @@
 .tableContainer {
     overflow-x: auto;
-    background: var(--surface);
-    border-radius: 16px;
-    box-shadow: var(--shadow-soft);
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    background: #1a2236;
 }
 
 .table {
     width: 100%;
     border-collapse: collapse;
+    font-size: 0.9rem;
+    table-layout: auto;
 }
 
-th,
-td {
-    padding: 14px 16px;
-    border-bottom: 1px solid var(--border);
+.table thead tr {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.table th {
+    padding: 13px 16px;
     text-align: left;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    white-space: nowrap;
 }
 
-th {
-    background: var(--surface-secondary);
-    color: var(--text-secondary);
+.table th:last-child,
+.table td:last-child {
+    width: 1%;
+    white-space: nowrap;
 }
 
-.actionBtnDanger {
+.row {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    transition: background-color 0.15s;
+}
+
+.row:last-child {
+    border-bottom: none;
+}
+
+.row:hover {
+    background-color: rgba(255, 255, 255, 0.03);
+}
+
+.table td {
+    padding: 14px 16px;
+    color: #e2e8f0;
+    vertical-align: middle;
+}
+
+.clientName {
+    font-weight: 500;
+    color: #f1f5f9;
+}
+
+.plate {
+    display: inline-block;
+    background: rgba(59, 130, 246, 0.12);
+    color: #93c5fd;
+    border: 1px solid rgba(59, 130, 246, 0.25);
+    border-radius: 5px;
+    padding: 2px 8px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+}
+
+.vehicleInfo {
+    display: block;
+    font-size: 0.8rem;
+    color: #64748b;
+    margin-top: 2px;
+}
+
+.fecha {
+    color: #94a3b8;
+    font-size: 0.85rem;
+    white-space: nowrap;
+}
+
+.total {
+    font-weight: 600;
+    color: #f1f5f9;
+    white-space: nowrap;
+}
+
+.badge {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.badgePendiente {
+    background: rgba(234, 179, 8, 0.12);
+    color: #fbbf24;
+    border: 1px solid rgba(234, 179, 8, 0.25);
+}
+
+.badgeAprobada {
+    background: rgba(34, 197, 94, 0.12);
+    color: #4ade80;
+    border: 1px solid rgba(34, 197, 94, 0.25);
+}
+
+.badgeRechazada {
+    background: rgba(239, 68, 68, 0.12);
+    color: #f87171;
+    border: 1px solid rgba(239, 68, 68, 0.25);
+}
+
+.badgeVencida {
+    background: rgba(100, 116, 139, 0.12);
+    color: #94a3b8;
+    border: 1px solid rgba(100, 116, 139, 0.25);
+}
+
+.actions {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    flex-wrap: nowrap;
+}
+
+.btnDelete {
     border: none;
-    background: var(--danger-color);
-    color: white;
-    width: 36px;
-    height: 36px;
-    border-radius: 10px;
+    width: 32px;
+    height: 32px;
+    min-width: 32px;
+    min-height: 32px;
+    flex-shrink: 0;
+    border-radius: 8px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
+    background: rgba(239, 68, 68, 0.12);
+    color: #f87171;
+    transition: opacity 0.15s, transform 0.1s;
 }
 
-.emptyMessage {
-    padding: 24px;
+.btnDelete:hover {
+    opacity: 0.85;
+    transform: scale(1.08);
+}
+
+.emptyState {
+    padding: 48px 24px;
     text-align: center;
-    color: var(--text-secondary);
+}
+
+.emptyText {
+    color: #475569;
+    font-size: 0.95rem;
 }
