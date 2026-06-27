@@ -1,7 +1,15 @@
-import { Filter, Plus, RotateCcw } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { Plus, RotateCcw } from 'lucide-react';
 import styles from './AgendamientoFilters.module.css';
+import { getTiposEstado } from '../../services';
 
 export default function AgendamientoFilters({ filters, onFilterChange, onNew }) {
+    const [estados, setEstados] = useState([]);
+
+    useEffect(() => {
+        getTiposEstado().then(setEstados).catch(() => { });
+    }, []);
+
     return (
         <div className={styles.filtersContainer}>
             <div className={styles.searchGroup}>
@@ -14,7 +22,11 @@ export default function AgendamientoFilters({ filters, onFilterChange, onNew }) 
                 />
             </div>
             <div className={styles.actions}>
-                <button className={styles.resetBtn} onClick={() => onFilterChange({ ...filters, search: '', estado: 'all' })}>
+                <button
+                    className={styles.resetBtn}
+                    title="Limpiar filtros"
+                    onClick={() => onFilterChange({ ...filters, search: '', estado: 'all' })}
+                >
                     <RotateCcw size={16} />
                 </button>
                 <select
@@ -23,10 +35,9 @@ export default function AgendamientoFilters({ filters, onFilterChange, onNew }) 
                     onChange={(e) => onFilterChange({ ...filters, estado: e.target.value })}
                 >
                     <option value="all">Todos los estados</option>
-                    <option value="PENDIENTE">Pendiente</option>
-                    <option value="APROBADA">Aprobada</option>
-                    <option value="RECHAZADA">Rechazada</option>
-                    <option value="SE_PRESENTA">Se presenta</option>
+                    {estados.map((e) => (
+                        <option key={e.value} value={e.value}>{e.label}</option>
+                    ))}
                 </select>
                 <button className={styles.newBtn} onClick={onNew}>
                     <Plus size={16} />
