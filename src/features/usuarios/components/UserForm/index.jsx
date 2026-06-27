@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { User, Wrench, SquareUserRound } from 'lucide-react';
 import styles from './UserForm.module.css';
-import { getTipoDoc, getEspecialidadMecanico } from '../../services';
+import { getTipoDoc, getEspecialidadMecanico, getTipoVia } from '../../services';
 
 const ROLE_OPTIONS = [
   { value: 'ROLE_ADMIN', label: 'Admin' },
@@ -12,27 +12,31 @@ const ROLE_OPTIONS = [
 export default function UserForm({ onSubmit, initialData = null }) {
   const [roles, setRoles] = useState(initialData?.roles || ['ROLE_CLIENTE']);
   const [tiposDocumento, setTiposDocumento] = useState([]);
+  const [tiposVia, setTiposVia] = useState([]);
   const [especialidadesOptions, setEspecialidadesOptions] = useState([]);
   const [formData, setFormData] = useState({
     nombre: initialData?.nombre || initialData?.nombres || '',
     apellido: initialData?.apellido || initialData?.apellidos || '',
-    tipoDocumento: initialData?.tipoDocumento || '',
-    numeroDocumento: initialData?.numeroDocumento || '',
+    tipoDocumento: initialData?.tipoDocumento || initialData?.documento?.tipo || '',
+    numeroDocumento: initialData?.numeroDocumento || initialData?.documento?.numero || '',
     correo: initialData?.correo || '',
     telefono: initialData?.telefono || '',
     direccion: {
-      calle: initialData?.direccion?.calle || '',
-      carrera: initialData?.direccion?.carrera || '',
-      ciudad: initialData?.direccion?.ciudad || '',
-      pais: initialData?.direccion?.pais || ''
+      tipoVia: initialData?.direccion?.tipoVia || '',
+      numero: initialData?.direccion?.numero || '',
+      numeroSecundario: initialData?.direccion?.numeroSecundario || '',
+      numeroTercero: initialData?.direccion?.numeroTercero || '',
+      complemento: initialData?.direccion?.complemento || ''
     },
     mecanico: {
-      especialidades: initialData?.mecanico?.especialidades || initialData?.especialidades || [],
-      aniosExperiencia: initialData?.mecanico?.aniosExperiencia || initialData?.anioExp || '',
-      descripcion: initialData?.mecanico?.descripcion || '',
-      disponible: typeof initialData?.mecanico?.disponible === 'boolean'
-        ? initialData.mecanico.disponible
-        : true
+      especialidades: initialData?.mecanicoPerfil?.especialidades || initialData?.mecanico?.especialidades || initialData?.especialidades || [],
+      aniosExperiencia: initialData?.mecanicoPerfil?.aniosExperiencia || initialData?.mecanico?.aniosExperiencia || initialData?.anioExp || '',
+      descripcion: initialData?.mecanicoPerfil?.descripcion || initialData?.mecanico?.descripcion || '',
+      disponible: typeof initialData?.mecanicoPerfil?.disponible === 'boolean'
+        ? initialData.mecanicoPerfil.disponible
+        : typeof initialData?.mecanico?.disponible === 'boolean'
+          ? initialData.mecanico.disponible
+          : true
     }
   });
 
@@ -94,9 +98,35 @@ export default function UserForm({ onSubmit, initialData = null }) {
     });
   };
 
+  const buildDireccionPayload = (direccion) => {
+    const normalizedDireccion = {
+      tipoVia: direccion?.tipoVia?.trim() || '',
+      numero: direccion?.numero?.trim() || '',
+      numeroSecundario: direccion?.numeroSecundario?.trim() || '',
+      numeroTercero: direccion?.numeroTercero?.trim() || '',
+      complemento: direccion?.complemento?.trim() || ''
+    };
+
+    const hasAnyValue = Object.values(normalizedDireccion).some((value) => value);
+    return hasAnyValue ? normalizedDireccion : null;
+  };
+
+  const buildDireccionCompleta = (direccion) => {
+    if (!direccion) return '';
+    return [direccion.tipoVia, direccion.numero, direccion.numeroSecundario, direccion.numeroTercero, direccion.complemento]
+      .filter(Boolean)
+      .join(' ');
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSubmit({ ...formData, roles });
+    const direccion = buildDireccionPayload(formData.direccion);
+    onSubmit({
+      ...formData,
+      roles,
+      direccion,
+      direccionCompleta: direccion ? buildDireccionCompleta(direccion) : ''
+    });
   };
 
   const getTipoDocumento = async () => {
@@ -109,10 +139,46 @@ export default function UserForm({ onSubmit, initialData = null }) {
     setEspecialidadesOptions(data || []);
   };
 
+  const getTiposViaOptions = async () => {
+    const data = await getTipoVia();
+    setTiposVia(data || []);
+  };
+
   useEffect(() => {
     getTipoDocumento();
+    getTiposViaOptions();
     getEspecialidadMecanicoOptions();
   }, []);
+
+  useEffect(() => {
+    setRoles(initialData?.roles || ['ROLE_CLIENTE']);
+    setFormData((prev) => ({
+      ...prev,
+      nombre: initialData?.nombre || initialData?.nombres || '',
+      apellido: initialData?.apellido || initialData?.apellidos || '',
+      tipoDocumento: initialData?.tipoDocumento || initialData?.documento?.tipo || '',
+      numeroDocumento: initialData?.numeroDocumento || initialData?.documento?.numero || '',
+      correo: initialData?.correo || '',
+      telefono: initialData?.telefono || '',
+      direccion: {
+        tipoVia: initialData?.direccion?.tipoVia || '',
+        numero: initialData?.direccion?.numero || '',
+        numeroSecundario: initialData?.direccion?.numeroSecundario || '',
+        numeroTercero: initialData?.direccion?.numeroTercero || '',
+        complemento: initialData?.direccion?.complemento || ''
+      },
+      mecanico: {
+        especialidades: initialData?.mecanicoPerfil?.especialidades || initialData?.mecanico?.especialidades || initialData?.especialidades || [],
+        aniosExperiencia: initialData?.mecanicoPerfil?.aniosExperiencia || initialData?.mecanico?.aniosExperiencia || initialData?.anioExp || '',
+        descripcion: initialData?.mecanicoPerfil?.descripcion || initialData?.mecanico?.descripcion || '',
+        disponible: typeof initialData?.mecanicoPerfil?.disponible === 'boolean'
+          ? initialData.mecanicoPerfil.disponible
+          : typeof initialData?.mecanico?.disponible === 'boolean'
+            ? initialData.mecanico.disponible
+            : true
+      }
+    }));
+  }, [initialData]);
 
   const isMecanico = roles.includes('ROLE_MECANICO');
 
@@ -224,60 +290,80 @@ export default function UserForm({ onSubmit, initialData = null }) {
         </div>
 
         <div className={styles.field}>
-          <label htmlFor="direccion.calle">Calle</label>
+          <label htmlFor="direccion.tipoVia">Tipo de vía</label>
+          <select
+            id="direccion.tipoVia"
+            name="direccion.tipoVia"
+            className={styles.input}
+            value={formData.direccion.tipoVia}
+            onChange={handleChange}
+          >
+            <option value="">Sin especificar</option>
+            {tiposVia && tiposVia.length > 0 ? (
+              tiposVia.map((tipo) => (
+                <option key={tipo.value} value={tipo.value}>
+                  {tipo.label}
+                </option>
+              ))
+            ) : (
+              <option disabled>No hay tipos de vía disponibles</option>
+            )}
+          </select>
+        </div>
+
+        <div className={styles.field}>
+          <label htmlFor="direccion.numero">Número</label>
           <input
             type="text"
-            id="direccion.calle"
-            name="direccion.calle"
-            placeholder="Ej: 10"
-            value={formData.direccion.calle}
+            id="direccion.numero"
+            name="direccion.numero"
+            placeholder="Ej: 45"
+            value={formData.direccion.numero}
             onChange={handleChange}
-            required
           />
         </div>
 
         <div className={styles.field}>
-          <label htmlFor="direccion.carrera">Carrera</label>
+          <label htmlFor="direccion.numeroSecundario">Número secundario</label>
           <input
             type="text"
-            id="direccion.carrera"
-            name="direccion.carrera"
-            placeholder="Ej: 5"
-            value={formData.direccion.carrera}
+            id="direccion.numeroSecundario"
+            name="direccion.numeroSecundario"
+            placeholder="Ej: 30"
+            value={formData.direccion.numeroSecundario}
             onChange={handleChange}
-            required
           />
         </div>
 
         <div className={styles.field}>
-          <label htmlFor="direccion.ciudad">Ciudad</label>
+          <label htmlFor="direccion.numeroTercero">Número tercero</label>
           <input
             type="text"
-            id="direccion.ciudad"
-            name="direccion.ciudad"
-            placeholder="Ej: Bogotá"
-            value={formData.direccion.ciudad}
+            id="direccion.numeroTercero"
+            name="direccion.numeroTercero"
+            placeholder="Ej: 12"
+            value={formData.direccion.numeroTercero}
             onChange={handleChange}
-            required
           />
         </div>
 
         <div className={styles.field}>
-          <label htmlFor="direccion.pais">País</label>
+          <label htmlFor="direccion.complemento">Complemento</label>
           <input
             type="text"
-            id="direccion.pais"
-            name="direccion.pais"
-            placeholder="Ej: Colombia"
-            value={formData.direccion.pais}
+            id="direccion.complemento"
+            name="direccion.complemento"
+            placeholder="Ej: Apto 202"
+            value={formData.direccion.complemento}
             onChange={handleChange}
-            required
           />
         </div>
+
+        <small>La dirección es opcional. Si no diligencias ningún campo, se enviará vacía.</small>
 
         {isMecanico && (
           <>
-            <div className={styles.field}>
+            <div className={`${styles.field} ${styles.especialidadesField}`}>
               <label>Especialidades</label>
               <div className={styles.checkboxList}>
                 {especialidadesOptions.length > 0 ? (
@@ -287,8 +373,6 @@ export default function UserForm({ onSubmit, initialData = null }) {
                       <label key={especialidad.value} className={styles.checkboxItem}>
                         <input
                           type="checkbox"
-                          name="mecanico.especialidades"
-                          value={especialidad.value}
                           checked={isChecked}
                           onChange={() => handleEspecialidadToggle(especialidad.value)}
                         />
@@ -303,59 +387,68 @@ export default function UserForm({ onSubmit, initialData = null }) {
               <small>Selecciona una o más especialidades.</small>
             </div>
 
-            <div className={styles.field}>
-              <label htmlFor="mecanico.especialidadesResumen">Especialidades seleccionadas</label>
-              <input
-                id="mecanico.especialidadesResumen"
-                type="text"
-                readOnly
-                className={styles.input}
-                value={especialidadesOptions
-                  .filter((especialidad) => formData.mecanico.especialidades.includes(especialidad.value))
-                  .map((especialidad) => especialidad.label)
-                  .join(', ')}
-                placeholder="Selecciona las especialidades"
-              />
+            <div className={`${styles.field} ${styles.selectedTagsField}`}>
+              <label>Especialidades seleccionadas</label>
+              <div className={styles.selectedTags}>
+                {formData.mecanico.especialidades.length > 0 ? (
+                  especialidadesOptions
+                    .filter((e) => formData.mecanico.especialidades.includes(e.value))
+                    .map((e) => (
+                      <span key={e.value} className={styles.tag}>{e.label}</span>
+                    ))
+                ) : (
+                  <span className={styles.noTags}>Ninguna seleccionada</span>
+                )}
+              </div>
             </div>
 
-            <div className={styles.field}>
-              <label htmlFor="mecanico.aniosExperiencia">Años de experiencia</label>
-              <input
-                type="number"
-                id="mecanico.aniosExperiencia"
-                name="mecanico.aniosExperiencia"
-                placeholder="Ej: 3"
-                value={formData.mecanico.aniosExperiencia}
-                onChange={handleChange}
-                min={0}
-                required
-              />
-            </div>
-
-            <div className={styles.field}>
-              <label htmlFor="mecanico.descripcion">Descripción</label>
-              <textarea
-                id="mecanico.descripcion"
-                name="mecanico.descripcion"
-                placeholder="Descripción del mecánico"
-                value={formData.mecanico.descripcion}
-                onChange={handleChange}
-                className={styles.textarea}
-                required
-              />
-            </div>
-
-            <div className={styles.field}>
-              <label className={styles.checkboxLabel}>
-                <input
-                  type="checkbox"
-                  id="mecanico.disponible"
-                  name="mecanico.disponible"
-                  checked={formData.mecanico.disponible}
+            {/* Fila de 3: descripción + años + disponible */}
+            <div className={styles.mecanicoBottomRow}>
+              <div className={`${styles.field} ${styles.descripcionField}`}>
+                <label htmlFor="mecanico.descripcion">Descripción</label>
+                <textarea
+                  id="mecanico.descripcion"
+                  name="mecanico.descripcion"
+                  placeholder="Descripción del mecánico"
+                  value={formData.mecanico.descripcion}
                   onChange={handleChange}
+                  className={styles.textarea}
+                  required
                 />
-                Disponible
-              </label>
+              </div>
+
+              <div className={styles.field}>
+                <label htmlFor="mecanico.aniosExperiencia">Años de experiencia</label>
+                <input
+                  type="number"
+                  id="mecanico.aniosExperiencia"
+                  name="mecanico.aniosExperiencia"
+                  placeholder="Ej: 3"
+                  value={formData.mecanico.aniosExperiencia}
+                  onChange={handleChange}
+                  min={0}
+                  required
+                />
+              </div>
+
+              <div className={styles.field}>
+                <label style={{ opacity: 0, pointerEvents: 'none' }}>&nbsp;</label>
+                <div className={styles.toggleInner}>
+                  <label className={styles.toggle}>
+                    <input
+                      type="checkbox"
+                      id="mecanico.disponible"
+                      name="mecanico.disponible"
+                      checked={formData.mecanico.disponible}
+                      onChange={handleChange}
+                    />
+                    <span className={styles.toggleSlider} />
+                  </label>
+                  <label htmlFor="mecanico.disponible" className={styles.toggleLabel}>
+                    Disponible
+                  </label>
+                </div>
+              </div>
             </div>
           </>
         )}

@@ -1,46 +1,60 @@
 import { apiFetch } from '../../../api/AuthApi';
 
-// Servicio para traer todos los usuarios registrados
+// GET /usuarios → List<UsuarioDto> (array directo)
 export async function getAllUsers() {
-    const data = await apiFetch('/usuarios', {
-        method: 'GET'
-    });
-    return data?.contenido || [];
+    const data = await apiFetch('/usuarios', { method: 'GET' });
+    return Array.isArray(data) ? data : [];
 }
 
-// Servicio para crear un usuario
+// GET /usuarios/{numDoc} → UsuarioDto
+export async function getUserByDoc(numDoc) {
+    return await apiFetch(`/usuarios/${numDoc}`, { method: 'GET' });
+}
+
+// POST /usuarios → { mensaje, id }
+// Body: CrearUsuarioRequest
 export async function createUser(data) {
     return await apiFetch('/usuarios', {
         method: 'POST',
         body: data,
-    })
+    });
 }
 
-// Servicio para actualizar los datos de un usuario 
-export async function updateUser(id, data) {
-    return await apiFetch(`/usuarios/${id}`, {
+// PUT /usuarios/{numDoc} → UsuarioDto actualizado
+// Body: EditarUsuarioRequest
+export async function updateUser(numDoc, data) {
+    return await apiFetch(`/usuarios/${numDoc}`, {
         method: 'PUT',
-        body: data
-    })
+        body: data,
+    });
 }
 
-// Servicio para desactivar un usuario 
-export async function deleteUsers(id) {
-    return await apiFetch(`/usuarios/${id}`, {
-        method: 'DELETE'
-    })
+// DELETE /usuarios/{numDoc} → 204 No Content (soft delete: activo=false)
+export async function deleteUser(numDoc) {
+    return await apiFetch(`/usuarios/${numDoc}`, { method: 'DELETE' });
 }
 
-// Servicio para consultar los tipos de documentos
+// GET /usuarios/tipoDocumento → [{ value, label }]
 export async function getTipoDoc() {
-    return await apiFetch('/usuarios/tipoDocumento')
+    return await apiFetch('/usuarios/tipoDocumento');
 }
 
-// Servicio para consultar las especialidades mecánicas dinámicas
+// GET /usuarios/tipoVia → [{ value, label }]
+export async function getTipoVia() {
+    return await apiFetch('/usuarios/tipoVia');
+}
+
+// GET /usuarios/especialidadMecanico → [{ value, label }]
 export async function getEspecialidadMecanico() {
-    return await apiFetch('/usuarios/especialidadMecanico')
+    return await apiFetch('/usuarios/especialidadMecanico');
 }
 
-export async function getEspecialidades() {
-    return await getEspecialidadMecanico();
+// GET /usuarios/getUsuarios → [{ numeroDocumento, nombreCompleto }]
+export async function getUsuariosSimples() {
+    return await apiFetch('/usuarios/getUsuarios');
+}
+
+// GET /usuarios/getMecanicos → [{ numeroDocumento, nombreCompleto }]
+export async function getMecanicosSimples() {
+    return await apiFetch('/usuarios/getMecanicos');
 }

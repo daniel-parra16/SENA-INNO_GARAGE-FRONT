@@ -5,7 +5,7 @@ import { useEffect, useMemo, useState } from 'react';
 
 const ITEMS_PER_PAGE = 10;
 
-export default function UserList({ users, onUpdateUser, onDeleteUser }) {
+export default function UserList({ users, onUpdateUser, onViewUser, onDeleteUser }) {
   const [currentPage, setCurrentPage] = useState(1);
 
   const totalPages = Math.max(1, Math.ceil(users.length / ITEMS_PER_PAGE));
@@ -90,7 +90,7 @@ export default function UserList({ users, onUpdateUser, onDeleteUser }) {
                     </td>
                     <td>
                       <div className={styles.actionButtons}>
-                        <button className={styles.actionBtn} title="Ver detalles">
+                        <button className={styles.actionBtn} title="Ver detalles" onClick={() => onViewUser(user)}>
                           <Eye size={18} />
                         </button>
                         <button className={styles.actionBtn} title="Editar" onClick={() => onUpdateUser(user)}>

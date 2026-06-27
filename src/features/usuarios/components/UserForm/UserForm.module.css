@@ -36,24 +36,13 @@
 }
 
 .roleCard.active {
-  background-color: rgba(59, 130, 246, 0.08);
+  background-color: rgba(59, 130, 246, 0.1);
   border-color: #3b82f6;
   color: #ffffff;
 }
 
 .roleCard.active .roleTitle {
   color: #3b82f6;
-}
-
-.roleCard:hover {
-  background-color: #344059;
-  border-color: rgba(255, 255, 255, 0.1);
-}
-
-.roleCard.active {
-  background-color: rgba(59, 130, 246, 0.1);
-  border-color: #3b82f6;
-  color: #ffffff;
 }
 
 .roleCard.active .iconWrapper {
@@ -72,10 +61,10 @@
   font-size: 1rem;
 }
 
+/* ── Grid principal ── */
 .inputGroup {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  justify-content: center;
   column-gap: 20px;
   row-gap: 16px;
   min-width: 0;
@@ -115,11 +104,6 @@
   background-color: #2a3347;
 }
 
-.field select[multiple] {
-  min-height: 140px;
-  max-height: 240px;
-}
-
 .field select option {
   background-color: #1e293b;
   color: #ffffff;
@@ -137,6 +121,7 @@
   width: 100%;
   box-sizing: border-box;
   min-height: 120px;
+  resize: vertical;
 }
 
 .field textarea:focus {
@@ -144,43 +129,53 @@
   background-color: #2a3347;
 }
 
-.checkboxLabel {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  color: #ffffff;
+.field input::placeholder,
+.field textarea::placeholder {
+  color: #64748b;
+}
+
+/* ── Especialidades ── */
+.especialidadesField {
+  grid-column: 1 / -1;
 }
 
 .checkboxList {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 10px;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 8px;
   padding: 12px;
   background-color: #1e293b;
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 8px;
-  max-height: 260px;
+  max-height: 200px;
   overflow-y: auto;
 }
 
 .checkboxItem {
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 10px;
-  border-radius: 8px;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: 6px;
   background-color: #242c3d;
   border: 1px solid rgba(255, 255, 255, 0.08);
+  cursor: pointer;
   transition: background-color 0.2s, border-color 0.2s;
+  font-size: 0.85rem;
+  color: #adb5bd;
 }
 
 .checkboxItem:hover {
   background-color: #2a3347;
-  border-color: rgba(59, 130, 246, 0.25);
+  border-color: rgba(59, 130, 246, 0.4);
+  color: #fff;
 }
 
 .checkboxItem input {
   accent-color: #3b82f6;
+  width: 15px;
+  height: 15px;
+  flex-shrink: 0;
 }
 
 .emptyMessage {
@@ -188,10 +183,117 @@
   padding: 10px 0;
 }
 
-.field input::placeholder {
-  color: #64748b;
+/* ── Tags seleccionadas ── */
+.selectedTagsField {
+  grid-column: 1 / -1;
 }
 
+.selectedTags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  min-height: 42px;
+  padding: 8px;
+  background-color: #242c3d;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+}
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  background-color: rgba(59, 130, 246, 0.15);
+  border: 1px solid rgba(59, 130, 246, 0.35);
+  color: #93c5fd;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.noTags {
+  color: #64748b;
+  font-size: 0.875rem;
+  align-self: center;
+  padding: 4px;
+}
+
+/* ── Fila inferior mecánico: descripción + años + disponible ── */
+.mecanicoBottomRow {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 20px;
+  align-items: start;
+}
+
+.descripcionField {
+  /* no necesita nada extra, el grid padre lo controla */
+}
+
+/* ── Toggle Disponible ── */
+.toggleInner {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 42px;
+  padding: 0 4px;
+}
+
+.toggleLabel {
+  color: #e2e8f0;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  user-select: none;
+}
+
+.toggle {
+  position: relative;
+  width: 44px;
+  height: 24px;
+  flex-shrink: 0;
+}
+
+.toggle input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+  position: absolute;
+}
+
+.toggleSlider {
+  position: absolute;
+  inset: 0;
+  background-color: #334155;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.toggleSlider::before {
+  content: '';
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  left: 3px;
+  top: 3px;
+  background-color: #94a3b8;
+  border-radius: 50%;
+  transition: transform 0.2s, background-color 0.2s;
+}
+
+.toggle input:checked+.toggleSlider {
+  background-color: rgba(59, 130, 246, 0.25);
+  border: 1px solid #3b82f6;
+}
+
+.toggle input:checked+.toggleSlider::before {
+  transform: translateX(20px);
+  background-color: #3b82f6;
+}
+
+/* ── Acciones ── */
 .actions {
   display: flex;
   justify-content: flex-end;
@@ -213,14 +315,11 @@
 .cancelBtn {
   background-color: transparent;
   color: #ef4444;
-  /* Rojo llamativo pero suave */
 }
 
 .cancelBtn:hover {
   background-color: rgba(239, 68, 68, 0.1);
-  /* Background rojo transparente y sútil */
   color: #f87171;
-  /* Texto ligeramente más brillante */
 }
 
 .submitBtn {
