@@ -1,4 +1,5 @@
-import { Trash2 } from 'lucide-react';
+import { Trash2, Edit, ClipboardList, Check } from 'lucide-react';
+
 import styles from './CotizacionList.module.css';
 
 const ESTADO_LABELS = {
@@ -24,7 +25,7 @@ const formatFecha = (valor) => {
     });
 };
 
-export default function CotizacionList({ cotizaciones, onDelete }) {
+export default function CotizacionList({ cotizaciones, onEdit, onDelete, onCrearOrden, onAprobarOrden }) {
     if (!cotizaciones || cotizaciones.length === 0) {
         return (
             <div className={styles.emptyState}>
@@ -51,22 +52,53 @@ export default function CotizacionList({ cotizaciones, onDelete }) {
                         <tr key={item.id} className={styles.row}>
                             <td>
                                 <span className={styles.clientName}>
-                                    {item.usuarioNombres} {item.usuarioApellidos}
+                                    {item.usuarioNombres && item.usuarioApellidos
+                                        ? `${item.usuarioNombres} ${item.usuarioApellidos}`
+                                        : item.usuarioId || '—'}
                                 </span>
                             </td>
                             <td>
-                                <span className={styles.plate}>{item.vehiculoPlaca}</span>
-                                <span className={styles.vehicleInfo}>{item.vehiculoMarca} {item.vehiculoModelo}</span>
+                                {item.placaVehiculo
+                                    ? <span className={styles.plate}>{item.placaVehiculo}</span>
+                                    : <span className={styles.noData}>—</span>
+                                }
                             </td>
                             <td>
                                 <span className={`${styles.badge} ${ESTADO_CLASS[item.estado] ?? ''}`}>
                                     {ESTADO_LABELS[item.estado] ?? item.estado}
                                 </span>
                             </td>
-                            <td className={styles.total}>${Number(item.total || 0).toLocaleString('es-CO')}</td>
+                            <td className={styles.total}>
+                                ${Number(item.total || 0).toLocaleString('es-CO')}
+                            </td>
                             <td className={styles.fecha}>{formatFecha(item.fechaEntrada)}</td>
                             <td>
                                 <div className={styles.actions}>
+                                    {item.estado === 'PENDIENTE' && (
+                                        <>
+                                            <button
+                                                className={styles.btnEdit}
+                                                title="Editar"
+                                                onClick={() => onEdit(item)}
+                                            >
+                                                <Edit size={15} />
+                                            </button>
+
+                                            <button
+                                                className={styles.btnAprobar}
+                                                title="Aprobar"
+                                                onClick={() => onAprobarOrden(item)}
+                                            >
+                                                <Check size={15} />
+                                            </button>
+                                        </>
+                                    )}
+
+                                    {item.estado === 'APROBADA' && (
+                                        <button className={styles.btnOrden} title="Crear orden" onClick={() => onCrearOrden(item)}>
+                                            <ClipboardList size={15} />
+                                        </button>
+                                    )}
                                     <button className={styles.btnDelete} title="Eliminar" onClick={() => onDelete(item)}>
                                         <Trash2 size={15} />
                                     </button>
