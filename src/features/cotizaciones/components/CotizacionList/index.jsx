@@ -25,7 +25,7 @@ const formatFecha = (valor) => {
     });
 };
 
-export default function CotizacionList({ cotizaciones, onEdit, onDelete, onCrearOrden, onAprobarOrden }) {
+export default function CotizacionList({ cotizaciones, onEdit, onDelete, onAprobarOrden }) {
     if (!cotizaciones || cotizaciones.length === 0) {
         return (
             <div className={styles.emptyState}>
@@ -75,30 +75,25 @@ export default function CotizacionList({ cotizaciones, onEdit, onDelete, onCrear
                             <td>
                                 <div className={styles.actions}>
                                     {item.estado === 'PENDIENTE' && (
-                                        <>
-                                            <button
-                                                className={styles.btnEdit}
-                                                title="Editar"
-                                                onClick={() => onEdit(item)}
-                                            >
-                                                <Edit size={15} />
-                                            </button>
-
-                                            <button
-                                                className={styles.btnAprobar}
-                                                title="Aprobar"
-                                                onClick={() => onAprobarOrden(item)}
-                                            >
-                                                <Check size={15} />
-                                            </button>
-                                        </>
-                                    )}
-
-                                    {item.estado === 'APROBADA' && (
-                                        <button className={styles.btnOrden} title="Crear orden" onClick={() => onCrearOrden(item)}>
-                                            <ClipboardList size={15} />
+                                        <button
+                                            className={styles.btnAprobar}
+                                            title="Aprobar"
+                                            onClick={() => onAprobarOrden(item)}
+                                        >
+                                            <Check size={15} />
                                         </button>
                                     )}
+                                    {item.estado !== 'RECHAZADA' && (
+
+                                        <button
+                                            className={styles.btnEdit}
+                                            title="Editar"
+                                            onClick={() => onEdit(item)}
+                                        >
+                                            <Edit size={15} />
+                                        </button>
+                                    )}
+
                                     <button className={styles.btnDelete} title="Eliminar" onClick={() => onDelete(item)}>
                                         <Trash2 size={15} />
                                     </button>

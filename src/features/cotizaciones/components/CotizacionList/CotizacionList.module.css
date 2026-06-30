@@ -25,6 +25,7 @@
     text-transform: uppercase;
     letter-spacing: 0.05em;
     white-space: nowrap;
+    text-align: center;
 }
 
 .table th:last-child,
@@ -88,6 +89,61 @@
     white-space: nowrap;
 }
 
+.btnOrden {
+    border: none;
+    width: 32px;
+    height: 32px;
+    min-width: 32px;
+    min-height: 32px;
+    flex-shrink: 0;
+    border-radius: 8px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    background: rgba(34, 197, 94, 0.12);
+    color: #4ade80;
+    transition: opacity 0.15s, transform 0.1s;
+}
+
+.btnOrden:hover {
+    opacity: 0.85;
+    transform: scale(1.08);
+}
+
+.btnAprobar {
+    border: none;
+    width: 32px;
+    height: 32px;
+    min-width: 32px;
+    min-height: 32px;
+    flex-shrink: 0;
+    border-radius: 8px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    background: rgba(34, 197, 94, 0.15);
+    color: #22c55e;
+    transition: opacity 0.15s, transform 0.1s, background-color 0.2s;
+}
+
+.btnAprobar:hover {
+    background: rgba(34, 197, 94, 0.25);
+    opacity: 0.9;
+    transform: scale(1.08);
+}
+
+.btnAprobar:active {
+    transform: scale(0.96);
+}
+
+.btnAprobar:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+
 .badge {
     display: inline-block;
     padding: 4px 10px;
@@ -125,7 +181,35 @@
     display: flex;
     gap: 6px;
     align-items: center;
+    justify-content: center;
     flex-wrap: nowrap;
+}
+
+.btnEdit {
+    border: none;
+    width: 32px;
+    height: 32px;
+    min-width: 32px;
+    min-height: 32px;
+    flex-shrink: 0;
+    border-radius: 8px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    background: rgba(59, 130, 246, 0.15);
+    color: #60a5fa;
+    transition: opacity 0.15s, transform 0.1s;
+}
+
+.btnEdit:hover {
+    opacity: 0.85;
+    transform: scale(1.08);
+}
+
+.noData {
+    color: #475569;
+    font-size: 0.85rem;
 }
 
 .btnDelete {

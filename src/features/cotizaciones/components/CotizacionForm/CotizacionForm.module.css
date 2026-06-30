@@ -138,7 +138,7 @@
 
 .insumosHead {
     display: grid;
-    grid-template-columns: 2fr 1fr 1fr 1fr 36px;
+    grid-template-columns: 1.2fr 2fr 0.6fr 1fr 1fr 36px;
     gap: 8px;
     padding: 0 4px 8px;
     border-bottom: 1px solid rgba(255, 255, 255, 0.07);
@@ -154,9 +154,15 @@
 
 .insumoRow {
     display: grid;
-    grid-template-columns: 2fr 1fr 1fr 1fr 36px;
+    grid-template-columns: 1.2fr 2fr 0.6fr 1fr 1fr 36px;
     gap: 8px;
     align-items: center;
+}
+
+.inputReadOnly {
+    opacity: 0.6;
+    cursor: not-allowed;
+    background-color: #1a2236;
 }
 
 .insumoRow input {
@@ -278,4 +284,28 @@
 
 .submitBtn:hover {
     background-color: #2563eb;
+}
+
+.insumoSelect {
+    background-color: #242c3d;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+    padding: 8px 10px;
+    border-radius: 6px;
+    font-size: 0.875rem;
+    outline: none;
+    width: 100%;
+    box-sizing: border-box;
+    transition: border-color 0.2s;
+    cursor: pointer;
+}
+
+.insumoSelect:focus {
+    border-color: #3b82f6;
+    background-color: #2a3347;
+}
+
+.insumoSelect option {
+    background-color: #1e293b;
+    color: #ffffff;
 }
