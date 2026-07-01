@@ -1,43 +1,116 @@
-// pages/admin/AdminDashboard.jsx
-import { useEffect, useState } from 'react';
-import { getAdminDashboard } from '../../services';
+import styles from "../../styles/dashboard.module.css";
+import useAdminDashboard from "../../hooks/useAdminDashboard";
 
-import styles from './AdminDashboard.module.css';
-import { AdminStats } from '../../components/Admin/AdminStats';
-import Table from '../../components/Admin/Table';
-import { AlertsPanel } from '../../components/Admin/AlertsPanel';
+import DashboardHeader from "../../components/Admin/DashboardHeader";
+import DashboardStats from "../../components/Admin/DashboardStats";
+import DashboardAlerts from "../../components/Admin/DashboardAlerts";
+import PriorityJobs from "../../components/Admin/PriorityJobs";
+import TodayActivity from "../../components/Admin/TodayActivity";
 
 export default function AdminDashboard() {
 
-    const [data, setData] = useState(null);
+    const {
 
-    useEffect(() => {
-        loadDashboard();
-    }, []);
+        dashboard,
 
-    const loadDashboard = async () => {
-        try {
-            const res = await getAdminDashboard();
-            setData(res);
-        } catch (error) {
-            console.error('Error cargando dashboard', error);
-        }
-    };
+        loading,
 
-    if (!data) return <p>Cargando dashboard...</p>;
+        error,
+
+        reload
+
+    } = useAdminDashboard();
+
+    if (loading) {
+
+        return <p>Cargando dashboard...</p>;
+
+    }
+
+    if (error) {
+
+        return (
+
+            <div>
+
+                <p>{error}</p>
+
+                <button onClick={reload}>
+
+                    Reintentar
+
+                </button>
+
+            </div>
+
+        );
+
+    }
 
     return (
-        <div className={styles.container}>
 
-            <div className={styles.statsGrid}>
-                <AdminStats data={data} />
-            </div>
+        <div className={styles.dashboard}>
 
-            <div className={styles.contentGrid}>
-                <Table />
-                <AlertsPanel data={data} />
-            </div>
+            {/* Header */}
+
+            <DashboardHeader
+
+                data={dashboard.resumen}
+
+            />
+
+            {/* Estadísticas */}
+
+            <section className={styles.statsSection}>
+
+                <DashboardStats
+
+                    data={dashboard.estadisticas}
+
+                />
+
+            </section>
+
+            {/* Contenido principal */}
+
+            <section className={styles.contentSection}>
+
+                <div className={styles.leftColumn}>
+
+                    <PriorityJobs
+
+                        data={dashboard.trabajosPrioritarios}
+
+                    />
+
+                </div>
+
+                <aside className={styles.rightColumn}>
+
+                    <DashboardAlerts
+
+                        data={dashboard.alertas}
+
+                    />
+
+                </aside>
+
+            </section>
+
+            {/* Actividad */}
+
+            <section className={styles.activitySection}>
+
+                <TodayActivity
+
+                    data={dashboard.actividadHoy}
+
+                />
+
+            </section>
 
         </div>
+
     );
+
 }
