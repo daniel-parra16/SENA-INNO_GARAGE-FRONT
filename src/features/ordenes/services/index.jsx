@@ -47,6 +47,11 @@ export async function updateOrden(id, data) {
     });
 }
 
+//  Obtener estado
+export async function getEstadosOrden() {
+    return await apiFetch('/ordenes/estadoOrden', { method: 'GET' });
+}
+
 //  Cambiar estado
 export async function changeEstado(id, estado) {
     return await apiFetch(`/ordenes/${id}/estado`, {

@@ -1,9 +1,9 @@
 .filtersContainer {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: var(--spacing-md, 16px);
     flex-wrap: wrap;
-    padding: 16px 0;
+    padding: var(--spacing-md, 16px) 0;
 }
 
 .searchBox {
@@ -13,24 +13,28 @@
 
 .searchInput {
     width: 100%;
-    background: #1a2236;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 10px;
-    padding: 10px 14px;
-    color: #e2e8f0;
-    font-size: 0.9rem;
-    outline: none;
-    box-sizing: border-box;
-    transition: border-color 0.2s;
     height: 40px;
+    box-sizing: border-box;
+    padding: 10px 14px;
+
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg, 10px);
+
+    color: var(--text-primary);
+    font-size: var(--font-size-sm, 0.875rem);
+    outline: none;
+
+    transition: var(--transition-base);
 }
 
 .searchInput:focus {
-    border-color: #3b82f6;
+    border-color: var(--primary-color);
+    background-color: var(--bg-tertiary);
 }
 
 .searchInput::placeholder {
-    color: #475569;
+    color: var(--text-secondary);
 }
 
 .actions {
@@ -41,88 +45,114 @@
 }
 
 .select {
-    background: #1a2236;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 10px;
+    height: 40px;
     padding: 10px 14px;
-    color: #e2e8f0;
-    font-size: 0.9rem;
+
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg, 10px);
+
+    color: var(--text-primary);
+    font-size: var(--font-size-sm, 0.875rem);
+
     outline: none;
     cursor: pointer;
-    transition: border-color 0.2s;
-    height: 40px;
+    transition: var(--transition-base);
 }
 
 .select:focus {
-    border-color: #3b82f6;
+    border-color: var(--primary-color);
+    background-color: var(--bg-tertiary);
 }
 
 .select option {
-    background: #1e293b;
-    color: #e2e8f0;
+    background-color: var(--bg-secondary);
+    color: var(--text-primary);
 }
 
 .agendamientoInput {
-    background: #1a2236;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 10px;
-    padding: 10px 14px;
-    color: #e2e8f0;
-    font-size: 0.9rem;
-    outline: none;
-    box-sizing: border-box;
-    transition: border-color 0.2s;
-    height: 40px;
     width: 180px;
+    height: 40px;
+    box-sizing: border-box;
+    padding: 10px 14px;
+
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg, 10px);
+
+    color: var(--text-primary);
+    font-size: var(--font-size-sm, 0.875rem);
+
+    outline: none;
+    transition: var(--transition-base);
 }
 
 .agendamientoInput:focus {
-    border-color: #3b82f6;
+    border-color: var(--primary-color);
+    background-color: var(--bg-tertiary);
 }
 
 .agendamientoInput::placeholder {
-    color: #475569;
+    color: var(--text-secondary);
 }
 
 .resetBtn {
     display: inline-flex;
     align-items: center;
     justify-content: center;
+
     width: 40px;
     height: 40px;
     min-width: 40px;
-    background: #1a2236;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 10px;
-    color: #94a3b8;
+
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg, 10px);
+
+    color: var(--text-secondary);
+
     cursor: pointer;
-    transition: border-color 0.2s, color 0.2s;
     flex-shrink: 0;
+    transition: var(--transition-base);
 }
 
 .resetBtn:hover {
-    border-color: #3b82f6;
-    color: #60a5fa;
+    border-color: var(--primary-color);
+    background-color: var(--bg-tertiary);
+    color: var(--primary-color);
 }
 
 .newBtn {
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    background: #3b82f6;
-    border: none;
-    border-radius: 10px;
-    padding: 0 18px;
+
     height: 40px;
-    color: #ffffff;
-    font-size: 0.9rem;
-    font-weight: 600;
+    padding: 0 18px;
+
+    background-color: var(--primary-color);
+    border: none;
+    border-radius: var(--radius-lg, 10px);
+
+    color: var(--white);
+    font-size: var(--font-size-sm, 0.875rem);
+    font-weight: var(--font-weight-semibold);
+
     cursor: pointer;
     white-space: nowrap;
-    transition: background-color 0.2s;
     flex-shrink: 0;
+
+    transition: background-color .2s ease, transform .15s ease;
 }
 
-.newBtn:hover {
-    background: #2563eb;
+.newBtn:active {
+    transform: scale(.98);
+}
+
+[data-theme="dark"] .newBtn:hover {
+    background-color: #60a5fa;
+}
+
+[data-theme="light"] .newBtn:hover {
+    background-color: #0284c7;
 }

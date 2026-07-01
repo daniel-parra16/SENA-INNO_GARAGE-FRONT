@@ -1,34 +1,33 @@
 .tableContainer {
     overflow-x: auto;
-    border-radius: 12px;
-    border: 1px solid rgba(255, 255, 255, 0.07);
-    background: #1a2236;
+    border-radius: var(--radius-lg, 12px);
+    border: 1px solid var(--border-color);
+    background-color: var(--bg-secondary);
 }
 
 .table {
     width: 100%;
     border-collapse: collapse;
-    font-size: 0.9rem;
+    font-size: var(--font-size-sm, 0.875rem);
     table-layout: auto;
 }
 
 .table thead tr {
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    border-bottom: 1px solid var(--border-color);
 }
 
 .table th {
     padding: 13px 16px;
     text-align: left;
     font-size: 0.78rem;
-    font-weight: 600;
-    color: #64748b;
+    font-weight: var(--font-weight-semibold);
+    color: var(--text-secondary);
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    background: transparent;
+    background-color: var(--table-head-bg);
     white-space: nowrap;
 }
 
-/* Columna acciones: ancho justo, nunca se comprime */
 .table th:last-child,
 .table td:last-child {
     width: 1%;
@@ -36,8 +35,8 @@
 }
 
 .row {
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-    transition: background-color 0.15s;
+    border-bottom: 1px solid var(--border-color);
+    transition: background-color var(--transition-base);
 }
 
 .row:last-child {
@@ -45,29 +44,30 @@
 }
 
 .row:hover {
-    background-color: rgba(255, 255, 255, 0.03);
+    background-color: var(--bg-tertiary);
 }
 
 .table td {
     padding: 14px 16px;
-    color: #e2e8f0;
+    color: var(--text-primary);
+    background-color: var(--table-body-bg);
     vertical-align: middle;
 }
 
 .clientName {
-    font-weight: 500;
-    color: #f1f5f9;
+    font-weight: var(--font-weight-medium);
+    color: var(--text-primary);
 }
 
 .plate {
     display: inline-block;
-    background: rgba(59, 130, 246, 0.12);
-    color: #93c5fd;
-    border: 1px solid rgba(59, 130, 246, 0.25);
+    background-color: var(--primary-bg);
+    color: var(--primary-text);
+    border: 1px solid var(--primary-border);
     border-radius: 5px;
     padding: 2px 8px;
     font-size: 0.8rem;
-    font-weight: 600;
+    font-weight: var(--font-weight-semibold);
     letter-spacing: 0.04em;
     margin-bottom: 3px;
 }
@@ -75,63 +75,65 @@
 .vehicleInfo {
     display: block;
     font-size: 0.8rem;
-    color: #64748b;
+    color: var(--text-secondary);
     margin-top: 2px;
 }
 
 .fecha {
-    color: #94a3b8;
+    color: var(--text-secondary);
     font-size: 0.85rem;
     white-space: nowrap;
 }
 
 .total {
-    font-weight: 600;
-    color: #f1f5f9;
+    font-weight: var(--font-weight-semibold);
+    color: var(--text-primary);
     white-space: nowrap;
 }
 
-/* Badges */
+/* ===== BADGES ===== */
+
 .badge {
     display: inline-block;
     padding: 4px 10px;
-    border-radius: 20px;
+    border-radius: var(--radius-full);
     font-size: 0.75rem;
-    font-weight: 600;
+    font-weight: var(--font-weight-semibold);
     white-space: nowrap;
 }
 
 .badgePendiente {
-    background: rgba(234, 179, 8, 0.12);
-    color: #fbbf24;
-    border: 1px solid rgba(234, 179, 8, 0.25);
+    background-color: var(--warning-bg);
+    color: var(--warning-text);
+    border: 1px solid var(--warning-border);
 }
 
 .badgeConfirmado {
-    background: rgba(59, 130, 246, 0.12);
-    color: #60a5fa;
-    border: 1px solid rgba(59, 130, 246, 0.25);
+    background-color: var(--primary-bg);
+    color: var(--primary-text);
+    border: 1px solid var(--primary-border);
 }
 
 .badgeSePresenta {
-    background: rgba(34, 197, 94, 0.12);
-    color: #4ade80;
-    border: 1px solid rgba(34, 197, 94, 0.25);
+    background-color: var(--success-bg);
+    color: var(--success-text);
+    border: 1px solid var(--success-border);
 }
 
 .badgeNoSePresenta {
-    background: rgba(239, 68, 68, 0.12);
-    color: #f87171;
-    border: 1px solid rgba(239, 68, 68, 0.25);
+    background-color: var(--danger-bg);
+    color: var(--danger-text);
+    border: 1px solid var(--danger-border);
 }
 
 .badgeCancelado {
-    background: rgba(100, 116, 139, 0.12);
-    color: #94a3b8;
-    border: 1px solid rgba(100, 116, 139, 0.25);
+    background-color: var(--neutral-bg);
+    color: var(--neutral-text);
+    border: 1px solid var(--neutral-border);
 }
 
-/* Acciones */
+/* ===== ACTIONS ===== */
+
 .actions {
     display: flex;
     gap: 6px;
@@ -141,57 +143,65 @@
 
 .btnCheck,
 .btnNoShow,
+.btnCotizar,
 .btnEdit,
 .btnDelete {
-    border: none;
     width: 32px;
     height: 32px;
     min-width: 32px;
     min-height: 32px;
-    flex-shrink: 0;
-    border-radius: 8px;
+    border: none;
+    border-radius: var(--radius-md);
     display: inline-flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    transition: opacity 0.15s, transform 0.1s;
+    flex-shrink: 0;
+    transition: var(--transition-base);
 }
 
 .btnCheck:hover,
 .btnNoShow:hover,
+.btnCotizar:hover,
 .btnEdit:hover,
 .btnDelete:hover {
-    opacity: 0.85;
     transform: scale(1.08);
+    opacity: .9;
 }
 
 .btnCheck {
-    background: rgba(34, 197, 94, 0.15);
-    color: #4ade80;
+    background-color: var(--success-bg);
+    color: var(--success-text);
 }
 
 .btnNoShow {
-    background: rgba(245, 158, 11, 0.15);
-    color: #f59e0b;
+    background-color: var(--warning-bg);
+    color: var(--warning-text);
+}
+
+.btnCotizar {
+    background-color: var(--success-bg);
+    color: var(--success-text);
 }
 
 .btnEdit {
-    background: rgba(59, 130, 246, 0.15);
-    color: #60a5fa;
+    background-color: var(--primary-bg);
+    color: var(--primary-text);
 }
 
 .btnDelete {
-    background: rgba(239, 68, 68, 0.12);
-    color: #f87171;
+    background-color: var(--danger-bg);
+    color: var(--danger-text);
 }
 
-/* Empty */
+/* ===== EMPTY ===== */
+
 .emptyState {
     padding: 48px 24px;
     text-align: center;
 }
 
 .emptyText {
-    color: #475569;
+    color: var(--text-secondary);
     font-size: 0.95rem;
 }

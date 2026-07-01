@@ -9,11 +9,9 @@ export async function getAllVehiculos() {
 
 // 🔥 Crear
 export async function createVehiculo(data) {
-    const userId = getUserIdFromToken();
 
     const payload = {
         ...data,
-        registrado_por: userId
     };
 
     return await apiFetch('/vehiculos', {
@@ -24,7 +22,6 @@ export async function createVehiculo(data) {
 
 // 🔥 Actualizar
 export async function updateVehiculo(placa, data) {
-    const userId = getUserIdFromToken();
 
     const payload = {
         ...data,

@@ -1,4 +1,4 @@
-import { Trash2, CheckCircle2, Edit, UserX } from 'lucide-react';
+import { Trash2, CheckCircle2, Edit, UserX, DollarSign } from 'lucide-react';
 import styles from './AgendamientoList.module.css';
 
 const ESTADO_LABELS = {
@@ -77,11 +77,10 @@ export default function AgendamientoList({ agendamientos, onEdit, onDelete, onLl
                                             <button
                                                 className={styles.btnCheck}
                                                 title="Registrar llegada"
-                                                onClick={() => onLlegada(item.id)}
+                                                onClick={() => onLlegada(item)}
                                             >
                                                 <CheckCircle2 size={15} />
                                             </button>
-
                                             <button
                                                 className={styles.btnNoShow}
                                                 title="No se presentó"

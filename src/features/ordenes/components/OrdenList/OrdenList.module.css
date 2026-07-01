@@ -1,7 +1,7 @@
 .tableContainer {
   background-color: var(--bg-secondary);
   border: 1px solid var(--border-color);
-  border-radius: 12px;
+  border-radius: var(--radius-lg);
   overflow: hidden;
 }
 
@@ -12,27 +12,24 @@
 .table {
   width: 100%;
   border-collapse: collapse;
-  text-align: left;
-}
-
-.table thead,
-.table tbody {
   text-align: center;
 }
 
+/* HEADER */
 .table th {
   padding: 16px 20px;
   color: var(--text-secondary);
-  font-size: 0.875rem;
-  font-weight: 500;
+  font-size: 0.85rem;
+  font-weight: var(--font-weight-medium);
   border-bottom: 1px solid var(--border-color);
   background-color: var(--table-head-bg);
 }
 
+/* CELDAS */
 .table td {
   padding: 14px 20px;
   color: var(--text-primary);
-  font-size: 0.875rem;
+  font-size: 0.85rem;
   border-bottom: 1px solid var(--border-color);
   background-color: var(--table-body-bg);
 }
@@ -45,199 +42,291 @@
   border-bottom: none;
 }
 
-/* ── Celdas especiales ── */
+
+/* CELDAS ESPECIALES */
+
 .idCell {
-  font-weight: 500;
-  color: var(--primary-color) !important;
+  font-weight: 600;
+  color: var(--primary-color);
 }
 
 .nameCell {
-  font-weight: 600;
   text-align: left;
-  min-width: 160px;
+  font-weight: 600;
 }
 
 .subText {
   font-size: 0.75rem;
-  color: var(--text-secondary);
+  color: var(--text-tertiary);
   margin-top: 2px;
 }
 
 .vehiculoInfo {
   display: flex;
   flex-direction: column;
-  align-items: center;
   gap: 2px;
+  align-items: center;
 }
 
 .placa {
   font-weight: 700;
-  letter-spacing: 1px;
   color: var(--primary-color);
+  letter-spacing: 1px;
+}
+
+.noAsignado {
+  font-style: italic;
+  font-size: .8rem;
+  color: var(--text-tertiary);
 }
 
 .totalCell {
   font-weight: 600;
 }
 
-.noAsignado {
-  color: var(--text-secondary);
-  font-style: italic;
-  font-size: 0.8rem;
-}
 
-/* ── Tipo badge ── */
-.tipoBadge {
-  font-size: 0.75rem;
-  font-weight: 600;
-  padding: 4px 10px;
-  border-radius: 20px;
-}
+/* BADGES */
 
-.tipoCotizacion {
-  background-color: rgba(139, 92, 246, 0.12);
-  color: #8b5cf6;
-}
-
-.tipoOrden {
-  background-color: rgba(59, 130, 246, 0.12);
-  color: #3b82f6;
-}
-
-/* ── Estado badges ── */
 .badge {
-  font-size: 0.72rem;
+  font-size: .72rem;
   font-weight: 600;
   padding: 4px 10px;
-  border-radius: 20px;
+  border-radius: var(--radius-full);
   white-space: nowrap;
 }
 
-.badgePending {
-  background-color: rgba(234, 179, 8, 0.12);
-  color: #ca8a04;
-}
-
-.badgeApproved {
-  background-color: rgba(34, 197, 94, 0.12);
-  color: #16a34a;
-}
-
-.badgeRejected {
-  background-color: rgba(239, 68, 68, 0.12);
-  color: #dc2626;
-}
-
-.badgeExpired {
-  background-color: rgba(107, 114, 128, 0.12);
-  color: #6b7280;
-}
 
 .badgeReceived {
-  background-color: rgba(59, 130, 246, 0.12);
-  color: #2563eb;
+  background: rgba(59, 130, 246, .12);
+  color: #60a5fa;
 }
 
 .badgeDiag {
-  background-color: rgba(139, 92, 246, 0.12);
-  color: #7c3aed;
+  background: rgba(168, 85, 247, .12);
+  color: #c084fc;
 }
 
 .badgeWaiting {
-  background-color: rgba(249, 115, 22, 0.12);
-  color: #ea580c;
+  background: rgba(249, 115, 22, .12);
+  color: #fb923c;
 }
 
 .badgeRepair {
-  background-color: rgba(14, 165, 233, 0.12);
-  color: #0284c7;
+  background: rgba(14, 165, 233, .12);
+  color: #38bdf8;
 }
 
 .badgeReady {
-  background-color: rgba(34, 197, 94, 0.12);
-  color: #15803d;
+  background: rgba(34, 197, 94, .12);
+  color: #4ade80;
 }
 
 .badgeDelivered {
-  background-color: rgba(16, 185, 129, 0.12);
-  color: #059669;
+  background: rgba(16, 185, 129, .12);
+  color: #34d399;
 }
 
 .badgeCancelled {
-  background-color: rgba(239, 68, 68, 0.12);
-  color: #dc2626;
+  background: rgba(239, 68, 68, .12);
+  color: #f87171;
 }
 
-/* ── Acciones ── */
-.actionButtons {
+.badgePending {
+  background: rgba(234, 179, 8, .12);
+  color: #facc15;
+}
+
+
+
+/* ACCIONES */
+
+.actions {
   display: flex;
   gap: 6px;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
+  flex-wrap: nowrap;
 }
 
-.actionBtn {
-  background: transparent;
+
+/* BOTON BASE */
+
+.btnIcon {
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
   border: none;
-  color: var(--text-secondary);
   cursor: pointer;
-  padding: 5px;
-  border-radius: 6px;
-  display: flex;
+
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.2s;
-}
 
-.actionBtn:hover {
-  background-color: var(--bg-primary);
-  color: var(--primary-color);
-}
-
-.actionBtnDanger:hover {
-  color: var(--error-color);
-}
-
-.actionBtnConvert:hover {
-  color: #16a34a;
-}
-
-/* ── Select de estado ── */
-.estadoSelect {
   position: relative;
-  display: flex;
-  align-items: center;
+
+  transition:
+    transform .15s ease,
+    background-color .15s ease,
+    opacity .15s ease;
 }
 
-.estadoSelect svg {
+
+.btnIcon:hover {
+  transform: scale(1.12);
+}
+
+.btnIcon:active {
+  transform: scale(.96);
+}
+
+
+.btnIcon:disabled {
+  opacity: .5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+
+
+/* TOOLTIP */
+
+.btnIcon::after {
+
+  content: attr(data-tooltip);
+
   position: absolute;
-  left: 6px;
-  color: var(--text-secondary);
-  pointer-events: none;
-}
 
-.estadoSelect select {
-  appearance: none;
-  background-color: var(--bg-primary);
-  border: 1px solid var(--border-color);
+  bottom: 120%;
+  left: 50%;
+
+  transform: translateX(-50%);
+
+  background: var(--bg-primary);
   color: var(--text-primary);
-  font-size: 0.75rem;
-  padding: 5px 8px 5px 22px;
+
+  font-size: .7rem;
+
+  padding: 5px 8px;
+
   border-radius: 6px;
-  cursor: pointer;
-  transition: border-color 0.2s;
+
+  white-space: nowrap;
+
+  opacity: 0;
+  pointer-events: none;
+
+  transition: .15s;
+
+  z-index: 20;
 }
 
-.estadoSelect select:hover {
-  border-color: var(--primary-color);
+
+.btnIcon:hover::after {
+  opacity: 1;
 }
 
-/* ── Empty state ── */
+
+
+/* BOTONES ESTADOS */
+
+
+.btnNext {
+  background: rgba(59, 130, 246, .15);
+  color: #60a5fa;
+}
+
+.btnNext:hover {
+  background: rgba(59, 130, 246, .25);
+}
+
+
+
+.btnProcess {
+
+  background: rgba(14, 165, 233, .15);
+  color: #38bdf8;
+
+}
+
+.btnProcess:hover {
+
+  background: rgba(14, 165, 233, .25);
+
+}
+
+
+
+.btnDone {
+
+  background: rgba(34, 197, 94, .15);
+  color: #22c55e;
+
+}
+
+.btnDone:hover {
+
+  background: rgba(34, 197, 94, .25);
+
+}
+
+
+
+.btnCancel {
+
+  background: rgba(239, 68, 68, .12);
+  color: #f87171;
+
+}
+
+.btnCancel:hover {
+
+  background: rgba(239, 68, 68, .25);
+
+}
+
+
+
+/* VOLVER */
+
+.btnBack {
+
+  background: var(--bg-tertiary);
+  color: var(--text-secondary);
+
+}
+
+.btnBack:hover {
+
+  background: var(--border-color);
+
+}
+
+.btnBack {
+  background: var(--bg-tertiary);
+  color: var(--text-secondary);
+}
+
+.btnBack:hover {
+  background: var(--border-color);
+}
+
+
+/* Ajuste específico para tema claro */
+[data-theme="light"] .btnBack {
+  background: #cbd5e1;
+  color: #475569;
+}
+
+[data-theme="light"] .btnBack:hover {
+  background: #94a3b8;
+  color: #1e293b;
+}
+
+/* EMPTY */
+
 .empty {
+
   text-align: center;
   padding: 60px 20px;
   color: var(--text-secondary);
-  background-color: var(--bg-secondary);
-  border: 1px solid var(--border-color);
-  border-radius: 12px;
 }

@@ -1,7 +1,7 @@
 .formContainer {
     display: flex;
     flex-direction: column;
-    gap: 24px;
+    gap: var(--spacing-lg, 24px);
 }
 
 .inputGroup {
@@ -25,24 +25,24 @@
 
 .field label {
     font-size: 0.85rem;
-    color: #adb5bd;
-    font-weight: 500;
+    color: var(--text-secondary);
+    font-weight: var(--font-weight-medium);
 }
 
 .field small {
     font-size: 0.78rem;
-    color: #475569;
+    color: var(--text-tertiary);
 }
 
 .field input,
 .field select {
-    background-color: #242c3d;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    color: #ffffff;
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
     padding: 10px 12px;
-    border-radius: 6px;
+    border-radius: var(--radius-md);
     font-size: 0.95rem;
-    transition: border-color 0.2s;
+    transition: var(--transition-base);
     outline: none;
     width: 100%;
     box-sizing: border-box;
@@ -51,32 +51,37 @@
 
 .field input:focus,
 .field select:focus {
-    border-color: #3b82f6;
-    background-color: #2a3347;
+    border-color: var(--primary-color);
+    background-color: var(--bg-tertiary);
 }
 
 .field input[type='datetime-local']::-webkit-calendar-picker-indicator {
-    filter: invert(1) opacity(0.5);
     cursor: pointer;
+    opacity: .7;
+}
+
+[data-theme="dark"] .field input[type='datetime-local']::-webkit-calendar-picker-indicator {
+    filter: invert(1);
 }
 
 .field select option {
-    background-color: #1e293b;
-    color: #ffffff;
+    background-color: var(--bg-secondary);
+    color: var(--text-primary);
 }
 
-.field input::placeholder {
-    color: #64748b;
+.field input::placeholder,
+.field textarea::placeholder {
+    color: var(--text-tertiary);
 }
 
 .field textarea {
-    background-color: #242c3d;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    color: #ffffff;
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
     padding: 10px 12px;
-    border-radius: 6px;
+    border-radius: var(--radius-md);
     font-size: 0.95rem;
-    transition: border-color 0.2s;
+    transition: var(--transition-base);
     outline: none;
     width: 100%;
     box-sizing: border-box;
@@ -85,15 +90,12 @@
 }
 
 .field textarea:focus {
-    border-color: #3b82f6;
-    background-color: #2a3347;
-}
-
-.field textarea::placeholder {
-    color: #64748b;
+    border-color: var(--primary-color);
+    background-color: var(--bg-tertiary);
 }
 
 /* ── Insumos ── */
+
 .insumosHeader {
     display: flex;
     align-items: center;
@@ -103,209 +105,291 @@
 
 .insumosHeader label {
     font-size: 0.85rem;
-    color: #adb5bd;
-    font-weight: 500;
+    color: var(--text-secondary);
+    font-weight: var(--font-weight-medium);
 }
 
 .addInsumoBtn {
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    background: rgba(59, 130, 246, 0.12);
-    border: 1px solid rgba(59, 130, 246, 0.3);
-    color: #60a5fa;
+
+    background-color: var(--primary-bg);
+    border: 1px solid var(--primary-border);
+    color: var(--primary-text);
+
     padding: 5px 12px;
-    border-radius: 6px;
+    border-radius: var(--radius-md);
+
     font-size: 0.8rem;
-    font-weight: 500;
+    font-weight: var(--font-weight-medium);
+
     cursor: pointer;
-    transition: background 0.2s;
+    transition: var(--transition-base);
 }
 
 .addInsumoBtn:hover {
-    background: rgba(59, 130, 246, 0.2);
+    background-color: var(--primary-border);
 }
+
+/* Tabla insumos */
 
 .insumosTable {
     display: flex;
     flex-direction: column;
     gap: 6px;
-    background: #1a2236;
-    border: 1px solid rgba(255, 255, 255, 0.07);
-    border-radius: 8px;
+
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+
+    border-radius: var(--radius-md);
     padding: 12px;
 }
 
 .insumosHead {
     display: grid;
-    grid-template-columns: 1.2fr 2fr 0.6fr 1fr 1fr 36px;
+    grid-template-columns: 1.2fr 2fr .6fr 1fr 1fr 36px;
     gap: 8px;
+
     padding: 0 4px 8px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+
+    border-bottom: 1px solid var(--border-color);
 }
 
 .insumosHead span {
-    font-size: 0.75rem;
-    font-weight: 600;
-    color: #64748b;
+    font-size: .75rem;
+    font-weight: var(--font-weight-semibold);
+    color: var(--text-secondary);
+
     text-transform: uppercase;
-    letter-spacing: 0.04em;
+    letter-spacing: .04em;
 }
 
 .insumoRow {
     display: grid;
-    grid-template-columns: 1.2fr 2fr 0.6fr 1fr 1fr 36px;
+    grid-template-columns: 1.2fr 2fr .6fr 1fr 1fr 36px;
     gap: 8px;
+
     align-items: center;
 }
 
 .inputReadOnly {
-    opacity: 0.6;
+    opacity: .6;
     cursor: not-allowed;
-    background-color: #1a2236;
+    background-color: var(--bg-tertiary);
 }
 
 .insumoRow input {
-    background-color: #242c3d;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    color: #ffffff;
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+
+    color: var(--text-primary);
+
     padding: 8px 10px;
-    border-radius: 6px;
-    font-size: 0.875rem;
+
+    border-radius: var(--radius-md);
+    font-size: .875rem;
+
     outline: none;
+
     width: 100%;
     box-sizing: border-box;
-    transition: border-color 0.2s;
+
+    transition: var(--transition-base);
 }
 
 .insumoRow input:focus {
-    border-color: #3b82f6;
-    background-color: #2a3347;
+    border-color: var(--primary-color);
+    background-color: var(--bg-tertiary);
 }
 
 .insumoRow input::placeholder {
-    color: #64748b;
+    color: var(--text-tertiary);
 }
 
 .insumoSubtotal {
-    font-size: 0.875rem;
-    color: #93c5fd;
-    font-weight: 500;
+    font-size: .875rem;
+    color: var(--primary-text);
+    font-weight: var(--font-weight-medium);
     padding: 0 4px;
 }
 
 .removeInsumoBtn {
     display: inline-flex;
+
     align-items: center;
     justify-content: center;
+
     width: 32px;
     height: 32px;
-    min-width: 32px;
+
     border: none;
-    border-radius: 6px;
-    background: rgba(239, 68, 68, 0.1);
-    color: #f87171;
+
+    border-radius: var(--radius-md);
+
+    background-color: var(--danger-bg);
+    color: var(--danger-text);
+
     cursor: pointer;
-    transition: background 0.2s;
-    flex-shrink: 0;
+
+    transition: var(--transition-base);
 }
 
 .removeInsumoBtn:hover:not(:disabled) {
-    background: rgba(239, 68, 68, 0.2);
+    background-color: var(--danger-border);
 }
 
 .removeInsumoBtn:disabled {
-    opacity: 0.3;
+    opacity: .3;
     cursor: not-allowed;
 }
 
 /* ── Totales ── */
+
 .totalesBox {
     margin-top: 10px;
+
     padding: 12px 16px;
-    background: #242c3d;
-    border-radius: 8px;
+
+    background-color: var(--bg-tertiary);
+
+    border-radius: var(--radius-md);
+
     display: flex;
     flex-direction: column;
+
     gap: 6px;
+
     align-self: flex-end;
+
     min-width: 260px;
 }
 
 .totalRow {
     display: flex;
     justify-content: space-between;
-    font-size: 0.875rem;
-    color: #94a3b8;
+
+    font-size: .875rem;
+
+    color: var(--text-secondary);
 }
 
 .totalFinal {
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-top: 1px solid var(--border-color);
+
     padding-top: 8px;
+
     margin-top: 2px;
-    font-weight: 700;
+
+    font-weight: var(--font-weight-bold);
+
     font-size: 1rem;
-    color: #f1f5f9;
+
+    color: var(--text-primary);
 }
 
 /* ── Acciones ── */
+
 .actions {
     display: flex;
     justify-content: flex-end;
+
     gap: 12px;
+
     margin-top: 8px;
 }
 
 .cancelBtn,
 .submitBtn {
+
     padding: 10px 16px;
-    border-radius: 6px;
-    font-size: 0.95rem;
-    font-weight: 500;
+
+    border-radius: var(--radius-md);
+
+    font-size: .95rem;
+
+    font-weight: var(--font-weight-semibold);
+
     cursor: pointer;
-    transition: all 0.2s ease;
+
     border: none;
+
+    transition:
+        background-color .2s ease,
+        color .2s ease,
+        transform .15s ease;
 }
 
 .cancelBtn {
     background-color: transparent;
-    color: #ef4444;
+
+    color: var(--danger-text);
+
+    border: 1px solid var(--danger-border);
 }
 
 .cancelBtn:hover {
-    background-color: rgba(239, 68, 68, 0.1);
-    color: #f87171;
+    background-color: var(--danger-bg);
 }
 
 .submitBtn {
-    background-color: #3b82f6;
-    color: #ffffff;
+
+    background-color: var(--primary-color);
+
+    color: var(--white);
 }
 
-.submitBtn:hover {
-    background-color: #2563eb;
+[data-theme="dark"] .submitBtn:hover {
+    background-color: #60a5fa;
 }
+
+[data-theme="light"] .submitBtn:hover {
+    background-color: #0284c7;
+}
+
+.cancelBtn:active,
+.submitBtn:active {
+    transform: scale(.98);
+}
+
+
+/* Select insumos */
 
 .insumoSelect {
-    background-color: #242c3d;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    color: #ffffff;
+
+    background-color: var(--bg-secondary);
+
+    border: 1px solid var(--border-color);
+
+    color: var(--text-primary);
+
     padding: 8px 10px;
-    border-radius: 6px;
-    font-size: 0.875rem;
+
+    border-radius: var(--radius-md);
+
+    font-size: .875rem;
+
     outline: none;
+
     width: 100%;
+
     box-sizing: border-box;
-    transition: border-color 0.2s;
+
     cursor: pointer;
+
+    transition: var(--transition-base);
 }
 
 .insumoSelect:focus {
-    border-color: #3b82f6;
-    background-color: #2a3347;
+
+    border-color: var(--primary-color);
+
+    background-color: var(--bg-tertiary);
 }
 
 .insumoSelect option {
-    background-color: #1e293b;
-    color: #ffffff;
+
+    background-color: var(--bg-secondary);
+
+    color: var(--text-primary);
 }
