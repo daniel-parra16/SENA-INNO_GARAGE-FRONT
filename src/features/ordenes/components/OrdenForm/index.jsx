@@ -1,415 +1,139 @@
-import { useState, useEffect } from 'react';
-import { Plus, Trash2 } from 'lucide-react';
+import { useEffect, useState } from 'react';
 import styles from './OrdenForm.module.css';
-import {
-  getAllSimpleMecanicos,
-  getAllSimpleUsers,
-  getAllVehicleByNumDoc,
-  getAllRepuestos
-} from '../../services';
+import { getMecanicosSimples } from '../../../usuarios/services';
 
-const itemVacio = () => ({
-  repuestoId: '',
-  tipo: 'REPUESTO',
-  descripcion: '',
-  cantidad: 1,
-  precioUnitario: '',
-});
-
-function formatCurrency(value) {
-  if (!value) return '$ 0';
-  return `$ ${Number(value).toLocaleString('es-CO')}`;
-}
-
-export default function OrdenForm({ initialData, onSubmit, onClose }) {
-
-  const [users, setUsers] = useState([]);
+export default function OrdenForm({ cotizacion, onSubmit }) {
   const [mecanicos, setMecanicos] = useState([]);
-  const [vehiculos, setVehiculos] = useState([]);
-  const [repuestos, setRepuestos] = useState([]);
-
-  const [form, setForm] = useState({
-    placaVehiculo: initialData?.vehiculoPlaca || '',
-    cedulaUsuario: initialData?.usuarioDocumento || '',
-    cedulaMecanico: initialData?.mecanicoId || '',
-    descripcionProblema: initialData?.descripcionProblema || '',
-    diagnostico: initialData?.diagnostico || '',
-    kmEntrada: initialData?.kmEntrada || '',
-    kmSalida: initialData?.kmSalida || '',
-    fechaEstimadaEntrega: initialData?.fechaEstimadaEntrega
-      ? initialData.fechaEstimadaEntrega.slice(0, 16)
-      : '',
-    observaciones: initialData?.observaciones || '',
+  const [formData, setFormData] = useState({
+    mecanicosIds: [],
+    kmEntrada: '',
+    observaciones: '',
   });
 
-  const [items, setItems] = useState(
-    initialData?.items?.map(i => ({
-      repuestoId: i.repuestoId || '',
-      tipo: i.tipo || 'REPUESTO',
-      descripcion: i.descripcion || '',
-      cantidad: i.cantidad || 1,
-      precioUnitario: i.precioUnitario || '',
-    })) || []
-  );
-
-  const esEdicion = !!initialData;
-
-  // ── Cargar datos iniciales ──
   useEffect(() => {
-    const load = async () => {
-      try {
-        const [u, m, r] = await Promise.all([
-          getAllSimpleUsers(),
-          getAllSimpleMecanicos(),
-          getAllRepuestos(),
-        ]);
-        setUsers(u);
-        setMecanicos(m);
-        setRepuestos(r);
-      } catch (e) {
-        console.error(e);
-      }
-    };
-    load();
+    getMecanicosSimples().then(setMecanicos).catch(() => { });
   }, []);
 
-  // Si es edición, cargar vehículos del usuario ya asignado
-  useEffect(() => {
-    if (initialData?.usuarioDocumento) {
-      getAllVehicleByNumDoc(initialData.usuarioDocumento)
-        .then(setVehiculos)
-        .catch(console.error);
-    }
-  }, []);
-
-  // ── Cambios del form base ──
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-
-    if (name === 'cedulaUsuario') {
-      setForm(prev => ({ ...prev, placaVehiculo: '', [name]: value }));
-      setVehiculos([]);
-      if (value) {
-        getAllVehicleByNumDoc(value).then(setVehiculos).catch(console.error);
-      }
-      return;
-    }
-
-    setForm(prev => ({ ...prev, [name]: value }));
-  };
-
-  // ── Manejo de items ──
-  const agregarItem = () => setItems(prev => [...prev, itemVacio()]);
-
-  const eliminarItem = (index) =>
-    setItems(prev => prev.filter((_, i) => i !== index));
-
-  const handleItemChange = (index, field, value) => {
-    setItems(prev => {
-      const copia = [...prev];
-      copia[index] = { ...copia[index], [field]: value };
-
-      // Si selecciona un repuesto, autocompletar precio y descripción
-      if (field === 'repuestoId' && value) {
-        const rep = repuestos.find(r => r.id === value);
-        if (rep) {
-          copia[index].precioUnitario = rep.precio;
-          copia[index].descripcion = rep.nombre;
-        }
-      }
-
-      return copia;
+  const handleToggleMecanico = (numeroDocumento) => {
+    setFormData((prev) => {
+      const ya = prev.mecanicosIds.includes(numeroDocumento);
+      return {
+        ...prev,
+        mecanicosIds: ya
+          ? prev.mecanicosIds.filter((id) => id !== numeroDocumento)
+          : [...prev.mecanicosIds, numeroDocumento],
+      };
     });
   };
 
-  // ── Totales calculados ──
-  const subtotal = items.reduce((acc, item) => {
-    const precio = parseFloat(item.precioUnitario) || 0;
-    const cant = parseInt(item.cantidad) || 0;
-    return acc + precio * cant;
-  }, 0);
-  const impuesto = subtotal * 0.19;
-  const total = subtotal + impuesto;
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
 
-  // ── Submit ──
   const handleSubmit = (e) => {
     e.preventDefault();
     onSubmit({
-      ...form,
-      kmEntrada: form.kmEntrada ? parseInt(form.kmEntrada) : null,
-      kmSalida: form.kmSalida ? parseInt(form.kmSalida) : null,
-      fechaEstimadaEntrega: form.fechaEstimadaEntrega || null,
-      items: items.map(i => ({
-        repuestoId: i.repuestoId || null,
-        tipo: i.tipo,
-        descripcion: i.descripcion,
-        cantidad: parseInt(i.cantidad),
-        precioUnitario: parseFloat(i.precioUnitario),
-      })),
+      cotizacionId: cotizacion.id,
+      mecanicosIds: formData.mecanicosIds,
+      kmEntrada: formData.kmEntrada ? Number(formData.kmEntrada) : null,
+      observaciones: formData.observaciones || null,
     });
   };
 
   return (
     <form onSubmit={handleSubmit} className={styles.formContainer}>
 
-      {/* ── SECCIÓN: Datos generales ── */}
-      <div className={styles.sectionTitle}>Datos generales</div>
+      {/* Resumen de la cotización */}
+      <div className={styles.resumenBox}>
+        <div className={styles.resumenRow}>
+          <span className={styles.resumenLabel}>Cliente</span>
+          <span className={styles.resumenValue}>
+            {cotizacion.usuarioNombres && cotizacion.usuarioApellidos
+              ? `${cotizacion.usuarioNombres} ${cotizacion.usuarioApellidos}`
+              : cotizacion.usuarioId || '—'}
+          </span>
+        </div>
+        <div className={styles.resumenRow}>
+          <span className={styles.resumenLabel}>Vehículo</span>
+          <span className={styles.resumenValue}>{cotizacion.placaVehiculo || '—'}</span>
+        </div>
+        <div className={styles.resumenRow}>
+          <span className={styles.resumenLabel}>Problema</span>
+          <span className={styles.resumenValue}>{cotizacion.descripcionProblema}</span>
+        </div>
+        <div className={styles.resumenRow}>
+          <span className={styles.resumenLabel}>Total cotizado</span>
+          <span className={`${styles.resumenValue} ${styles.resumenTotal}`}>
+            ${Number(cotizacion.total || 0).toLocaleString('es-CO')}
+          </span>
+        </div>
+      </div>
+
       <div className={styles.inputGroup}>
 
-        {/* Fila 1: Usuario | Vehículo | Mecánico */}
-        <div className={styles.fieldRow3}>
-          <div className={styles.field}>
-            <label className={styles.label}>Usuario</label>
-            <select name="cedulaUsuario" className={styles.input}
-              value={form.cedulaUsuario} onChange={handleChange}
-              required disabled={esEdicion}>
-              <option value="" hidden>Seleccione un usuario</option>
-              {users && users.length > 0
-                ? (
-                  users.map(u => (
-                    <option key={u.numeroDocumento} value={u.numeroDocumento}>
-                      {u.nombreCompleto}
-                    </option>
-                  ))
-                ) : (
-                  <option disabled>No hay usuarios registrados</option>
-                )
-              }
-            </select>
+        <div className={`${styles.field} ${styles.fullWidth}`}>
+          <label>Mecánicos asignados</label>
+          <div className={styles.mecanicosGrid}>
+            {mecanicos.length > 0 ? (
+              mecanicos.map((m) => {
+                const seleccionado = formData.mecanicosIds.includes(m.numeroDocumento);
+                return (
+                  <button
+                    key={m.numeroDocumento}
+                    type="button"
+                    className={`${styles.mecanicoCard} ${seleccionado ? styles.mecanicoCardActive : ''}`}
+                    onClick={() => handleToggleMecanico(m.numeroDocumento)}
+                  >
+                    <span className={styles.mecanicoNombre}>{m.nombreCompleto}</span>
+                    <span className={styles.mecanicoDoc}>#{m.numeroDocumento}</span>
+                  </button>
+                );
+              })
+            ) : (
+              <p className={styles.emptyMsg}>No hay mecánicos disponibles</p>
+            )}
           </div>
-
-          <div className={styles.field}>
-            <label className={styles.label}>Vehículo</label>
-            <select name="placaVehiculo" className={styles.input}
-              value={form.placaVehiculo} onChange={handleChange}
-              required disabled={esEdicion || !form.cedulaUsuario}>
-              <option value="" hidden>
-                {form.cedulaUsuario ? 'Seleccione un vehículo' : 'Primero seleccione un usuario'}
-              </option>
-              {vehiculos && vehiculos.length > 0
-                ? (
-                  vehiculos.map(v => (
-                    <option key={v.placa} value={v.placa}>
-                      {v.placa} — {v.marca} {v.modelo}
-                    </option>
-                  ))
-                ) : (
-                  <option disabled>No hay vehiculos registrados para este usuario</option>
-                )}
-            </select>
-          </div>
-
-          <div className={styles.field}>
-            <label className={styles.label}>
-              Mecánico <span className={styles.opcional}>(opcional)</span>
-            </label>
-            <select name="cedulaMecanico" className={styles.input}
-              value={form.cedulaMecanico} onChange={handleChange}>
-              <option value="">Sin asignar</option>
-              {mecanicos && mecanicos.length > 0
-                ? (
-                  mecanicos.map(m => (
-                    <option key={m.numeroDocumento} value={m.numeroDocumento}>
-                      {m.nombreCompleto}
-                    </option>
-                  ))
-                ) : (
-                  <option disabled>No hay usuarios con rol mecanico.</option>
-                )}
-            </select>
-          </div>
+          {formData.mecanicosIds.length > 0 && (
+            <small>{formData.mecanicosIds.length} mecánico(s) seleccionado(s)</small>
+          )}
         </div>
 
-        {/* Fila 2: Km entrada | Fecha estimada */}
-        <div className={styles.fieldRow2}>
-          <div className={styles.field}>
-            <label className={styles.label}>Km de entrada</label>
-            <input type="number" name="kmEntrada" className={styles.input}
-              value={form.kmEntrada} onChange={handleChange}
-              placeholder="Ej: 45000" min={0} />
-          </div>
-
-          <div className={styles.field}>
-            <label className={styles.label}>Fecha estimada de entrega</label>
-            <input type="datetime-local" name="fechaEstimadaEntrega" className={styles.input}
-              value={form.fechaEstimadaEntrega} onChange={handleChange} />
-          </div>
+        <div className={styles.field}>
+          <label htmlFor="kmEntrada">Km de entrada</label>
+          <input
+            type="number"
+            id="kmEntrada"
+            name="kmEntrada"
+            placeholder="Ej: 45000"
+            value={formData.kmEntrada}
+            onChange={handleChange}
+            min={0}
+          />
         </div>
 
-        {/* Fila 3: Descripción | Observaciones */}
-        <div className={styles.fieldRow2Textarea}>
-          <div className={styles.field}>
-            <label className={styles.label}>Descripción del problema</label>
-            <textarea name="descripcionProblema"
-              className={`${styles.input} ${styles.textarea}`}
-              value={form.descripcionProblema} onChange={handleChange}
-              placeholder="Describe el problema del vehículo..."
-              rows={4} required />
-          </div>
-
-          <div className={styles.field}>
-            <label className={styles.label}>
-              Observaciones <span className={styles.opcional}>(opcional)</span>
-            </label>
-            <textarea name="observaciones"
-              className={`${styles.input} ${styles.textarea}`}
-              value={form.observaciones} onChange={handleChange}
-              placeholder="Observaciones adicionales..."
-              rows={4} />
-          </div>
+        <div className={styles.field}>
+          <label htmlFor="observaciones">Observaciones</label>
+          <textarea
+            id="observaciones"
+            name="observaciones"
+            placeholder="Ej: Entregar informe de daños"
+            value={formData.observaciones}
+            onChange={handleChange}
+          />
+          <small>Las observaciones son opcionales.</small>
         </div>
-
-        {/* Solo edición: Diagnóstico + Km salida */}
-        {esEdicion && (
-          <div className={styles.fieldRow2}>
-            <div className={styles.field}>
-              <label className={styles.label}>
-                Diagnóstico <span className={styles.opcional}>(opcional)</span>
-              </label>
-              <textarea name="diagnostico"
-                className={`${styles.input} ${styles.textarea}`}
-                value={form.diagnostico} onChange={handleChange}
-                placeholder="Diagnóstico técnico del vehículo..."
-                rows={3} />
-            </div>
-
-            <div className={styles.field}>
-              <label className={styles.label}>Km de salida</label>
-              <input type="number" name="kmSalida" className={styles.input}
-                value={form.kmSalida} onChange={handleChange}
-                placeholder="Ej: 45200" min={0} />
-            </div>
-          </div>
-        )}
 
       </div>
 
-      {/* ── SECCIÓN: Items / Repuestos ── */}
-      <div className={styles.sectionTitle}>
-        Repuestos y servicios
-        <button type="button" className={styles.addItemBtn} onClick={agregarItem}>
-          <Plus size={14} /> Agregar ítem
-        </button>
-      </div>
-
-      {!items || items.length === 0 ? (
-        <p className={styles.emptyItems}>No hay ítems agregados. La cotización se creará sin repuestos.</p>
-      ) : (
-        <div className={styles.itemsContainer}>
-          {items.map((item, index) => (
-            <div key={index} className={styles.itemRow}>
-
-              {/* Repuesto */}
-              <div className={styles.itemField}>
-                <label className={styles.label}>Repuesto</label>
-                <select
-                  className={styles.input}
-                  value={item.repuestoId}
-                  onChange={(e) => handleItemChange(index, 'repuestoId', e.target.value)}
-                >
-                  <option value="">Seleccionar repuesto</option>
-                  {repuestos.map(r => (
-                    <option key={r.id} value={r.id}>
-                      {r.nombre} — {formatCurrency(r.precio)}
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              {/* Descripción */}
-              <div className={styles.itemField}>
-                <label className={styles.label}>Descripción</label>
-                <input
-                  type="text"
-                  className={styles.input}
-                  value={item.descripcion}
-                  onChange={(e) => handleItemChange(index, 'descripcion', e.target.value)}
-                  placeholder="Descripción del ítem"
-                  required
-                />
-              </div>
-
-              {/* Cantidad */}
-              <div className={styles.itemFieldSmall}>
-                <label className={styles.label}>Cant.</label>
-                <input
-                  type="number"
-                  className={styles.input}
-                  value={item.cantidad}
-                  onChange={(e) => handleItemChange(index, 'cantidad', e.target.value)}
-                  min={1}
-                  required
-                />
-              </div>
-
-              {/* Precio unitario */}
-              <div className={styles.itemFieldSmall}>
-                <label className={styles.label}>Precio unit.</label>
-                <input
-                  type="number"
-                  className={styles.input}
-                  value={item.precioUnitario}
-                  onChange={(e) => handleItemChange(index, 'precioUnitario', e.target.value)}
-                  placeholder="0"
-                  min={0}
-                  required
-                />
-              </div>
-
-              {/* Subtotal (solo lectura) */}
-              <div className={styles.itemFieldSmall}>
-                <label className={styles.label}>Subtotal</label>
-                <input
-                  type="text"
-                  className={`${styles.input} ${styles.readOnly}`}
-                  value={formatCurrency((parseFloat(item.precioUnitario) || 0) * (parseInt(item.cantidad) || 0))}
-                  readOnly
-                />
-              </div>
-
-              {/* Eliminar */}
-              <button
-                type="button"
-                className={styles.deleteItemBtn}
-                onClick={() => eliminarItem(index)}
-                title="Eliminar ítem"
-              >
-                <Trash2 size={16} />
-              </button>
-
-            </div>
-          ))}
-        </div>
-      )}
-
-      {/* ── Resumen de totales ── */}
-      {items.length > 0 && (
-        <div className={styles.totalesContainer}>
-          <div className={styles.totalRow}>
-            <span>Subtotal</span>
-            <span>{formatCurrency(subtotal)}</span>
-          </div>
-          <div className={styles.totalRow}>
-            <span>IVA (19%)</span>
-            <span>{formatCurrency(impuesto)}</span>
-          </div>
-          <div className={`${styles.totalRow} ${styles.totalFinal}`}>
-            <span>Total</span>
-            <span>{formatCurrency(total)}</span>
-          </div>
-        </div>
-      )}
-
-      {/* ── Acciones ── */}
       <div className={styles.actions}>
-        <button type="button" className={styles.cancelBtn} onClick={onClose}>
+        <button type="button" className={styles.cancelBtn} onClick={() => onSubmit(null)}>
           Cancelar
         </button>
         <button type="submit" className={styles.submitBtn}>
-          {esEdicion ? 'Actualizar Orden' : 'Crear Cotización'}
+          Crear Orden
         </button>
       </div>
-
     </form>
   );
 }

@@ -1,7 +1,7 @@
 .formContainer {
     display: flex;
     flex-direction: column;
-    gap: 24px;
+    gap: var(--spacing-lg, 24px);
 }
 
 .inputGroup {
@@ -21,24 +21,24 @@
 
 .field label {
     font-size: 0.85rem;
-    color: #adb5bd;
-    font-weight: 500;
+    color: var(--text-secondary);
+    font-weight: var(--font-weight-medium);
 }
 
 .field small {
     font-size: 0.78rem;
-    color: #475569;
+    color: var(--text-tertiary);
 }
 
 .field input,
 .field select {
-    background-color: #242c3d;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    color: #ffffff;
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
     padding: 10px 12px;
-    border-radius: 6px;
-    font-size: 0.95rem;
-    transition: border-color 0.2s;
+    border-radius: var(--radius-md, 8px);
+    font-size: var(--font-size-base, 0.95rem);
+    transition: var(--transition-base);
     outline: none;
     width: 100%;
     box-sizing: border-box;
@@ -47,33 +47,43 @@
 
 .field input:focus,
 .field select:focus {
-    border-color: #3b82f6;
-    background-color: #2a3347;
+    border-color: var(--primary-color);
+    background-color: var(--bg-tertiary);
 }
 
-/* datetime-local en dark mode */
+/* datetime-local */
+
 .field input[type='datetime-local']::-webkit-calendar-picker-indicator {
-    filter: invert(1) opacity(0.5);
     cursor: pointer;
+    opacity: 0.7;
+}
+
+[data-theme='dark'] .field input[type='datetime-local']::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+}
+
+[data-theme='light'] .field input[type='datetime-local']::-webkit-calendar-picker-indicator {
+    filter: none;
 }
 
 .field select option {
-    background-color: #1e293b;
-    color: #ffffff;
+    background-color: var(--bg-secondary);
+    color: var(--text-primary);
 }
 
-.field input::placeholder {
-    color: #64748b;
+.field input::placeholder,
+.field textarea::placeholder {
+    color: var(--text-tertiary);
 }
 
 .field textarea {
-    background-color: #242c3d;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    color: #ffffff;
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
     padding: 10px 12px;
-    border-radius: 6px;
-    font-size: 0.95rem;
-    transition: border-color 0.2s;
+    border-radius: var(--radius-md, 8px);
+    font-size: var(--font-size-base, 0.95rem);
+    transition: var(--transition-base);
     outline: none;
     width: 100%;
     box-sizing: border-box;
@@ -82,12 +92,8 @@
 }
 
 .field textarea:focus {
-    border-color: #3b82f6;
-    background-color: #2a3347;
-}
-
-.field textarea::placeholder {
-    color: #64748b;
+    border-color: var(--primary-color);
+    background-color: var(--bg-tertiary);
 }
 
 .observacionesField {
@@ -103,30 +109,56 @@
 
 .cancelBtn,
 .submitBtn {
-    padding: 10px 16px;
-    border-radius: 6px;
-    font-size: 0.95rem;
-    font-weight: 500;
+    padding: 10px 18px;
+    border-radius: var(--radius-md, 8px);
+    font-size: var(--font-size-base, 0.95rem);
+    font-weight: var(--font-weight-semibold);
     cursor: pointer;
-    transition: all 0.2s ease;
-    border: none;
+    transition: background-color .2s ease,
+        color .2s ease,
+        border-color .2s ease,
+        transform .15s ease;
 }
+
+/* ================= CANCELAR ================= */
 
 .cancelBtn {
     background-color: transparent;
-    color: #ef4444;
+    color: var(--danger-text);
+    border: 1px solid var(--danger-border);
 }
 
 .cancelBtn:hover {
-    background-color: rgba(239, 68, 68, 0.1);
-    color: #f87171;
+    background-color: var(--danger-bg);
+    color: var(--danger-text);
 }
+
+.cancelBtn:active {
+    transform: scale(.98);
+}
+
+/* ================= AGENDAR ================= */
 
 .submitBtn {
-    background-color: #3b82f6;
-    color: #ffffff;
+    background-color: var(--primary-color);
+    color: var(--white);
+    border: 1px solid transparent;
 }
 
-.submitBtn:hover {
-    background-color: #2563eb;
+.submitBtn:active {
+    transform: scale(.98);
+}
+
+/* ---------- DARK MODE ---------- */
+/* Se aclara un poco */
+
+[data-theme="dark"] .submitBtn:hover {
+    background-color: #9fc2ec;
+}
+
+/* ---------- LIGHT MODE ---------- */
+/* Se oscurece un poco */
+
+[data-theme="light"] .submitBtn:hover {
+    background-color: #0284c7;
 }

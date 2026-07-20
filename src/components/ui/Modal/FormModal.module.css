@@ -6,40 +6,36 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 1050;
+  z-index: var(--z-modal-backdrop, 1040);
   animation: fadeIn 0.2s ease-out;
 }
 
 .modal {
-  /* Fondo general del modal basado en la imagen (un azul marino muy oscuro) */
-  background-color: #1c2331;
-  border-radius: 12px;
+  background-color: var(--bg-secondary);
+  border-radius: var(--radius-lg, 12px);
   width: 90%;
   max-height: 90vh;
   display: flex;
   flex-direction: column;
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+  box-shadow: var(--shadow-xl);
   animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-color);
 }
 
 .header {
   display: flex;
   justify-content: center;
-  /* Centramos el título */
   align-items: center;
   padding: 20px 24px;
   position: relative;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  /* El divider */
+  border-bottom: 1px solid var(--border-color);
   margin-bottom: 20px;
-  /* Dale espacio al contenido que viene debajo */
 }
 
 .title {
   font-size: 1.25rem;
-  font-weight: 600;
-  color: #ffffff;
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
   margin: 0;
   text-align: center;
 }
@@ -47,22 +43,21 @@
 .closeButton {
   position: absolute;
   right: 20px;
-  /* Mantiene la X acomodada a la derecha sin empujar el título */
   background: transparent;
   border: none;
-  color: #8392a5;
+  color: var(--text-secondary);
   cursor: pointer;
   padding: 4px;
-  border-radius: 6px;
+  border-radius: var(--radius-sm, 4px);
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.2s ease;
+  transition: var(--transition-base);
 }
 
 .closeButton:hover {
-  background-color: rgba(255, 255, 255, 0.1);
-  color: #ffffff;
+  background-color: var(--bg-tertiary);
+  color: var(--text-primary);
 }
 
 .content {

@@ -1,18 +1,18 @@
 import { Navigate, Route, Routes } from 'react-router-dom';
 import MainLayout from '../components/layout/MainLayout';
-import LoginView from '../features/auth/index.jsx';
+import LoginView from '../features/auth';
 import RegisterView from '../features/auth/RegisterView';
 import RememberView from '../features/auth/RememberView';
-import DashboardView from '../features/dashboard/index.jsx';
-import OrdenesView from '../features/ordenes/index';
-import UsuariosView from '../features/usuarios/index.jsx';
-import AgendamientosView from '../features/agendamiento/Index.jsx';
-import CotizacionesView from '../features/cotizaciones/Index.jsx';
+import DashboardView from '../features/dashboard';
+import OrdenesView from '../features/ordenes/Index';
+import UsuariosView from '../features/usuarios';
+import AgendamientosView from '../features/agendamiento';
+import CotizacionesView from '../features/cotizaciones';
 import { useAuth } from '../store/authContext.jsx';
 import VerifyEmailView from '../features/auth/VerifyEmailView.jsx';
 import NewPasswordView from '../features/auth/NewPasswordView.jsx';
-import VehiculosView from '../features/vehiculos/index.jsx';
-import InventarioView from '../features/inventario/index.jsx';
+import VehiculosView from '../features/vehiculos';
+import InventarioView from '../features/inventario';
 
 // Permite que solo accedan los usuarios no logueados.
 function GuestRoute({ children }) {

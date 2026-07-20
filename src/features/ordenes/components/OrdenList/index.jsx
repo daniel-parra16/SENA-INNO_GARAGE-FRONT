@@ -1,36 +1,23 @@
-import { Edit, Trash2, ChevronDown } from 'lucide-react';
+import { Undo2, Trash2, ArrowRight, CheckCircle, Wrench, PackageCheck, ClipboardList, Truck } from 'lucide-react';
 import { useState } from 'react';
 import styles from './OrdenList.module.css';
 
-const ESTADOS_COTIZACION = [
-  { value: 'COTIZACION_PENDIENTE', label: 'Pendiente' },
-  { value: 'COTIZACION_APROBADA', label: 'Aprobada' },
-  { value: 'COTIZACION_RECHAZADA', label: 'Rechazada' },
-  { value: 'COTIZACION_VENCIDA', label: 'Vencida' },
-];
-
-const ESTADOS_ORDEN = [
-  { value: 'ORDEN_RECIBIDO', label: 'Recibido' },
-  { value: 'ORDEN_EN_DIAGNOSTICO', label: 'En diagnóstico' },
-  { value: 'ORDEN_ESPERANDO_REPUESTOS', label: 'Esperando repuestos' },
-  { value: 'ORDEN_EN_REPARACION', label: 'En reparación' },
-  { value: 'ORDEN_LISTA', label: 'Lista' },
-  { value: 'ORDEN_ENTREGADA', label: 'Entregada' },
-  { value: 'ORDEN_CANCELADA', label: 'Cancelada' },
-];
-
 const ESTADO_BADGE = {
-  COTIZACION_PENDIENTE: { label: 'Pendiente', className: 'badgePending' },
-  COTIZACION_APROBADA: { label: 'Aprobada', className: 'badgeApproved' },
-  COTIZACION_RECHAZADA: { label: 'Rechazada', className: 'badgeRejected' },
-  COTIZACION_VENCIDA: { label: 'Vencida', className: 'badgeExpired' },
-  ORDEN_RECIBIDO: { label: 'Recibido', className: 'badgeReceived' },
-  ORDEN_EN_DIAGNOSTICO: { label: 'En diagnóstico', className: 'badgeDiag' },
-  ORDEN_ESPERANDO_REPUESTOS: { label: 'Esp. repuestos', className: 'badgeWaiting' },
-  ORDEN_EN_REPARACION: { label: 'En reparación', className: 'badgeRepair' },
-  ORDEN_LISTA: { label: 'Lista', className: 'badgeReady' },
-  ORDEN_ENTREGADA: { label: 'Entregada', className: 'badgeDelivered' },
-  ORDEN_CANCELADA: { label: 'Cancelada', className: 'badgeCancelled' },
+  RECIBIDO: { label: 'Recibido', className: 'badgeReceived' },
+  EN_DIAGNOSTICO: { label: 'Diagnóstico', className: 'badgeDiag' },
+  ESPERANDO_REPUESTOS: { label: 'Esperando repuestos', className: 'badgeWaiting' },
+  EN_REPARACION: { label: 'Reparación', className: 'badgeRepair' },
+  LISTA: { label: 'Lista', className: 'badgeReady' },
+  ENTREGADA: { label: 'Entregada', className: 'badgeDelivered' },
+  CANCELADA: { label: 'Cancelada', className: 'badgeCancelled' },
+};
+
+const ESTADO_ANTERIOR = {
+  EN_DIAGNOSTICO: 'RECIBIDO',
+  ESPERANDO_REPUESTOS: 'EN_DIAGNOSTICO',
+  EN_REPARACION: 'ESPERANDO_REPUESTOS',
+  LISTA: 'EN_REPARACION',
+  ENTREGADA: 'LISTA'
 };
 
 function formatCurrency(value) {
@@ -41,12 +28,90 @@ function formatCurrency(value) {
 function formatFecha(fecha) {
   if (!fecha) return '—';
   return new Date(fecha).toLocaleDateString('es-CO', {
-    day: '2-digit', month: '2-digit', year: 'numeric'
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric'
   });
 }
 
+/* ───────── FLUJO DE ESTADOS ───────── */
+const getAcciones = (estado) => {
+  switch (estado) {
 
-export default function OrdenList({ ordenes, onEdit, onDelete, onChangeEstado, onRefresh, canEdit = true }) {
+    case 'RECIBIDO':
+      return [
+        {
+          icon: ClipboardList,
+          tooltip: 'Enviar a diagnóstico',
+          className: styles.btnNext,
+          estado: 'EN_DIAGNOSTICO'
+        },
+        {
+          icon: PackageCheck,
+          tooltip: 'Esperar repuestos',
+          className: styles.btnProcess,
+          estado: 'ESPERANDO_REPUESTOS'
+        },
+        {
+          icon: Wrench,
+          tooltip: 'Iniciar reparación',
+          className: styles.btnProcess,
+          estado: 'EN_REPARACION'
+        }
+      ];
+
+    case 'EN_DIAGNOSTICO':
+      return [
+        {
+          icon: PackageCheck,
+          tooltip: 'Esperar repuestos',
+          className: styles.btnProcess,
+          estado: 'ESPERANDO_REPUESTOS'
+        }
+      ];
+
+    case 'ESPERANDO_REPUESTOS':
+      return [
+        {
+          icon: Wrench,
+          tooltip: 'Iniciar reparación',
+          className: styles.btnProcess,
+          estado: 'EN_REPARACION'
+        }
+      ];
+
+    case 'EN_REPARACION':
+      return [
+        {
+          icon: CheckCircle,
+          tooltip: 'Marcar lista',
+          className: styles.btnDone,
+          estado: 'LISTA'
+        }
+      ];
+
+    case 'LISTA':
+      return [
+        {
+          icon: Truck,
+          tooltip: 'Entregar orden',
+          className: styles.btnDone,
+          estado: 'ENTREGADA'
+        }
+      ];
+
+    default:
+      return [];
+  }
+};
+
+export default function OrdenList({
+  ordenes,
+  onDelete,
+  onChangeEstado,
+  onRefresh,
+  canEdit = true
+}) {
   const [loadingId, setLoadingId] = useState(null);
 
   const handleEstado = async (id, estado) => {
@@ -59,7 +124,6 @@ export default function OrdenList({ ordenes, onEdit, onDelete, onChangeEstado, o
     }
   };
 
-  // SIEMPRE renderiza la tabla, aunque no haya órdenes
   return (
     <div className={styles.tableContainer}>
       <div className={styles.tableWrapper}>
@@ -67,52 +131,58 @@ export default function OrdenList({ ordenes, onEdit, onDelete, onChangeEstado, o
           <thead>
             <tr>
               <th>#</th>
-              <th>Tipo</th>
               <th>Cliente</th>
               <th>Vehículo</th>
-              <th>Mecánico</th>
+              <th>Mecánicos</th>
               <th>Estado</th>
               <th>Total</th>
-              <th>Fecha ingreso</th>
+              <th>Fecha entrada</th>
               <th>Acciones</th>
             </tr>
           </thead>
+
           <tbody>
             {ordenes.length === 0 ? (
               <tr>
-                <td colSpan={9} style={{ textAlign: 'center', padding: '60px 20px', color: 'var(--text-secondary)' }}>
+                <td colSpan={8} style={{ textAlign: 'center', padding: 50 }}>
                   No hay órdenes registradas
                 </td>
               </tr>
             ) : (
               ordenes.map((o, index) => {
-                const badge = ESTADO_BADGE[o.estado] || { label: o.estado, className: 'badgePending' };
-                const estados = o.tipo === 'COTIZACION' ? ESTADOS_COTIZACION : ESTADOS_ORDEN;
+
+                const badge = ESTADO_BADGE[o.estado] || {
+                  label: o.estado,
+                  className: 'badgePending'
+                };
+
+                const acciones = getAcciones(o.estado);
                 const isLoading = loadingId === o.id;
 
                 return (
                   <tr key={o.id}>
-                    <td className={styles.idCell}>{index + 1}</td>
+
+                    <td>{index + 1}</td>
 
                     <td>
-                      <span className={`${styles.tipoBadge} ${o.tipo === 'COTIZACION' ? styles.tipoCotizacion : styles.tipoOrden}`}>
-                        {o.tipo === 'COTIZACION' ? 'Cotización' : 'Orden'}
-                      </span>
-                    </td>
-
-                    <td className={styles.nameCell}>
                       <div>{o.usuarioNombres} {o.usuarioApellidos}</div>
                       <div className={styles.subText}>{o.usuarioDocumento}</div>
                     </td>
 
                     <td>
-                      <div className={styles.vehiculoInfo}>
-                        <span className={styles.placa}>{o.vehiculoPlaca}</span>
-                        <span className={styles.subText}>{o.vehiculoMarca} {o.vehiculoModelo} {o.vehiculoAnio}</span>
+                      <div>
+                        <strong>{o.vehiculoPlaca}</strong>
+                        <div className={styles.subText}>
+                          {o.vehiculoMarca} {o.vehiculoModelo}
+                        </div>
                       </div>
                     </td>
 
-                    <td>{o.mecanicoNombres || <span className={styles.noAsignado}>Sin asignar</span>}</td>
+                    <td>
+                      {o.mecanicosNombres?.length > 0
+                        ? o.mecanicosNombres.join(', ')
+                        : <span className={styles.noAsignado}>Sin asignar</span>}
+                    </td>
 
                     <td>
                       <span className={`${styles.badge} ${styles[badge.className]}`}>
@@ -120,57 +190,56 @@ export default function OrdenList({ ordenes, onEdit, onDelete, onChangeEstado, o
                       </span>
                     </td>
 
-                    <td className={styles.totalCell}>{formatCurrency(o.total)}</td>
+                    <td>{formatCurrency(o.total)}</td>
 
-                    <td>{formatFecha(o.fechaIngreso)}</td>
+                    <td>{formatFecha(o.fechaEntrada)}</td>
 
                     <td>
-                      <div className={styles.actionButtons}>
+                      <div className={styles.actions}>
 
-                        {/* Cambiar estado */}
-                        <div className={styles.estadoSelect}>
-                          <ChevronDown size={12} />
-                          <select
-                            disabled={isLoading || !canEdit}
-                            onChange={(e) => {
-                              if (e.target.value) handleEstado(o.id, e.target.value);
-                              e.target.value = '';
-                            }}
-                            defaultValue=""
-                            title="Cambiar estado"
+                        {/* BOTONES DE FLUJO */}
+                        {acciones.map((a, i) => {
+                          const Icon = a.icon;
+
+                          return (
+                            <button
+                              key={i}
+                              className={`${styles.btnIcon} ${a.className}`}
+                              data-tooltip={a.tooltip}
+                              disabled={isLoading}
+                              onClick={() => handleEstado(o.id, a.estado)}
+                            >
+                              <Icon size={16} />
+                            </button>
+                          );
+                        })}
+
+                        {ESTADO_ANTERIOR[o.estado] && (
+                          <button
+                            className={`${styles.btnIcon} ${styles.btnBack}`}
+                            data-tooltip="Volver al estado anterior"
+                            disabled={isLoading}
+                            onClick={() => handleEstado(o.id, ESTADO_ANTERIOR[o.estado])}
                           >
-                            <option value="" disabled>Estado</option>
-                            {estados.map(e => (
-                              <option key={e.value} value={e.value}>{e.label}</option>
-                            ))}
-                          </select>
-                        </div>
+                            <Undo2 size={16} />
+                          </button>
+                        )}
 
-                        {canEdit ? (
-                          <>
-                            <button
-                              className={styles.actionBtn}
-                              title="Editar"
-                              onClick={() => onEdit(o)}
-                            >
-                              <Edit size={18} />
-                            </button>
-
-                            {/* Eliminar */}
-                            <button
-                              className={`${styles.actionBtn} ${styles.actionBtnDanger}`}
-                              title="Desactivar"
-                              onClick={() => onDelete(o)}
-                            >
-                              <Trash2 size={18} />
-                            </button>
-                          </>
-                        ) : (
-                          <span className={styles.readOnlyText}>Solo lectura</span>
+                        {/* CANCELAR SIEMPRE */}
+                        {o.estado !== 'ENTREGADA' && o.estado !== 'CANCELADA' && (
+                          <button
+                            className={`${styles.btnIcon} ${styles.btnCancel}`}
+                            data-tooltip="Cancelar orden"
+                            disabled={isLoading}
+                            onClick={() => handleEstado(o.id, 'CANCELADA')}
+                          >
+                            <Trash2 size={16} />
+                          </button>
                         )}
 
                       </div>
                     </td>
+
                   </tr>
                 );
               })

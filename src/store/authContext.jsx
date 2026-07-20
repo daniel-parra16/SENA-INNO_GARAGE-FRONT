@@ -52,6 +52,7 @@ export function AuthProvider({ children }) {
     }, []);
 
     const login = (data) => {
+        console.log("data:" + decodeJWT(data));
         const payload = decodeJWT(data.accessToken);
         const userData = {
             accessToken: data.accessToken,
@@ -60,6 +61,7 @@ export function AuthProvider({ children }) {
             nombres: payload?.nombres || "",
             rol: roleMap[payload?.roles?.[0]] || "cliente",
             id: payload?.sub || "",
+            numDoc: payload?.numDoc || "",
         };
         setUser(userData);
         localStorage.setItem("auth", JSON.stringify(userData));

@@ -4,10 +4,12 @@ import CotizacionFilters from './components/CotizacionFilters';
 import LoadingModal from '../../components/ui/LoadingModal/LoadingModal';
 import Modal from '../../components/ui/Modal/modal';
 import ConfirmModal from '../../components/ui/ConfirmModal/ConfirmModal';
-import { getAllCotizaciones, deleteCotizacion } from './services';
-import styles from './CotizacionesView.module.css';
 import FormModal from '../../components/ui/Modal/FormModal';
 import CotizacionForm from './components/CotizacionForm';
+import { getAllCotizaciones, createCotizacion, updateCotizacion, deleteCotizacion, cambiarEstadoCotizacion } from './services';
+import styles from './CotizacionesView.module.css';
+import { createOrden } from '../ordenes/services';
+import OrdenForm from '../ordenes/components/OrdenForm';
 
 export default function CotizacionesView() {
     const [cotizaciones, setCotizaciones] = useState([]);
@@ -21,6 +23,39 @@ export default function CotizacionesView() {
     const [type, setType] = useState('info');
     const [confirmOpen, setConfirmOpen] = useState(false);
     const [selectedCotizacion, setSelectedCotizacion] = useState(null);
+    const [ordenModalOpen, setOrdenModalOpen] = useState(false);
+    const [cotizacionParaOrden, setCotizacionParaOrden] = useState(null);
+
+    const handleCrearOrden = async (data) => {
+        if (!data) { setOrdenModalOpen(false); setCotizacionParaOrden(null); return; }
+        setIsLoading(true);
+        try {
+            await createOrden(data);
+            setMessage('Orden creada correctamente');
+            setType('success');
+            setTitle('Éxito');
+            setShowModal(true);
+            setOrdenModalOpen(false);
+            setCotizacionParaOrden(null);
+
+            // cambia el estado de la cotizacion a aprobada
+            try {
+                await cambiarEstadoCotizacion(data.cotizacionId, 'APROBADA');
+
+                await fetchCotizaciones();
+
+
+            } catch (error) {
+                console.error(error);
+            }
+        } catch (err) {
+            setType('error');
+            setTitle('Error');
+            setMessage(err.message || 'Error al crear la orden');
+            setShowModal(true);
+        }
+        setIsLoading(false);
+    };
 
     const fetchCotizaciones = async () => {
         setIsLoading(true);
@@ -28,11 +63,10 @@ export default function CotizacionesView() {
             const params = { page: filters.page, size: filters.size };
             if (filters.search?.trim()) params.busqueda = filters.search.trim();
             if (filters.estado && filters.estado !== 'all') params.estado = filters.estado;
-            if (filters.agendamientoId?.trim()) params.agendamientoId = filters.agendamientoId.trim();
 
             const data = await getAllCotizaciones(params);
             setCotizaciones(data.contenido || []);
-        } catch (err) {
+        } catch {
             setType('error');
             setTitle('Error');
             setMessage('No se pudieron cargar las cotizaciones');
@@ -41,9 +75,7 @@ export default function CotizacionesView() {
         setIsLoading(false);
     };
 
-    useEffect(() => {
-        fetchCotizaciones();
-    }, [filters]);
+    useEffect(() => { fetchCotizaciones(); }, [filters]);
 
     const handleSubmit = async (data) => {
         if (!data) { setIsModalOpen(false); setSelected(null); return; }
@@ -77,7 +109,7 @@ export default function CotizacionesView() {
         try {
             await deleteCotizacion(selectedCotizacion.id);
             setType('success');
-            setTitle('Success');
+            setTitle('Éxito');
             setMessage('Cotización eliminada correctamente');
             setShowModal(true);
             await fetchCotizaciones();
@@ -90,6 +122,11 @@ export default function CotizacionesView() {
         setConfirmOpen(false);
         setSelectedCotizacion(null);
         setIsLoading(false);
+    };
+
+    const handleAprobar = async (item) => {
+        setCotizacionParaOrden(item);
+        setOrdenModalOpen(true);
     };
 
     return (
@@ -110,16 +147,31 @@ export default function CotizacionesView() {
             >
                 <CotizacionForm onSubmit={handleSubmit} initialData={selected} />
             </FormModal>
+            <FormModal
+                isOpen={ordenModalOpen}
+                title="Crear Orden"
+                onClose={() => { setOrdenModalOpen(false); setCotizacionParaOrden(null); }}
+            >
+                {cotizacionParaOrden && (
+                    <OrdenForm cotizacion={cotizacionParaOrden} onSubmit={handleCrearOrden} />
+                )}
+            </FormModal>
+
             <div className={styles.container}>
                 <div className={styles.header}>
                     <h1 className={styles.title}>Cotizaciones</h1>
                     <p className={styles.subtitle}>Consulta y administra cotizaciones.</p>
                 </div>
-                <CotizacionFilters filters={filters} onFilterChange={setFilters} onNew={() => setIsModalOpen(true)} />
+                <CotizacionFilters
+                    filters={filters}
+                    onFilterChange={setFilters}
+                    onNew={() => { setSelected(null); setIsModalOpen(true); }}
+                />
                 <CotizacionList
                     cotizaciones={cotizaciones}
                     onEdit={(item) => { setSelected(item); setIsModalOpen(true); }}
                     onDelete={(item) => { setSelectedCotizacion(item); setConfirmOpen(true); }}
+                    onAprobarOrden={(item) => { handleAprobar(item); }}
                 />
             </div>
         </>

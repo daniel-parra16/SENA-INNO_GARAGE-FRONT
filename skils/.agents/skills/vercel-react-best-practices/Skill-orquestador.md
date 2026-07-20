@@ -166,7 +166,7 @@ Extrae del SVG y define en CSS custom properties:
 Si el proyecto ya cuenta con una estructura base (Layout, Sidebar, Global CSS):
 
 1. **Crea los componentes visuales** encontrados en la imagen dentro de `src/features/{nombre_modulo}/components/`.
-2. **Crea el archivo de ensamble principal** en `src/features/{nombre_modulo}/index.jsx`.
+2. **Crea el archivo de ensamble principal** en `src/features/{nombre_modulo}`.
 3. **Usa los CSS Modules** para cada componente asegurándote de consumir las `variables.css`.
 4. **Actualiza las rutas:** Modifica `src/routes/AppRoutes.jsx` para incluir la nueva ruta apuntando a la feature creada (¡sin borrar las rutas anteriores como Dashboard!).
 5. **Omitir la recreación** de Sidebar, Navbar, variables CSS o MainLayout a menos que en la imagen vengan cambios explícitos a estos.

@@ -1,89 +1,162 @@
-import { useEffect, useMemo, useState } from 'react';
-
-import styles from './ClienteDashboard.module.css';
-import { useAuth } from '../../../../store/authContext';
-import { getClienteDashboard } from '../../services';
 import {
-    getClienteDashboardFallback,
-    normalizeClienteDashboard,
-} from '../../services/clienteService';
+    FileText,
+    Wrench,
+    CheckCircle2,
+    Car,
+    ArrowRight
+} from "lucide-react";
 
-import ClienteStats from '../../components/Cliente/ClienteStats';
-import MyVehicles from '../../components/Cliente/MyVehicles';
-import MyOrders from '../../components/Cliente/MyOrders';
-import OrderStatus from '../../components/Cliente/OrderStatus';
+import styles from "../../styles/dashboard.module.css";
+import { useAuth } from "../../../../store/authContext";
+import useClienteDashboard from "../../hooks/useClienteDashboard";
+import StatCard from "../../components/StatCard";
 
 export default function ClienteDashboard() {
+
     const { user } = useAuth();
 
-    const firstName = useMemo(() => {
-        if (!user?.nombres) return 'Juan';
-        return user.nombres.split(' ')[0];
-    }, [user?.nombres]);
+    const {
+        dashboard,
+        loading,
+        error,
+        reload
+    } = useClienteDashboard(user?.numDoc);
 
-    const [data, setData] = useState(() => getClienteDashboardFallback(user?.nombres || 'Juan Pérez'));
-    const [loading, setLoading] = useState(true);
+    if (loading)
+        return <div className={styles.loading}>Cargando...</div>;
 
-    useEffect(() => {
-        setData(getClienteDashboardFallback(user?.nombres || 'Juan Pérez'));
-    }, [user?.nombres]);
+    if (error)
+        return (
+            <div className={styles.errorPage}>
+                <h2>{error}</h2>
 
-    useEffect(() => {
-        let isMounted = true;
+                <button
+                    className={styles.primaryButton}
+                    onClick={reload}
+                >
+                    Reintentar
+                </button>
 
-        const loadDashboard = async () => {
-            if (isMounted) setLoading(true);
+            </div>
+        );
 
-            if (!user?.id) {
-                if (isMounted) setLoading(false);
-                return;
-            }
+    if (!dashboard)
+        return null;
 
-            try {
-                const response = await getClienteDashboard(user.id);
-                if (isMounted) {
-                    setData(normalizeClienteDashboard(response, user?.nombres || 'Juan Pérez'));
-                }
-            } catch (error) {
-                console.error('No se pudo cargar el dashboard de cliente, usando datos de respaldo.', error);
-            } finally {
-                if (isMounted) setLoading(false);
-            }
-        };
-
-        loadDashboard();
-
-        return () => {
-            isMounted = false;
-        };
-    }, [user?.id, user?.nombres]);
+    const {
+        cotizacionesPendientes,
+        ordenesActivas,
+        ordenesFinalizadas,
+        vehiculos
+    } = dashboard;
 
     return (
-        <section className={styles.container}>
-            <header className={styles.header}>
-                <h1 className={styles.title}>Hola, {firstName}</h1>
-                <p className={styles.subtitle}>
-                    {loading
-                        ? 'Preparando tu panel de control...'
-                        : 'Bienvenido de nuevo a tu panel de AutoFix Pro.'}
-                </p>
-            </header>
 
-            <ClienteStats stats={data.stats} />
+        <div className={styles.dashboard}>
 
-            <div className={styles.contentGrid}>
-                <div className={styles.leftColumn}>
-                    <MyVehicles vehicles={data.vehicles} />
-                    <MyOrders quotes={data.pendingQuotes} />
+            <div className={styles.pageHeader}>
+
+                <div>
+
+                    <h1 className={styles.title}>
+                        Hola, {user?.nombres}
+                    </h1>
+
+                    <p className={styles.subtitle}>
+                        {ordenesActivas > 0
+                            ? `Tienes ${ordenesActivas} ${ordenesActivas === 1 ? "orden activa" : "órdenes activas"} en este momento.`
+                            : "No tienes órdenes activas en este momento."}
+                    </p>
+
                 </div>
 
-                <aside className={styles.rightColumn}>
-                    <OrderStatus
-                        appointment={data.appointment}
-                        trustedWorkshop={data.trustedWorkshop}
-                    />
-                </aside>
             </div>
-        </section>
+
+            <div className={styles.statsSectionMecanico}>
+
+                <StatCard
+                    title="Vehículos"
+                    value={vehiculos}
+                    description="Registrados a tu nombre"
+                    icon={<Car size={22} />}
+                    color="#2563eb"
+                />
+
+                <StatCard
+                    title="Cotizaciones pendientes"
+                    value={cotizacionesPendientes}
+                    description="Esperando tu aprobación"
+                    icon={<FileText size={22} />}
+                    color="#f59e0b"
+                />
+
+                <StatCard
+                    title="Órdenes activas"
+                    value={ordenesActivas}
+                    description="En proceso actualmente"
+                    icon={<Wrench size={22} />}
+                    color="#7c3aed"
+                />
+
+                <StatCard
+                    title="Órdenes finalizadas"
+                    value={ordenesFinalizadas}
+                    description="Servicios completados"
+                    icon={<CheckCircle2 size={22} />}
+                    color="#16a34a"
+                />
+
+            </div>
+
+            {/* CTA destacado para cotizaciones pendientes */}
+            {cotizacionesPendientes > 0 && (
+
+                <div className={styles.clienteAlertCard}>
+
+                    <div className={styles.clienteAlertIcon}>
+                        <FileText size={26} />
+                    </div>
+
+                    <div className={styles.clienteAlertText}>
+
+                        <h3>
+                            Tienes {cotizacionesPendientes} {cotizacionesPendientes === 1 ? "cotización pendiente" : "cotizaciones pendientes"}
+                        </h3>
+
+                        <p>
+                            Revísalas y apruébalas para que iniciemos el trabajo en tu vehículo.
+                        </p>
+
+                    </div>
+
+                    <button className={styles.clienteAlertButton}>
+                        Ver cotizaciones
+                        <ArrowRight size={18} />
+                    </button>
+
+                </div>
+
+            )}
+
+            {/* Estado vacío llamativo cuando no hay actividad */}
+            {ordenesActivas === 0 && cotizacionesPendientes === 0 && (
+
+                <div className={styles.clienteEmptyCard}>
+
+                    <CheckCircle2 size={48} />
+
+                    <h3>Todo al día</h3>
+
+                    <p>
+                        No tienes cotizaciones pendientes ni órdenes en proceso. Cuando agendes un nuevo servicio, aparecerá aquí.
+                    </p>
+
+                </div>
+
+            )}
+
+        </div>
+
     );
+
 }

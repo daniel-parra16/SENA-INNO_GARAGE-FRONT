@@ -1,15 +1,17 @@
 import { useEffect, useState } from 'react';
 import { RotateCcw, Plus } from 'lucide-react';
 import styles from './CotizacionFilters.module.css';
+import { getEstadosCotizacion } from '../../services';
 
 export default function CotizacionFilters({ filters, onFilterChange, onNew }) {
     const [estados, setEstados] = useState([]);
 
     useEffect(() => {
-        fetch('http://localhost:8080/api/cotizaciones/estadoCotizacion')
-            .then((r) => r.json())
+        getEstadosCotizacion()
             .then(setEstados)
-            .catch(() => { });
+            .catch((error) => {
+                console.error(error);
+            });
     }, []);
 
     return (

@@ -1,8 +1,15 @@
-import { Filter, Plus, RotateCcw } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { RotateCcw } from 'lucide-react';
 import { SearchBar } from '../../../../components/ui/SearchBar/SearchBar';
 import styles from './OrdenFilters.module.css';
+import { getEstadosOrden } from '../../services';
 
-export default function OrdenFilters({ onNew, filters, onFilterChange }) {
+export default function OrdenFilters({ filters, onFilterChange }) {
+  const [estados, setEstados] = useState([]);
+
+  useEffect(() => {
+    getEstadosOrden().then(setEstados).catch(() => { });
+  }, []);
 
   const handleSearchChange = (value) => {
     onFilterChange({ ...filters, search: value });
@@ -12,22 +19,12 @@ export default function OrdenFilters({ onNew, filters, onFilterChange }) {
     onFilterChange({ ...filters, estado: e.target.value });
   };
 
-  const handleTipoChange = (e) => {
-    onFilterChange({ ...filters, tipo: e.target.value });
-  };
-
   const handleResetFilters = () => {
-    onFilterChange({
-      search: '',
-      estado: 'all',
-      tipo: 'all'
-    });
+    onFilterChange({ search: '', estado: 'all', page: 0, size: 20 });
   };
 
   return (
     <div className={styles.filtersContainer}>
-
-      {/* 🔍 BUSCADOR */}
       <div className={styles.searchBox}>
         <SearchBar
           placeholder="Buscar por cliente, vehículo o descripción..."
@@ -35,56 +32,29 @@ export default function OrdenFilters({ onNew, filters, onFilterChange }) {
         />
       </div>
 
-      {/* 🔘 FILTROS + BOTÓN */}
       <div className={styles.actionGroup}>
-
-        <button className={styles.resetBtn} onClick={handleResetFilters}>
-          <RotateCcw size={16} />
-        </button>
-
-        {/* 🔥 FILTRO ESTADO */}
-        <div className={styles.filterSelect}>
-          <Filter size={16} />
+        <div className={styles.selectWrapper}>
           <select
             className={styles.select}
             value={filters.estado}
             onChange={handleEstadoChange}
           >
             <option value="all">Todos los estados</option>
-            <option value="COTIZACION_PENDIENTE">Cotización pendiente</option>
-            <option value="COTIZACION_APROBADA">Cotización aprobada</option>
-            <option value="COTIZACION_RECHAZADA">Cotización rechazada</option>
-            <option value="COTIZACION_VENCIDA">Cotización vencida</option>
-            <option value="ORDEN_RECIBIDO">Recibido</option>
-            <option value="ORDEN_EN_DIAGNOSTICO">En diagnóstico</option>
-            <option value="ORDEN_ESPERANDO_REPUESTOS">Esperando repuestos</option>
-            <option value="ORDEN_EN_REPARACION">En reparación</option>
-            <option value="ORDEN_LISTA">Lista</option>
-            <option value="ORDEN_ENTREGADA">Entregada</option>
-            <option value="ORDEN_CANCELADA">Cancelada</option>
+            {estados.map((e) => (
+              <option key={e.value} value={e.value}>
+                {e.label}
+              </option>
+            ))}
           </select>
         </div>
 
-        {/* 🔥 FILTRO TIPO */}
-        <div className={styles.filterSelect}>
-          <Filter size={16} />
-          <select
-            className={styles.select}
-            value={filters.tipo}
-            onChange={handleTipoChange}
-          >
-            <option value="all">Todos los tipos</option>
-            <option value="COTIZACION">Cotización</option>
-            <option value="ORDEN">Orden</option>
-          </select>
-        </div>
-
-        {/* ➕ NUEVO */}
-        <button className={styles.newOrderBtn} onClick={onNew}>
-          <Plus size={18} />
-          Nueva Orden
+        <button
+          className={styles.resetBtn}
+          title="Limpiar filtros"
+          onClick={handleResetFilters}
+        >
+          <RotateCcw size={16} />
         </button>
-
       </div>
     </div>
   );
