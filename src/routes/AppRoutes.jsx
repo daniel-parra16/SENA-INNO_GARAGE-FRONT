@@ -12,7 +12,7 @@ import { useAuth } from '../store/authContext.jsx';
 import VerifyEmailView from '../features/auth/VerifyEmailView.jsx';
 import NewPasswordView from '../features/auth/NewPasswordView.jsx';
 import VehiculosView from '../features/vehiculos/index.jsx';
-import InventarioView from '../features/inventario/Index.jsx';
+import InventarioView from '../features/inventario/index.jsx';
 
 // Permite que solo accedan los usuarios no logueados.
 function GuestRoute({ children }) {
