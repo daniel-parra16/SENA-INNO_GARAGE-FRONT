@@ -69,7 +69,7 @@ export default function AppRoutes() {
         <Route path="ordenes" element={<OrdenesView />} />
         <Route path="agendamientos" element={
           <RoleRoute roles={["admin", "mecanico", "cliente"]}>
-            <AgendamientosView />
+            <AgendamientoView />
           </RoleRoute>
         } />
         <Route path="cotizaciones" element={
