@@ -1,11 +1,11 @@
 import styles from './LoginView.module.css';
-import LoginForm from './components/LoginForm/Index';
+import LoginForm from './components/LoginForm';
 
 export default function LoginView() {
   return (
     <div className={styles.container}>
       <div className={styles.backgroundEffects}></div>
-      
+
       <div className={styles.card}>
         <div className={styles.logoContainer}>
           <div className={styles.logoBox}>
