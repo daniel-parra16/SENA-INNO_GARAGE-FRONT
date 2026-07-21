@@ -4,7 +4,7 @@ import LoginView from '../features/auth';
 import RegisterView from '../features/auth/RegisterView';
 import RememberView from '../features/auth/RememberView';
 import DashboardView from '../features/dashboard';
-import OrdenesView from '../features/ordenes/Index';
+import OrdenesView from '../features/ordenes';
 import UsuariosView from '../features/usuarios';
 import AgendamientosView from '../features/agendamiento';
 import CotizacionesView from '../features/cotizaciones';
