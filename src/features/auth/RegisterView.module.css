@@ -3,7 +3,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #0B0E14; /* Tema oscuro base */
+  background-color: #0B0E14;
+  /* Tema oscuro base */
   position: relative;
   overflow: hidden;
 }
@@ -16,7 +17,7 @@
   width: 100vw;
   height: 100vh;
   background: radial-gradient(circle at 10% 20%, rgba(19, 146, 236, 0.1) 0%, transparent 40%),
-              radial-gradient(circle at 90% 80%, rgba(19, 146, 236, 0.05) 0%, transparent 40%);
+    radial-gradient(circle at 90% 80%, rgba(19, 146, 236, 0.05) 0%, transparent 40%);
   pointer-events: none;
 }
 
@@ -63,4 +64,95 @@
   color: #94A3B8;
   font-size: 14px;
   margin: 0;
+}
+
+/* ===========================
+   Tablets
+=========================== */
+
+@media (max-width: 992px) {
+
+  .container {
+    padding: 32px 20px;
+    align-items: flex-start;
+    overflow-y: auto;
+  }
+
+  .card {
+    max-width: 90%;
+    max-height: none;
+    margin: auto;
+    padding: 28px;
+  }
+
+  .imgIG {
+    max-width: 4.5rem;
+  }
+
+}
+
+/* ===========================
+   Teléfonos
+=========================== */
+
+@media (max-width: 768px) {
+
+  .container {
+    padding: 20px 14px;
+    justify-content: flex-start;
+    overflow-y: auto;
+  }
+
+  .backgroundEffects {
+    background:
+      radial-gradient(circle at 15% 15%, rgba(19, 146, 236, .10), transparent 45%),
+      radial-gradient(circle at 85% 85%, rgba(19, 146, 236, .05), transparent 45%);
+  }
+
+  .card {
+    width: 100%;
+    max-width: 100%;
+    margin: 20px 0;
+    padding: 24px 18px;
+    border-radius: 10px;
+    max-height: none;
+  }
+
+  .header {
+    margin-bottom: 18px;
+  }
+
+  .imgIG {
+    max-width: 4rem;
+  }
+
+  .title {
+    font-size: 1.6rem;
+  }
+
+}
+
+/* ===========================
+   Móviles pequeños
+=========================== */
+
+@media (max-width: 480px) {
+
+  .container {
+    padding: 12px;
+  }
+
+  .card {
+    padding: 18px 14px;
+    border-radius: 8px;
+  }
+
+  .imgIG {
+    max-width: 3.4rem;
+  }
+
+  .title {
+    font-size: 1.35rem;
+  }
+
 }

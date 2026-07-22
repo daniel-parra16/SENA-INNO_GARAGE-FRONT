@@ -19,11 +19,16 @@
   flex-shrink: 0;
 }
 
-/* ---- Row groups — 2 columnas ---- */
+/* ---- Campos generales escritorio ---- */
 .rowGroup {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 12px 20px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px 20px;
+}
+
+/* ---- Seguridad: siempre 2 columnas en escritorio ---- */
+.securityGroup {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
 /* ---- Cada campo ---- */
@@ -154,9 +159,106 @@ select.input option {
   text-decoration: underline;
 }
 
-/* ---- Responsive ---- */
-@media (max-width: 600px) {
-  .rowGroup {
-    grid-template-columns: 1fr;
+/* ===========================
+   Tablets
+=========================== */
+
+@media (max-width: 992px) {
+
+  .rowGroup,
+  .securityGroup {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px 18px;
   }
+
+}
+
+/* ===========================
+   Móviles
+=========================== */
+
+@media (max-width: 768px) {
+
+  .formContainer {
+    gap: 6px;
+  }
+
+  .sectionTitle {
+    margin: 18px 0 12px;
+    font-size: .72rem;
+    letter-spacing: 1.5px;
+  }
+
+  .rowGroup,
+  .securityGroup {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .label {
+    font-size: .82rem;
+  }
+
+  .input {
+    height: 42px;
+    font-size: .9rem;
+    padding: 0 14px;
+  }
+
+  .passwordWrapper .input {
+    padding-right: 66px;
+  }
+
+  .togglePwd {
+    right: 10px;
+    font-size: .75rem;
+  }
+
+  .submitBtn {
+    height: 44px;
+    margin-top: 20px;
+    font-size: .95rem;
+  }
+
+  .footerLink {
+    margin-top: 16px;
+    font-size: .85rem;
+  }
+
+}
+
+
+/* ===========================
+   Móviles pequeños
+=========================== */
+
+/* ===========================
+   Móviles pequeños
+=========================== */
+
+@media (max-width: 480px) {
+
+  .sectionTitle {
+    font-size: .68rem;
+  }
+
+  .label {
+    font-size: .78rem;
+  }
+
+  .input {
+    height: 40px;
+    font-size: .85rem;
+    padding: 0 12px;
+  }
+
+  .submitBtn {
+    height: 42px;
+    font-size: .9rem;
+  }
+
+  .togglePwd {
+    font-size: .7rem;
+  }
+
 }

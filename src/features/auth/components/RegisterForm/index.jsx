@@ -217,7 +217,7 @@ export default function RegisterForm() {
 
         <p className={styles.sectionTitle}>Seguridad</p>
 
-        <div className={styles.rowGroup}>
+        <div className={`${styles.rowGroup} ${styles.securityGroup}`}>
           <div className={styles.formGroup}>
             <label htmlFor="password" className={styles.label}>Contraseña</label>
             <div className={styles.passwordWrapper}>
