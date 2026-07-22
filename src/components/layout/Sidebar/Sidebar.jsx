@@ -14,7 +14,8 @@ import {
 import { NavLink } from 'react-router-dom';
 import styles from './Sidebar.module.css';
 import { useAuth } from '../../../store/authContext';
-import logoInnoGarage from '../../../assets/logo/LogoInnoGarageFondoAzul.png';
+import logoLight from '/logo/Logo-2.png';
+import logoDark from '/logo/Logo.png';
 
 // Menú completo — cada item tiene los roles que pueden verlo
 const navItems = [
@@ -70,7 +71,9 @@ const rolLabel = {
     cliente: 'Cliente',
 };
 
-export default function Sidebar({ isCollapsed, toggleSidebar }) {
+export default function Sidebar({ isCollapsed, isLightMode }) {
+    const logoInnoGarage = isLightMode ? logoLight : logoDark;
+
     const { user } = useAuth();
 
     // Filtra los items según el rol del usuario
@@ -113,17 +116,6 @@ export default function Sidebar({ isCollapsed, toggleSidebar }) {
                     </NavLink>
                 ))}
             </nav>
-            <div className={styles.divider}></div>
-            <div className={`${styles.footerSection} ${isCollapsed ? styles.collapsed : ''}`}>
-                <div className={styles.userProfile}>
-
-
-
-                    <button className={styles.settingsBtn} title={isCollapsed ? "Configuración" : undefined}>
-                        <Settings size={20} />
-                    </button>
-                </div>
-            </div>
         </div>
     );
 }

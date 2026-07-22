@@ -11,15 +11,16 @@ const rolLabel = {
     cliente: 'Cliente',
 };
 
-export default function Header({ toggleSidebar, isCollapsed }) {
+export default function Header({
+    toggleSidebar,
+    isCollapsed,
+    isLightMode,
+    setIsLightMode
+}) {
     const [menuOpen, setMenuOpen] = useState(false);
     const { user, logout } = useAuth();
     const navigate = useNavigate();
     const userProfileRef = useRef(null);
-
-    const [isLightMode, setIsLightMode] = useState(() => {
-        return localStorage.getItem('theme') === 'light' || document.documentElement.getAttribute('data-theme') === 'light';
-    });
 
     useEffect(() => {
         if (isLightMode) {
