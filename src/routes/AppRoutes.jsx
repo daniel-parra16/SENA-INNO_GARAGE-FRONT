@@ -6,8 +6,8 @@ import RememberView from '../features/auth/RememberView';
 import DashboardView from '../features/dashboard';
 import OrdenesView from '../features/ordenes';
 import UsuariosView from '../features/usuarios';
-import AgendamientosView from '../features/agendamiento';
-import CotizacionesView from '../features/cotizaciones';
+import AgendamientoView from '../features/agendamiento/Index';
+import CotizacionesView from '../features/cotizaciones/Index';
 import { useAuth } from '../store/authContext.jsx';
 import VerifyEmailView from '../features/auth/VerifyEmailView.jsx';
 import NewPasswordView from '../features/auth/NewPasswordView.jsx';
@@ -69,7 +69,7 @@ export default function AppRoutes() {
         <Route path="ordenes" element={<OrdenesView />} />
         <Route path="agendamientos" element={
           <RoleRoute roles={["admin", "mecanico", "cliente"]}>
-            <AgendamientosView />
+            <AgendamientoView />
           </RoleRoute>
         } />
         <Route path="cotizaciones" element={
