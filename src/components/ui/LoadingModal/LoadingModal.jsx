@@ -6,7 +6,7 @@ export default function LoadingModal({ message = 'Cargando...' }) {
     <div className={styles.overlay}>
       <div className={styles.modal}>
         <div className={styles.logoWrapper}>
-          <img src="logo.svg" alt="Logo cargando" className={styles.logo} />
+          <img src="logo/Logo.png" alt="Logo cargando" className={styles.logo} />
         </div>
         <p className={styles.message}>{message}</p>
       </div>

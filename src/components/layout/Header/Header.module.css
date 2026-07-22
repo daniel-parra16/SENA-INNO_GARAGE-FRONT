@@ -17,13 +17,13 @@
   border: none;
   cursor: pointer;
   padding: 2px;
-  color: #f1f5f9;
+  color: var(--text-secondary);
   border-radius: 6px;
   transition: color 0.2s, background 0.2s;
 }
 
 .toggleBtn:hover {
-  color: #f1f5f9;
+  color: var(--text-secondary);
 }
 
 .headerSearch {
@@ -128,4 +128,80 @@
 
 .settingsBtn:hover {
   color: var(--text-primary);
+}
+
+@media (max-width: 768px) {
+
+  .headerContainer {
+    padding: 0 12px;
+  }
+
+  .rightSection {
+    gap: 8px;
+  }
+
+  .iconBtn {
+    padding: 6px;
+    border-radius: 6px;
+  }
+
+  .divider {
+    margin: 0 4px;
+    height: 20px;
+  }
+
+  .userProfile {
+    padding: 6px;
+    gap: 8px;
+  }
+
+  .avatarCircle {
+    width: 36px;
+    height: 36px;
+  }
+
+  .userName {
+    font-size: 0.85rem;
+  }
+
+  .userRole {
+    display: none;
+  }
+
+  .settingsBtn {
+    padding: 2px;
+  }
+
+  /* Si necesitas más espacio, puedes ocultar el nombre del usuario */
+  /*
+  .userInfo {
+    display: none;
+  }
+  */
+
+}
+
+@media (max-width: 480px) {
+
+  .headerContainer {
+    padding: 0 8px;
+  }
+
+  .rightSection {
+    gap: 4px;
+  }
+
+  .divider {
+    display: none;
+  }
+
+  .userInfo {
+    display: none;
+  }
+
+  .toggleBtn,
+  .iconBtn {
+    padding: 5px;
+  }
+
 }
