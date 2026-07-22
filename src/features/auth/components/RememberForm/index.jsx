@@ -55,76 +55,124 @@ export default function RememberForm() {
                 />
             )}
 
-            <div className={styles['forgot-card']}>
-                {/* Banner superior — sin cambios */}
-                <div className={styles['card-banner']}>
-                    <div className={styles['banner-icon']}>
-                        <svg width="52" height="52" viewBox="0 0 52 52" fill="none">
-                            <circle cx="26" cy="26" r="25" stroke="rgba(255,255,255,0.15)" strokeWidth="1" />
-                            <circle cx="26" cy="26" r="18" fill="rgba(255,255,255,0.07)" stroke="rgba(255,255,255,0.2)" strokeWidth="1" />
-                            <g transform="translate(26,26) rotate(-35)">
-                                <circle cx="0" cy="-10" r="6" fill="none" stroke="white" strokeWidth="2.5" />
-                                <circle cx="0" cy="-10" r="2.5" fill="white" />
-                                <rect x="-2" y="-5" width="4" height="18" rx="2" fill="white" />
-                                <rect x="-2" y="11" width="4" height="3" rx="1" fill="white" />
-                                <rect x="0" y="12" width="5" height="2.5" rx="1" fill="white" />
-                            </g>
-                        </svg>
-                    </div>
-                    <div className={styles['banner-tag']}>
-                        <span>🔒</span> Protocolo de Seguridad
-                    </div>
-                </div>
+            <div className={styles.formContainer}>
 
-                {/* Cuerpo */}
-                <div className={styles['card-body']}>
-                    <h2 className={styles['forgot-title']}>Recuperar Contraseña</h2>
-                    <p className={styles['forgot-subtitle']}>
-                        No te preocupes, te ayudaremos a volver en poco tiempo.
+                <div className={styles.content}>
+
+                    <div className={styles.logoBox}>
+                        <img src="logo/Logo.png" alt="Fondo Inno Garage" className={styles.imgIG} />
+                    </div>
+
+                    <h2>
+                        Recuperar contraseña
+                    </h2>
+
+
+                    <p className={styles.description}>
+                        Ingresa el correo asociado a tu cuenta.
+                        Te enviaremos un enlace para restablecer tu contraseña.
                     </p>
-                    <p className={styles['forgot-desc']}>
-                        Ingresa el correo electrónico asociado a tu cuenta de INNO-GARAGE.
-                        Te enviaremos un enlace seguro para restablecer tu contraseña.
-                    </p>
+
+
 
                     <form onSubmit={handleSubmit}>
-                        <label className={styles['field-label']}>Correo electrónico</label>
-                        <div className={styles['input-wrap']}>
-                            <span className={styles['input-icon']}>✉</span>
+
+
+                        <label className={styles.label}>
+                            Correo electrónico
+                        </label>
+
+
+                        <div className={styles.inputWrapper}>
+
+
+                            <span>
+                                ✉
+                            </span>
+
+
                             <input
                                 className={styles.input}
                                 type="email"
                                 placeholder="usuario@innogarage.com"
-                                required
                                 value={email}
+                                required
                                 onChange={(e) => setEmail(e.target.value)}
                             />
+
+
                         </div>
-                        <button className={styles['btn-send']} type="submit" disabled={isLoading}>
-                            Enviar enlace de recuperación &nbsp;→
+
+
+
+                        <button
+                            className={styles.submitBtn}
+                            disabled={isLoading}
+                        >
+
+                            Enviar enlace →
+
                         </button>
+
+
                     </form>
+
+
+                    <button
+                        className={styles.backBtn}
+                        onClick={() => navigate('/login')}
+                    >
+
+                        ← Volver al inicio de sesión
+
+                    </button>
+
+
 
                     <div className={styles.divider} />
 
-                    <button
-                        className={styles['back-login']}
-                        onClick={() => navigate("/login")}
-                    >
-                        ← Volver al inicio de sesión
-                    </button>
+
+
                 </div>
+
+
             </div>
 
-            <div className={styles['footer-badges']}>
-                <div className={styles['badge-item']}>
-                    <span className={styles['badge-dot']} />
-                    Encriptación segura
+
+
+            <div className={styles.securityBox}>
+
+                <div className={styles.securityIcon}>
+
                 </div>
-                <div className={styles['badge-item']}>
-                    🔒 Soporte 24/7
+                <div className="securityContent">
+
+
+                    <div>
+
+                        <h3>
+                            Protocolo de seguridad
+                        </h3>
+
+                        <p>
+                            Protegemos tu cuenta mediante un proceso seguro
+                            de recuperación.
+                        </p>
+
+                    </div>
+                    <div className={styles['footer-badges']}>
+                        <div className={styles['badge-item']}>
+                            <span className={styles['badge-dot']} />
+                            Encriptación segura
+                        </div>
+                        <div className={styles['badge-item']}>
+                            ⛑ Soporte 24/7
+                        </div>
+                    </div>
                 </div>
+
             </div>
+
         </>
     );
 }

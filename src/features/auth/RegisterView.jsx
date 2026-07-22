@@ -11,7 +11,7 @@ export default function RegisterView() {
         <div className={styles.header}>
           <div className={styles.logoContainer}>
             <div className={styles.logoBox}>
-              <img src="/src/assets/logo/LogoInnoGarageFondoAzul.png" alt="Fondo Inno Garage" className={styles.imgIG} />
+              <img src="logo/Logo.png" alt="Fondo Inno Garage" className={styles.imgIG} />
             </div>
             <h1 className={styles.title}>Crear una cuenta</h1>
           </div>

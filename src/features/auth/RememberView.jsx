@@ -3,10 +3,16 @@ import styles from './RememberView.module.css';
 
 export default function RememberView() {
     return (
-        <div className={styles['forgot-page']}>
+        <div className={styles.container}>
 
-            <RememberForm />
+            <div className={styles.backgroundEffects}></div>
+
+            <div className={styles.card}>
+
+                <RememberForm />
+
+            </div>
 
         </div>
-    )
+    );
 }
