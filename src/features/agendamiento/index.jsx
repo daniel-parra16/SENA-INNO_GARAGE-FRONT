@@ -6,10 +6,11 @@ import LoadingModal from '../../components/ui/LoadingModal/LoadingModal';
 import Modal from '../../components/ui/Modal/modal';
 import ConfirmModal from '../../components/ui/ConfirmModal/ConfirmModal';
 import FormModal from '../../components/ui/Modal/FormModal';
-import { getAllAgendamientos, createAgendamiento, updateAgendamiento, changeAgendamientoLlegada, deleteAgendamiento, changeAgendamientoEstado } from './services';
+import { getAllAgendamientos, getAgendamientosByUser, createAgendamiento, updateAgendamiento, changeAgendamientoLlegada, deleteAgendamiento, changeAgendamientoEstado } from './services';
 import { createCotizacion } from '../cotizaciones/services';
 import styles from './AgendamientoView.module.css';
 import CotizacionForm from '../cotizaciones/components/CotizacionForm';
+import { useAuth } from '../../store/authContext';
 
 export default function AgendamientoView() {
     const [agendamientos, setAgendamientos] = useState([]);
@@ -24,6 +25,7 @@ export default function AgendamientoView() {
     const [confirmOpen, setConfirmOpen] = useState(false);
     const [itemToDelete, setItemToDelete] = useState(null);
     const [debouncedSearch, setDebouncedSearch] = useState(filters.search);
+    const { user } = useAuth();
 
     // Estado para el modal de cotización
     const [cotizacionModalOpen, setCotizacionModalOpen] = useState(false);
@@ -49,28 +51,35 @@ export default function AgendamientoView() {
 
     const fetchAgendamientos = async () => {
         setIsLoading(true);
+
         try {
-            const params = {
-                page: filters.page,
-                size: filters.size,
-            };
+            if (user?.rol === "cliente") {
+                const data = await getAgendamientosByUser();
+                setAgendamientos(data || []);
+            } else {
+                const params = {
+                    page: filters.page,
+                    size: filters.size,
+                };
 
-            if (debouncedSearch?.trim()) {
-                params.busqueda = debouncedSearch.trim();
+                if (debouncedSearch?.trim()) {
+                    params.busqueda = debouncedSearch.trim();
+                }
+
+                if (filters.estado && filters.estado !== "all") {
+                    params.estado = filters.estado;
+                }
+
+                const data = await getAllAgendamientos(params);
+                setAgendamientos(data.contenido || []);
             }
-
-            if (filters.estado && filters.estado !== 'all') {
-                params.estado = filters.estado;
-            }
-
-            const data = await getAllAgendamientos(params);
-            setAgendamientos(data.contenido || []);
         } catch {
-            setType('error');
-            setTitle('Error');
-            setMessage('No se pudieron cargar los agendamientos');
+            setType("error");
+            setTitle("Error");
+            setMessage("No se pudieron cargar los agendamientos");
             setShowModal(true);
         }
+
         setIsLoading(false);
     };
 
@@ -84,8 +93,16 @@ export default function AgendamientoView() {
     }, [filters.search]);
 
     useEffect(() => {
-        fetchAgendamientos();
-    }, [filters.page, filters.size, debouncedSearch, filters.estado]);
+        if (user?.rol === "cliente") {
+            fetchAgendamientos();
+        }
+    }, [user]);
+
+    useEffect(() => {
+        if (user?.rol !== "cliente") {
+            fetchAgendamientos();
+        }
+    }, [user, filters.page, filters.size, debouncedSearch, filters.estado]);
 
     const handleSubmit = async (agendamiento) => {
         if (!agendamiento) { setIsModalOpen(false); setSelected(null); return; }

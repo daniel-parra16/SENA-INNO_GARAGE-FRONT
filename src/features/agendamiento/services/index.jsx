@@ -11,6 +11,18 @@ export async function getAllAgendamientos(params = {}) {
     return await apiFetch(`/agendamientos?${query}`, { method: 'GET' });
 }
 
+export async function getAgendamientosByUser() {
+    const auth = JSON.parse(localStorage.getItem("auth"));
+
+    if (!auth?.numDoc) {
+        throw new Error("No hay un usuario autenticado.");
+    }
+
+    return await apiFetch(`/agendamientos/user/${auth.numDoc}`, {
+        method: "GET",
+    });
+}
+
 export async function createAgendamiento(data) {
     return await apiFetch('/agendamientos', { method: 'POST', body: data });
 }

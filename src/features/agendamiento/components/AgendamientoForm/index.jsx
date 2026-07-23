@@ -1,45 +1,63 @@
-import { useEffect, useState } from 'react';
-import styles from './AgendamientoForm.module.css';
-import { getUsuariosSimples } from '../../../usuarios/services';
-import { getVehiculoByUser } from '../../../vehiculos/services';
+import { useEffect, useState } from "react";
+import styles from "./AgendamientoForm.module.css";
+import { getUsuariosSimples } from "../../../usuarios/services";
+import { getVehiculoByUser } from "../../../vehiculos/services";
+import { useAuth } from "../../../../store/authContext";
 
 export default function AgendamientoForm({ onSubmit, initialData = null }) {
+    const { user } = useAuth();
+    const esCliente = user?.rol === "cliente";
+
     const [usuarios, setUsuarios] = useState([]);
     const [vehiculos, setVehiculos] = useState([]);
     const [formData, setFormData] = useState({
-        usuarioId: initialData?.usuarioId || '',
-        placaVehiculo: initialData?.placaVehiculo || '',
-        fechaHora: initialData?.fechaHora ? initialData.fechaHora.slice(0, 16) : '',
-        observaciones: initialData?.observaciones || ''
+        usuarioId: esCliente ? user.numDoc : initialData?.usuarioId || "",
+        placaVehiculo: initialData?.placaVehiculo || "",
+        fechaHora: initialData?.fechaHora
+            ? initialData.fechaHora.slice(0, 16)
+            : "",
+        observaciones: initialData?.observaciones || "",
     });
+    useEffect(() => {
+        if (!esCliente) {
+            getUsuariosSimples()
+                .then(setUsuarios)
+                .catch(() => {});
+        }
+    }, [esCliente]);
 
     useEffect(() => {
-        getUsuariosSimples().then(setUsuarios).catch(() => { });
-    }, []);
+        const usuarioId = esCliente
+            ? user.numDoc
+            : initialData?.usuarioId || "";
 
-    useEffect(() => {
-        const nuevoFormData = {
-            usuarioId: initialData?.usuarioId || '',
-            placaVehiculo: initialData?.placaVehiculo || '',
-            fechaHora: initialData?.fechaHora ? initialData.fechaHora.slice(0, 16) : '',
-            observaciones: initialData?.observaciones || ''
-        };
-        setFormData(nuevoFormData);
+        setFormData({
+            usuarioId,
+            placaVehiculo: initialData?.placaVehiculo || "",
+            fechaHora: initialData?.fechaHora
+                ? initialData.fechaHora.slice(0, 16)
+                : "",
+            observaciones: initialData?.observaciones || "",
+        });
 
-        if (initialData?.usuarioId) {
-            getVehiculoByUser(initialData.usuarioId)
+        if (usuarioId) {
+            getVehiculoByUser(usuarioId)
                 .then(setVehiculos)
                 .catch(() => setVehiculos([]));
         } else {
             setVehiculos([]);
         }
-    }, [initialData]);
+    }, [initialData, esCliente, user]);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
 
-        if (name === 'usuarioId') {
-            setFormData((prev) => ({ ...prev, usuarioId: value, placaVehiculo: '' }));
+        if (name === "usuarioId") {
+            setFormData((prev) => ({
+                ...prev,
+                usuarioId: value,
+                placaVehiculo: "",
+            }));
             setVehiculos([]);
             if (value) {
                 getVehiculoByUser(value)
@@ -60,28 +78,31 @@ export default function AgendamientoForm({ onSubmit, initialData = null }) {
     return (
         <form onSubmit={handleSubmit} className={styles.formContainer}>
             <div className={styles.inputGroup}>
+                {!esCliente && (
+                    <div className={styles.field}>
+                        <label htmlFor="usuarioId">Cliente</label>
+                        <select
+                            id="usuarioId"
+                            name="usuarioId"
+                            value={formData.usuarioId}
+                            onChange={handleChange}
+                            required
+                        >
+                            <option value="" hidden>
+                                Seleccione un cliente
+                            </option>
 
-                <div className={styles.field}>
-                    <label htmlFor="usuarioId">Cliente</label>
-                    <select
-                        id="usuarioId"
-                        name="usuarioId"
-                        value={formData.usuarioId}
-                        onChange={handleChange}
-                        required
-                    >
-                        <option value="" hidden>Seleccione un cliente</option>
-                        {usuarios.length > 0 ? (
-                            usuarios.map((u) => (
-                                <option key={u.numeroDocumento} value={u.numeroDocumento}>
+                            {usuarios.map((u) => (
+                                <option
+                                    key={u.numeroDocumento}
+                                    value={u.numeroDocumento}
+                                >
                                     {u.numeroDocumento} - {u.nombreCompleto}
                                 </option>
-                            ))
-                        ) : (
-                            <option disabled>No hay clientes disponibles</option>
-                        )}
-                    </select>
-                </div>
+                            ))}
+                        </select>
+                    </div>
+                )}
 
                 <div className={styles.field}>
                     <label htmlFor="placaVehiculo">Vehículo</label>
@@ -94,7 +115,9 @@ export default function AgendamientoForm({ onSubmit, initialData = null }) {
                         disabled={!formData.usuarioId}
                     >
                         <option value="" hidden>
-                            {formData.usuarioId ? 'Seleccione un vehículo' : 'Primero seleccione un cliente'}
+                            {formData.usuarioId
+                                ? "Seleccione un vehículo"
+                                : "Primero seleccione un cliente"}
                         </option>
                         {vehiculos.length > 0 ? (
                             vehiculos.map((v) => (
@@ -103,7 +126,9 @@ export default function AgendamientoForm({ onSubmit, initialData = null }) {
                                 </option>
                             ))
                         ) : formData.usuarioId ? (
-                            <option disabled>No hay vehículos para este cliente</option>
+                            <option disabled>
+                                No hay vehículos para este cliente
+                            </option>
                         ) : null}
                     </select>
                 </div>
@@ -132,15 +157,20 @@ export default function AgendamientoForm({ onSubmit, initialData = null }) {
                     />
                     <small>Las observaciones son opcionales.</small>
                 </div>
-
             </div>
 
             <div className={styles.actions}>
-                <button type="button" className={styles.cancelBtn} onClick={() => onSubmit(null)}>
+                <button
+                    type="button"
+                    className={styles.cancelBtn}
+                    onClick={() => onSubmit(null)}
+                >
                     Cancelar
                 </button>
                 <button type="submit" className={styles.submitBtn}>
-                    {initialData ? 'Actualizar Agendamiento' : 'Crear Agendamiento'}
+                    {initialData
+                        ? "Actualizar Agendamiento"
+                        : "Crear Agendamiento"}
                 </button>
             </div>
         </form>
